@@ -8,7 +8,6 @@ if (!isset($_SESSION["username"])) {
     $userid = $_SESSION["userid"];
     $firstname = $_SESSION["firstname"];
     $lastname = $_SESSION["lastname"];
-    $username = $_SESSION["username"];
     $email = $_SESSION["email"];
     $password = $_SESSION["password"];
     $phonenumber = $_SESSION["phonenumber"];

@@ -15,12 +15,12 @@
     <form action="../BackEnd/logindb.php" method="post">
 
         <div class="input-group">
-            <label for="UserName">UserName</label>
-            <input type="text" name="UserName" id="UserName">
+            <label for="users_username">UserName</label>
+            <input type="text" name="users_username" id="users_username">
         </div>
         <div class="input-group">
-            <label for="Password">Password</label>
-            <input type="Password" name="Password" id="Password">
+            <label for="users_password">Password</label>
+            <input type="Password" name="users_password" id="users_password">
         </div>
         <div class="input-group">
             <button type="submit" name="login_user" class="btn">Login</button>
