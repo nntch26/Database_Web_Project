@@ -69,7 +69,7 @@ session_start();
 
         <!--action="บอกว่าจะดึงข้อมูลไปที่ไหน.php" method=" อันนี้เพิ่มข้อมูลใน db ใช้เป็น post"-->
 
-        <form class="p-5 card login-card-custom" action="register_db.php" method="post">
+        <form class="p-5 card login-card-custom" action="../BackEnd/register_db.php" method="post">
 
             <div class="form-outline mb-3">
                 <label class="form-label" for="form1Example1">Username</label>
