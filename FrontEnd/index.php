@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,6 +11,7 @@
     <title>Hotel Project</title>
 
 </head>
+
 <body>
 
     <!---- Navbar ---->
@@ -18,21 +20,21 @@
             <a class="navbar-brand me-5 fw-bold fs-3 h-font" href="index.php">หาแรมนอน</a>
 
             <button class="navbar-toggler shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
+                <span class="navbar-toggler-icon"></span>
             </button>
 
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="index.php">Home</a>
+                        <a class="nav-link active" aria-current="page" href="index.php">Home</a>
                     </li>
                     <li class="nav-item">
-                    <a class="nav-link me-2" href="rooms.php">Rooms</a>
+                        <a class="nav-link me-2" href="rooms.php">Rooms</a>
                     </li>
                 </ul>
                 <div class="d-flex" role="search">
-                    <a href="login.php" type="button" class="btn btn-primary shadow-none me-lg-3 me-2">Login	</a>
-                    <a href="register.php" type="button" class="btn btn-outline-primary shadow-none" >Register	</a>
+                    <a href="login.php" type="button" class="btn btn-primary shadow-none me-lg-3 me-2">Login </a>
+                    <a href="register.php" type="button" class="btn btn-outline-primary shadow-none">Register </a>
                 </div>
             </div>
         </div>
@@ -43,8 +45,8 @@
         <!----Backgrounds image---->
         <div class="header__image__container">
             <div class="header__content ">
-            <h1>Enjoy Your Dream Vacation</h1>
-            <p>จองโรงแรม ห้องพัก และแพ็คเกจการเข้าพักในราคาที่ถูกที่สุด</p>
+                <h1>Enjoy Your Dream Vacation</h1>
+                <p>จองโรงแรม ห้องพัก และแพ็คเกจการเข้าพักในราคาที่ถูกที่สุด</p>
             </div>
 
             <!----Booking bar---->
@@ -154,7 +156,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="col-md-3">
                 <div class="card">
                     <img src="https://static.leonardo-hotels.com/image/leonardohotelbucharestcitycenter_room_comfortdouble2_2022_4000x2600_7e18f254bc75491965d36cc312e8111f_1200x780_mobile_3.jpeg" class="card-img-top" alt="รูปโรงแรม">
@@ -195,7 +197,7 @@
             </div>
         </div>
     </div>
-      
+
     <!---- end room card ---->
 
 
@@ -210,23 +212,24 @@
                 <div class="col-md-6 mt-5">
                     <h4>ติดต่อเรา</h4>
                     <address>
-                    <p>1/1 ถนนสุขุมวิท, กรุงเทพฯ, ประเทศไทย</p>
-                    <p>อีเมล: haramnon@gmail.com</p>
-                    <p>โทรศัพท์: +66 893456789</p>
+                        <p>1/1 ถนนสุขุมวิท, กรุงเทพฯ, ประเทศไทย</p>
+                        <p>อีเมล: haramnon@gmail.com</p>
+                        <p>โทรศัพท์: +66 893456789</p>
                     </address>
                 </div>
                 <div class="mt-5 mb-5 text-center">
                     <small class="text-center">
                         Copyright © 2023 Haramnon.com. All Rights Reserved.
                     </small>
-               
+
                 </div>
-                
+
             </div>
         </div>
     </footer>
 
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm" crossorigin="anonymous"></script>
-  </body>
+</body>
+
 </html>

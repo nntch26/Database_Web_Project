@@ -1,4 +1,4 @@
-<?php 
+<?php
 session_start();
 ?>
 
@@ -22,18 +22,18 @@ session_start();
         <h1 class="text-white mb-5">เข้าสู่ระบบ</h1>
 
 
-        <?php if(isset($_SESSION['err_fill'])): ?>
+        <?php if (isset($_SESSION['err_fill'])) : ?>
             <!-- ถ้ามี error ให้แสดง alert  ถ้าเป็นข้อมูลว่าง แสดงข้อความเตือน-->
             <div class="alert alert-danger" role="alert">
-                <?php echo $_SESSION['err_fill']; ?> 
+                <?php echo $_SESSION['err_fill']; ?>
             </div>
         <?php endif; ?>
 
 
-        <?php if(isset($_SESSION['exist_uname'])): ?>
+        <?php if (isset($_SESSION['exist_uname'])) : ?>
             <!-- ถ้ามี error ให้แสดง alert  ถ้าไม่มี Username นี้ในระบบ-->
             <div class="alert alert-danger" role="alert">
-                <?php echo $_SESSION['exist_uname']; ?> 
+                <?php echo $_SESSION['exist_uname']; ?>
             </div>
         <?php endif; ?>
 
@@ -41,11 +41,11 @@ session_start();
         <?php if (isset($_SESSION['err_pw'])) : ?>
             <!-- ถ้ามี error ให้แสดง alert -->
             <div class="alert alert-danger" role="alert">
-                <?php echo $_SESSION['err_pw']; ?> 
+                <?php echo $_SESSION['err_pw']; ?>
             </div>
         <?php endif; ?>
 
-    
+
 
         <form class="p-5 card login-card-custom" action="../BackEnd/login_db.php" method="post">
             <div class="form-outline mb-3">
@@ -75,7 +75,7 @@ session_start();
 
 <?php
 
-if(isset($_SESSION['err_fill']) || isset($_SESSION['exist_uname']) || isset($_SESSION['err_pw'])){
+if (isset($_SESSION['err_fill']) || isset($_SESSION['exist_uname']) || isset($_SESSION['err_pw'])) {
     unset($_SESSION['err_fill']);
     unset($_SESSION['exist_uname']);
     unset($_SESSION['err_pw']);

@@ -1,4 +1,4 @@
-<?php 
+<?php
 session_start();
 ?>
 
@@ -26,7 +26,7 @@ session_start();
         <?php if (isset($_SESSION['err_fill'])) : ?>
             <!-- ถ้ามี error ให้แสดง alert  ถ้าเป็นข้อมูลว่าง แสดงข้อความเตือน-->
             <div class="alert alert-danger" role="alert">
-                <?php echo $_SESSION['err_fill']; ?> 
+                <?php echo $_SESSION['err_fill']; ?>
             </div>
         <?php endif; ?>
 
@@ -34,7 +34,7 @@ session_start();
         <?php if (isset($_SESSION['err_pw'])) : ?>
             <!-- ถ้ามี error ให้แสดง alert -->
             <div class="alert alert-danger" role="alert">
-                <?php echo $_SESSION['err_pw']; ?> 
+                <?php echo $_SESSION['err_pw']; ?>
             </div>
         <?php endif; ?>
 
@@ -42,7 +42,7 @@ session_start();
         <?php if (isset($_SESSION['exist_uname'])) : ?>
             <!-- ถ้ามี error ให้แสดง alert -->
             <div class="alert alert-danger" role="alert">
-                <?php echo $_SESSION['exist_uname']; ?> 
+                <?php echo $_SESSION['exist_uname']; ?>
             </div>
         <?php endif; ?>
 
@@ -50,7 +50,7 @@ session_start();
         <?php if (isset($_SESSION['exist_email'])) : ?>
             <!-- ถ้ามี error ให้แสดง alert -->
             <div class="alert alert-danger" role="alert">
-                <?php echo $_SESSION['exist_email']; ?> 
+                <?php echo $_SESSION['exist_email']; ?>
             </div>
         <?php endif; ?>
 
@@ -58,7 +58,7 @@ session_start();
         <?php if (isset($_SESSION['err_insert'])) : ?>
             <!-- ถ้ามี error ให้แสดง alert -->
             <div class="alert alert-danger" role="alert">
-                <?php echo $_SESSION['err_insert']; ?> 
+                <?php echo $_SESSION['err_insert']; ?>
             </div>
         <?php endif; ?>
 
@@ -73,17 +73,17 @@ session_start();
 
             <div class="form-outline mb-3">
                 <label class="form-label" for="form1Example1">Username</label>
-                <input type="text" name ="username" class="form-control" />
+                <input type="text" name="username" class="form-control" />
             </div>
 
             <div class="form-outline mb-3">
                 <label class="form-label" for="form1Example1">Email</label>
-                <input type="text" name ="email" class="form-control" />
+                <input type="text" name="email" class="form-control" />
             </div>
 
             <div class="form-outline mb-3">
                 <label class="form-label" for="form1Example1">Password</label>
-                <input type="password" name = "password" class="form-control" />
+                <input type="password" name="password" class="form-control" />
             </div>
 
             <div class="form-outline mb-3">
@@ -110,21 +110,17 @@ session_start();
 
 
 <!-- เมื่อตรวจสอบ error เสร็จแล้วให้ลบ session เพื่อรีหน้าใหม่--->
-<?php 
-    if(isset($_SESSION['err_fill'])){
-        unset($_SESSION['err_fill']);
-
-    }else if(isset($_SESSION['err_pw'])){
-        unset($_SESSION['err_pw']);
-
-    }else if(isset($_SESSION['exist_uname'])){
-        unset($_SESSION['exist_uname']);
-
-    }else if(isset($_SESSION['err_insert'])){
-        unset($_SESSION['err_insert']);
-
-    }else if(isset($_SESSION['exist_email'])){
-        unset($_SESSION['exist_email']);
-    }
+<?php
+if (isset($_SESSION['err_fill'])) {
+    unset($_SESSION['err_fill']);
+} else if (isset($_SESSION['err_pw'])) {
+    unset($_SESSION['err_pw']);
+} else if (isset($_SESSION['exist_uname'])) {
+    unset($_SESSION['exist_uname']);
+} else if (isset($_SESSION['err_insert'])) {
+    unset($_SESSION['err_insert']);
+} else if (isset($_SESSION['exist_email'])) {
+    unset($_SESSION['exist_email']);
+}
 
 ?>

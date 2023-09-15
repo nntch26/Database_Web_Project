@@ -1,6 +1,18 @@
-
-
-
+<?php
+    if (!isset($_SESSION["username"])) {
+        header("Location: login.php");
+    } else {
+        $username = $_SESSION["username"];
+        $userid = $_SESSION["userid"];
+        $firstname = $_SESSION["firstname"];
+        $lastname = $_SESSION["lastname"];
+        $email = $_SESSION["email"];
+        $password = $_SESSION["password"];
+        $phonenumber = $_SESSION["phonenumber"];
+        $address = $_SESSION["address"];
+        $role = $_SESSION["role"];
+    }
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -36,7 +48,7 @@
                 </ul>
                 <div class="d-flex">
                     <a class="nav-link me-5" href="profile.php"><i class="fas fa-user-circle"></i> Profile</a>
-                    <a class="nav-link me-5" href="logout.php"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                    <a class="nav-link me-5" href="../BackEnd/logoutdb.php"><i class="fas fa-sign-out-alt"></i> Logout</a>
                 </div>
             </div>
         </div>
