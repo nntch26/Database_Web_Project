@@ -1,7 +1,7 @@
 
 <?php 
 session_start();
-include('connection.php'); // ดึงไฟล์เชื่อม database เข้ามา
+include('includes/connection.php'); // ดึงไฟล์เชื่อม database เข้ามา
 
 // เช็คว่ามีการกดปุ่ม submit มาหรือไม่
 
@@ -18,7 +18,7 @@ if (isset($_POST['submit'])){
         $_SESSION['err_fill'] = "กรุณากรอกข้อมูลให้ครบถ้วน";
 
         // พอมี error ให้ส่งกลับไปที่หน้า สมัครสมาชิกเหมือนเดิม
-        header('location: register.php');
+        header('location: ../FrontEnd/register.php');
         exit; // จบการทำงาน
     }
 
@@ -29,7 +29,7 @@ if (isset($_POST['submit'])){
         // กรณีที่ รหัสผ่านไม่ตรงกัน
         if($password != $confirm_password){
             $_SESSION['err_pw'] = "กรุณากรอกรหัสผ่านให้ตรงกัน";
-            header('location: register.php');
+            header('location: ../FrontEnd/register.php');
             exit;
         }
 
@@ -52,14 +52,14 @@ if (isset($_POST['submit'])){
             // ถ้าแสดงแถวแล้วได้จำนวน > 0 แปลว่า ข้อมูลซ้ำ
             if($rowuser['count_uname'] != 0 ) {
                 $_SESSION['exist_uname'] = "มี Username นี้แล้วในระบบ";
-                header('location: register.php');
+                header('location: ../FrontEnd/register.php');
                 exit;
 
             }
             // ถ้า เมลในระบบ ซ้ำ
             else if ($rowem['count_email'] != 0){
                 $_SESSION['exist_email'] = "มี Email นี้แล้วในระบบ";
-                header('location: register.php');
+                header('location: ../FrontEnd/register.php');
                 exit;
             }
 
@@ -75,13 +75,13 @@ if (isset($_POST['submit'])){
 
                     $_SESSION['username'] = $username;
                     $_SESSION['is_login'] = true; // สถานะการ login ให้ login เข้าไปเลย
-                    header('location: login.php');
+                    header('location: ../FrontEnd/login.php');
                 }
 
                 // สมัครไม่สำเร็จ
                 else{
                     $_SESSION['err_insert'] = "ไม่สามารถนำเข้าข้อมูลได้";
-                    header('location: register.php');
+                    header('location: ../FrontEnd/register.php');
                     exit;
 
                 }
