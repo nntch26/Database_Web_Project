@@ -1,7 +1,7 @@
 
 <?php
 session_start();
-include('includes/connection.php'); // ดึงไฟล์เชื่อม database เข้ามา
+include('includes/connect_database.php'); // ดึงไฟล์เชื่อม database เข้ามา
 
 // เช็คว่ามีการกดปุ่ม submit มาหรือไม่
 
@@ -22,7 +22,6 @@ if (isset($_POST['submit'])) {
         exit; // จบการทำงาน
     }
 
-
     // ถ้าข้อมูลไม่เป็นค่าว่าง มีข้อมูล
     else {
 
@@ -37,11 +36,11 @@ if (isset($_POST['submit'])) {
         else {
 
             //เช็คว่าข้อมูลที่กรอกเข้ามาซ้ำ ใน database หรือไม่
-            $select_stmt = $db->prepare("SELECT COUNT(username) AS count_uname FROM users WHERE username = :username");
-            $select_stmt2 = $db->prepare("SELECT COUNT(email) AS count_email FROM users WHERE email= :email");
+            $select_stmt = $db->prepare("SELECT COUNT(users_username) AS count_uname FROM users WHERE users_username = :users_username");
+            $select_stmt2 = $db->prepare("SELECT COUNT(users_email) AS count_email FROM users WHERE users_email= :users_email");
 
-            $select_stmt->bindParam(':username', $username);
-            $select_stmt2->bindParam(':email', $email);
+            $select_stmt->bindParam(':users_username', $username);
+            $select_stmt2->bindParam(':users_email', $email);
 
             $select_stmt->execute();
             $select_stmt2->execute();
@@ -65,9 +64,9 @@ if (isset($_POST['submit'])) {
 
             // ถ้าไม่มี username ซ้ำ สมัครได้
             else {
-                $insert_stmt = $db->prepare("INSERT INTO users (username, password, role) VALUES (:username, :password, 'TOURIST')");
-                $insert_stmt->bindParam(':username', $username);
-                $insert_stmt->bindParam(':password', $password);
+                $insert_stmt = $db->prepare("INSERT INTO users (users_username, users_password, users_role) VALUES (:users_username, :users_password, 'TOURIST')");
+                $insert_stmt->bindParam(':users_username', $username);
+                $insert_stmt->bindParam(':users_password', $password);
                 $insert_stmt->execute();
 
                 // สมัครสำเร็จ เช็คว่า ถ้าเพิ่มข้อมูลผ่านแล้ว จะให้ทำการเก็บ username เอาไปใช้ต่อ

@@ -72,23 +72,23 @@ session_start();
         <form class="p-5 card login-card-custom" action="../BackEnd/register_db.php" method="post">
 
             <div class="form-outline mb-3">
-                <label class="form-label" for="form1Example1">Username</label>
-                <input type="text" name="username" class="form-control" />
+                <label class="form-label" for="username">Username</label>
+                <input type="text" name="username" id="username" class="form-control" />
             </div>
 
             <div class="form-outline mb-3">
-                <label class="form-label" for="form1Example1">Email</label>
-                <input type="text" name="email" class="form-control" />
+                <label class="form-label" for="email">Email</label>
+                <input type="text" name="email" id="email" class="form-control" />
             </div>
 
             <div class="form-outline mb-3">
-                <label class="form-label" for="form1Example1">Password</label>
-                <input type="password" name="password" class="form-control" />
+                <label class="form-label" for="password">Password</label>
+                <input type="password" name="password" id="password" class="form-control" />
             </div>
 
             <div class="form-outline mb-3">
-                <label class="form-label" for="form1Example1">Confirm Password</label>
-                <input type="password" name="confirm_password" class="form-control" />
+                <label class="form-label" for="confirm_password">Confirm Password</label>
+                <input type="password" name="confirm_password" id="confirm_password" class="form-control" />
             </div>
 
             <div class="row">

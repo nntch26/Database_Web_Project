@@ -68,7 +68,7 @@
                 <form>
                     <div class="form__group ">
                         <div class="input__group ">
-                            <input type="text" />
+                            <input type="text" placeholder = "ชื่อจังหวัด" name = "location"/>
                             <label>Location</label>
                         </div>
                         <p>Where are you going?</p>
@@ -92,7 +92,7 @@
 
                     <div class="form__group">
                         <div class="input__group">
-                            <input type="text" />
+                            <input type="text" placeholder = "จำนวนผู้ที่มาพัก" name = "num_guest"/>
                             <label>Guests</label>
                         </div>
                         <p>Add guests</p>

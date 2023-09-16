@@ -1,3 +1,7 @@
+<?php
+session_start();
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -51,41 +55,40 @@
 
             <!----Booking bar---->
             <div class="booking__container">
-                <form>
+                <form action="../BackEnd/search_db.php" method="post">
                     <div class="form__group ">
-                        <div class="input__group ">
-                            <input type="text" />
+                        <div class="input__group" for="location">
+                            <input type="text" placeholder="ชื่อจังหวัด" name="location" />
                             <label>Location</label>
                         </div>
                         <p>Where are you going?</p>
                     </div>
 
                     <div class="form__group">
-                        <div class="input__group">
-                            <input type="date" />
+                        <div class="input__group" for="checkin">
+                            <input type="date" name="checkin" />
                             <label>Check In</label>
                         </div>
                         <p>Add date</p>
                     </div>
 
                     <div class="form__group">
-                        <div class="input__group">
-                            <input type="date" />
+                        <div class="input__group" for="checkout">
+                            <input type="date" name="checkout" />
                             <label>Check Out</label>
                         </div>
                         <p>Add date</p>
                     </div>
 
                     <div class="form__group">
-                        <div class="input__group">
-                            <input type="text" />
+                        <div class="input__group" for="num_guest">
+                            <input type="text" placeholder="จำนวนผู้ที่มาพัก" name="num_guest" />
                             <label>Guests</label>
                         </div>
                         <p>Add guests</p>
                     </div>
-
+                    <button type="submit" name="submit" class="btn btn-primary shadow-none me-lg-3 me-2">Search</button>
                 </form>
-                <a href="rooms.php" class="btn btn-primary shadow-none me-lg-3 me-2">Submit</a>
             </div>
         </div>
     </header>

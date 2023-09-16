@@ -2,7 +2,7 @@
 <?php
 
 session_start();
-include('includes/connection.php'); // ดึงไฟล์เชื่อม database เข้ามา
+include('includes/connect_database.php'); // ดึงไฟล์เชื่อม database เข้ามา
 
 
 // เช็คว่า กดปุ่ม submit
@@ -23,8 +23,8 @@ if (isset($_POST['submit'])) {
     else {
 
         // เช็คว่ามี username นั่นจริงมั้ย , ดึง password ออกมาตรวจสอบด้วย
-        $select_stmt = $db->prepare("SELECT COUNT(username) AS count_uname, password FROM users WHERE username = :username GROUP BY password");
-        $select_stmt->bindParam(':username', $username);
+        $select_stmt = $db->prepare("SELECT COUNT(users_username) AS count_uname, users_password FROM users WHERE users_username  = :users_username GROUP BY users_password");
+        $select_stmt->bindParam(':users_username', $username);
         $select_stmt->execute();
 
         $row = $select_stmt->fetch(PDO::FETCH_ASSOC); // ดึงข้อมูลออกมา
@@ -37,7 +37,7 @@ if (isset($_POST['submit'])) {
         } else {
 
             // กรณี login สำเร็จ
-            if ($row['password'] == $password) {
+            if ($row['users_password'] == $password) {
                 $_SESSION["userid"] = $row['user_id'];
                 $_SESSION["firstname"] = $row['users_first_name'];
                 $_SESSION["lastname"] = $row['users_last_name'];
@@ -48,12 +48,11 @@ if (isset($_POST['submit'])) {
                 $_SESSION["address"] = $row['users_address'];
                 $_SESSION["role"] = $row['users_role'];
                 $_SESSION['is_login'] = true;
-                header('location: ../FrontEnd/homepage.php');
+                header('location: ../FrontEnd/index.php');
             }
 
             // กรณี login ไม่สำเร็จ
             else {
-
                 $_SESSION['err_pw'] = "กรุณากรอกรหัสผ่านให้ตรงกัน";
                 header('location: ../FrontEnd/login.php');
                 exit;
