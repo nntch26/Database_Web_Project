@@ -45,7 +45,7 @@ session_start();
 
                     <div class="form__group">
                         <div class="input__group" for="checkin">
-                            <input type="date" name="checkin" />
+                            <input type="date" name="checkin" min="<?php echo date('Y-m-d')?>"/>
                             <label>Check In</label>
                         </div>
                         <p>Add date</p>
@@ -53,7 +53,7 @@ session_start();
 
                     <div class="form__group">
                         <div class="input__group" for="checkout">
-                            <input type="date" name="checkout" />
+                            <input type="date" name="checkout" min="<?php echo date('Y-m-d')?>"/>
                             <label>Check Out</label>
                         </div>
                         <p>Add date</p>

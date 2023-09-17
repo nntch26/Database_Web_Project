@@ -50,5 +50,23 @@ if (isset($_POST['submit'])) {
                 exit;
             }
         }
+            // query ข้อมูลของคนที่ login เข้ามา เพื่อแสดงผลใน html
+            $select_stmt3 = $db->prepare("SELECT * FROM users WHERE users_username = :username");
+            $select_stmt3->bindParam(':username', $_SESSION["username"]);
+            $select_stmt3->execute();
+            $row = $select_stmt3->fetch(PDO::FETCH_ASSOC);  // ทำบรรทัดนี้ กรณีที่เราต้องการดึงข้อมูลมาแสดง
+            // query ข้อมูลของคนที่ login เข้ามา 
+
+            $_SESSION["userid"] = $row['user_id'];
+            $_SESSION["firstname"] = $row['users_first_name'];
+            $_SESSION["lastname"] = $row['users_last_name'];
+            $_SESSION["username"] = $row['users_username'];
+            $_SESSION["email"] = $row['users_email'];
+            $_SESSION["password"] = $row['users_password'];
+            $_SESSION["phonenumber"] = $row['users_phone_number'];
+            $_SESSION["address"] = $row['users_address'];
+            $_SESSION["city"] = $row['users_city'];
+            $_SESSION["postcode"] = $row['users_postcode'];
+            $_SESSION["role"] = $row['users_role'];
     }
 }
