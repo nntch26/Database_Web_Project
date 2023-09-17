@@ -66,7 +66,7 @@
                         <span class="mt-5" style="font-weight: 700;">Email</span> : <?php echo $_SESSION["email"]; ?>  <br>
                         <span style="font-weight: 700;">หมายเลขโทรศัพท์ </span> : <?php echo $_SESSION["phonenumber"]; ?> <br>
                         <span style="font-weight: 700;">ที่อยู่</span> : <?php echo $_SESSION["address"]; ?> <br>
-                        <span style="font-weight: 700;">เมือง/จังหวัด</span> : <?php echo $_SESSION["city"]; ?>  
+                        <span style="font-weight: 700;">เมือง/จังหวัด</span> : <?php echo $_SESSION["city"]; ?>  <br>
                         <span style="font-weight: 700;">รหัสไปรษณีย์</span> : <?php echo $_SESSION["postcode"]; ?>  <br>
                         <span style="font-weight: 700;">Role</span> : <?php echo $_SESSION["role"]; ?> 
                     </div>
