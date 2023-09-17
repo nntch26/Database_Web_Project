@@ -64,9 +64,13 @@ if (isset($_POST['submit'])) {
 
             // ถ้าไม่มี username ซ้ำ สมัครได้
             else {
-                $insert_stmt = $db->prepare("INSERT INTO users (users_username, users_password, users_role) VALUES (:users_username, :users_password, 'TOURIST')");
+                
+                $insert_stmt = $db->prepare("INSERT INTO users (users_username, users_password, users_email, users_role) 
+                VALUES (:users_username, :users_password, :users_email 'TOURIST')");
+
                 $insert_stmt->bindParam(':users_username', $username);
                 $insert_stmt->bindParam(':users_password', $password);
+                $insert_stmt->bindParam(':users_email', $email);
                 $insert_stmt->execute();
 
                 // สมัครสำเร็จ เช็คว่า ถ้าเพิ่มข้อมูลผ่านแล้ว จะให้ทำการเก็บ username เอาไปใช้ต่อ
