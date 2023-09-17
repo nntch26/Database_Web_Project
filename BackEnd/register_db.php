@@ -66,7 +66,7 @@ if (isset($_POST['submit'])) {
             else {
                 
                 $insert_stmt = $db->prepare("INSERT INTO users (users_username, users_password, users_email, users_role) 
-                VALUES (:users_username, :users_password, :users_email 'TOURIST')");
+                VALUES (:users_username, :users_password, :users_email ,'TOURIST')");
 
                 $insert_stmt->bindParam(':users_username', $username);
                 $insert_stmt->bindParam(':users_password', $password);
