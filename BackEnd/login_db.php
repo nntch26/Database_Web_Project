@@ -38,15 +38,7 @@ if (isset($_POST['submit'])) {
 
             // กรณี login สำเร็จ
             if ($row['users_password'] == $password) {
-                $_SESSION["userid"] = $row['user_id'];
-                $_SESSION["firstname"] = $row['users_first_name'];
-                $_SESSION["lastname"] = $row['users_last_name'];
-                $_SESSION["username"] = $row['users_username'];
-                $_SESSION["email"] = $row['users_email'];
-                $_SESSION["password"] = $row['users_password'];
-                $_SESSION["phonenumber"] = $row['users_phone_number'];
-                $_SESSION["address"] = $row['users_address'];
-                $_SESSION["role"] = $row['users_role'];
+                $_SESSION["username"] = $username;
                 $_SESSION['is_login'] = true;
                 header('location: ../FrontEnd/index.php');
             }
