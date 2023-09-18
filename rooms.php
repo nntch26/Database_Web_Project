@@ -1,6 +1,6 @@
 <?php
 session_start();
-include('../BackEnd/includes/connect_database.php');
+include('/BackEnd/includes/connect_database.php');
 
 $location = $_SESSION["location"];
 $checkin = $_SESSION["checkin"];
@@ -53,7 +53,7 @@ $num_guest = $_SESSION["num_guest"];
 
               <div class="border bg-light p-3 rounded mb-3">
 
-                <form action="../BackEnd/search_db.php" method="post">
+                <form action="/BackEnd/search_db.php" method="post">
                   <h5 class="mb-3" style="font-size: 18px;">CHECK AVAILABILITY</h5>
 
                   <label class="form-label">Search</label>

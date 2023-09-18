@@ -15,7 +15,7 @@ if (isset($_POST['submit'])) {
 
         // ถ้าเป็นข้อมูลว่าง  กำหนด error จะเก็บไว้ใน session
         $_SESSION['err_fill'] = "กรุณากรอกข้อมูลให้ครบถ้วน";
-        header('location: ../FrontEnd/login.php'); // กลับไปหน้า login เหมือนเดิม
+        header('location: ../login.php'); // กลับไปหน้า login เหมือนเดิม
         exit; // จบการทำงาน
     }
 
@@ -32,7 +32,7 @@ if (isset($_POST['submit'])) {
         // กรณีที่ไม่มีข้อมูล ในระบบ
         if ($row['count_uname'] == 0) {
             $_SESSION['exist_uname'] = "ไม่มี Username นี้ในระบบ";
-            header('location: ../FrontEnd/login.php');
+            header('location: ../login.php');
             exit;
         } else {
 
@@ -40,13 +40,13 @@ if (isset($_POST['submit'])) {
             if ($row['users_password'] == $password) {
                 $_SESSION["username"] = $username;
                 $_SESSION['is_login'] = true;
-                header('location: ../FrontEnd/index.php');
+                header('location: ../index.php');
             }
 
             // กรณี login ไม่สำเร็จ
             else {
                 $_SESSION['err_pw'] = "กรุณากรอกรหัสผ่านให้ตรงกัน";
-                header('location: ../FrontEnd/login.php');
+                header('location: ../login.php');
                 exit;
             }
         }

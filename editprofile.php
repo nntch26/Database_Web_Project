@@ -6,7 +6,7 @@ session_start();
 // ถ้ามี $_SESSION['is_logged_in'] แสดงว่ามีการ login เข้ามาแล้ว
 
 if (!isset($_SESSION['is_login'])) {
-    header('location: ../FrontEnd/login.php'); // ถ้าไม่มีให้เด้งไป login
+    header('location: login.php'); // ถ้าไม่มีให้เด้งไป login
 }
 
 ?>

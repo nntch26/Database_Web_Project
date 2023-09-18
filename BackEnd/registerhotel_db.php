@@ -23,7 +23,7 @@ if (isset($_POST['req_submit'])) {
         $_SESSION['err_regis'] = "กรุณากรอกข้อมูลให้ครบถ้วน";
 
         // พอมี error ให้ส่งกลับไปที่หน้า สมัครสมาชิกเหมือนเดิม
-        header('location: ../FrontEnd/registerhotel.php');
+        header('location: ../registerhotel.php');
         exit; // จบการทำงาน
     }
 
@@ -43,7 +43,7 @@ if (isset($_POST['req_submit'])) {
         // ถ้าแสดงแถวแล้วได้จำนวน > 0 แปลว่า ข้อมูลซ้ำ
         if ($row['count_name'] != 0) {
             $_SESSION['exist_hotelname'] = "มี โรงแรม นี้แล้วในระบบ";
-            header('location: ../FrontEnd/registerhotel.php');
+            header('location: ../registerhotel.php');
             exit;
         }
 
@@ -88,13 +88,13 @@ if (isset($_POST['req_submit'])) {
                 $_SESSION["req_status"] = $rowstatus['req_status'];
                 $_SESSION['is_req'] = true;
 
-                header('location: ../FrontEnd/registerhotel.php');
+                header('location: ../registerhotel.php');
             }
 
             // ลงทะเบียนไม่สำเร็จ
             else {
                 $_SESSION['err_insert'] = "ไม่สามารถนำเข้าข้อมูลได้";
-                header('location: ../FrontEnd/registerhotel.php');
+                header('location: ../registerhotel.php');
                 exit;
             }
         
@@ -102,11 +102,11 @@ if (isset($_POST['req_submit'])) {
     }
 }
 elseif (isset($_POST['req_back'])){
-    header('location: ../FrontEnd/index.php');
+    header('location: ../index.php');
     exit;
     
 }elseif (isset($_POST['req_cancel'])){
-    header('location: ../FrontEnd/index.php');
+    header('location: ../index.php');
     exit;
 
 }

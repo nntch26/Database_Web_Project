@@ -1,11 +1,11 @@
 <?php
 session_start();
-include('../BackEnd/includes/connect_database.php'); // ดึงไฟล์เชื่อม database เข้ามา
+include('/BackEnd/includes/connect_database.php'); // ดึงไฟล์เชื่อม database เข้ามา
 
 
 // เช็คว่า login หรือยัง ถ้ายัง ให้กลับไปยังหน้า login.php เพื่อทำการ login ก่อน
 if (!isset($_SESSION['is_login'])) {
-    header('location: ../FrontEnd/login.php');
+    header('location: login.php');
 }
 else{
     // query ข้อมูลของคนที่ login เข้ามา เพื่อแสดงผลใน html

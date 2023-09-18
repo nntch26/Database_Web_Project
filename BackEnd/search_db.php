@@ -22,6 +22,6 @@ $_SESSION["checkin"] = $get_checkin;
 $_SESSION["checkout"] = $get_checkout;
 $_SESSION["num_guest"] = $get_num_guest;
 
-header("Location: ../FrontEnd/rooms.php");
+header("Location: ../rooms.php");
 
 ?>

@@ -18,7 +18,7 @@ if (isset($_POST['update'])) {
     // เช็คว่า เป็นข้อมูลที่รับมาเป็นค่าว่าง หรือไม่
     if (empty($firstname) || empty($lastname) || empty($address) || empty($phone) || empty($city)|| empty($postcode)) {
         $_SESSION['err_edit'] = "โปรดระบุข้อมูลของคุณให้ครบถ้วน";
-        header('location: ../FrontEnd/editprofile.php'); // กลับไปหน้า editprofile 
+        header('location: ../editprofile.php'); // กลับไปหน้า editprofile 
         exit; // จบการทำงาน
     }
 
@@ -44,24 +44,24 @@ if (isset($_POST['update'])) {
         // เพิ่มข้อมูลแล้ว 
         if ($update_stmt) {
             $_SESSION['profile_update'] = "อัปเดตข้อมูลของคุณเรียบร้อยแล้ว";
-            header('location: ../FrontEnd/editprofile.php');
+            header('location: ../editprofile.php');
         }
 
         // เพิ่มข้อมูลไม่สำเร็จ
         else {
             $_SESSION['err_update'] = "ไม่สามารถนำเข้าข้อมูลได้";
-            header('location: ../FrontEnd/editprofile.php');
+            header('location: ../editprofile.php');
             exit;
         }
 
     }
 
 } elseif (isset($_POST['back'])){
-    header('location: ../FrontEnd/profile.php');
+    header('location: ../profile.php');
     exit;
     
 }elseif (isset($_POST['cancel'])){
-    header('location: ../FrontEnd/profile.php');
+    header('location: ../profile.php');
     exit;
 
 }
