@@ -3,7 +3,7 @@
 $db_host = "161.246.127.24";
 $db_port = "9068";
 $db_user = "clmonqc1t002nbsmncwt2af9x";
-$db_password = "clmonqc1t002nbsmncwt2af9x";
+$db_password = "JpxkLX8D978E639E5qBdCwIz";
 $db_name = "dbtesto";
 
 try{
