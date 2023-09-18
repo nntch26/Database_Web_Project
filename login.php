@@ -47,7 +47,7 @@ session_start();
 
 
 
-        <form class="p-5 card login-card-custom" action="/BackEnd/login_db.php" method="post">
+        <form class="p-5 card login-card-custom" action="BackEnd/login_db.php" method="post">
             <div class="form-outline mb-3">
                 <label class="form-label" for="username">Username</label>
                 <input type="text" name="username" id="username" class="form-control" />

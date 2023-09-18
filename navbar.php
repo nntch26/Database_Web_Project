@@ -24,7 +24,7 @@
 
                     <a class="nav-link me-5" href="profilehotel.php"><i class="fa-solid fa-hotel"></i> ลงทะเบียนที่พัก</a>
                     <a class="nav-link me-5" href="profile.php"><i class="fas fa-user-circle"></i> Profile</a>
-                    <a class="nav-link me-5" href="../BackEnd/logout_db.php"><i class="fas fa-sign-out-alt"></i> Logout</a>
+                    <a class="nav-link me-5" href="BackEnd/logout_db.php"><i class="fas fa-sign-out-alt"></i> Logout</a>
 
                 <?php else : ?>
                     <!-- แสดง Navbar สำหรับผู้ไม่ได้เข้าสู่ระบบ -->

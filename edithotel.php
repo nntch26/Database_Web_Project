@@ -37,7 +37,7 @@ if (!isset($_SESSION['is_login'])) {
             <h1 class="mt-5">Change Hotel</h1>
             <p>แก้ไขข้อมูลโรงแรมของคุณ</p>
 
-            <form class="p-5 card" action="../BackEnd/editprofile_db.php" method="post">
+            <form class="p-5 card" action="BackEnd/editprofile_db.php" method="post">
                 
                 <!-- เช็คว่ามี error มั้ย  ถ้าเป็นค่าว่าง -->
                 <?php if (isset($_SESSION['err_edit'])) : ?>

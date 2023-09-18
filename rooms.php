@@ -1,6 +1,6 @@
 <?php
 session_start();
-include('/BackEnd/includes/connect_database.php');
+include('BackEnd/includes/connect_database.php');
 
 $location = $_SESSION["location"];
 $checkin = $_SESSION["checkin"];
@@ -123,6 +123,26 @@ $num_guest = $_SESSION["num_guest"];
 
         //ดึง Hotel ล่ะ JOIN กับตัว locations กับ rooms เพื่อดึงตัวโรงแรมที่ตรงตามเงื่อนไขที่ Tourist ค้นหา
 
+        if (!isset($location) && !isset($num_guest)){
+          $select_stmt = $db->prepare("SELECT * FROM hotels JOIN locations USING (location_id) 
+                                JOIN rooms USING (hotel_id)
+                                JOIN reviews USING (hotel_id)");
+          $select_stmt->execute();
+        }else if (isset($location) && !isset($num_guest)){
+          $select_stmt = $db->prepare("SELECT * FROM hotels JOIN locations USING (location_id) 
+                                JOIN rooms USING (hotel_id)
+                                JOIN reviews USING (hotel_id) 
+                                WHERE location_name = :get_location");
+          $select_stmt->bindParam(':get_location', $location);
+          $select_stmt->execute();
+        }else if (!isset($location) && isset($num_guest)){
+          $select_stmt = $db->prepare("SELECT * FROM hotels JOIN locations USING (location_id) 
+                                JOIN rooms USING (hotel_id)
+                                JOIN reviews USING (hotel_id) 
+                                WHERE location_name = :get_location AND rooms_size <= :num_guest");
+          $select_stmt->bindParam(':num_guest', $num_guest);
+          $select_stmt->execute();
+        }else{
           $select_stmt = $db->prepare("SELECT * FROM hotels JOIN locations USING (location_id) 
                                 JOIN rooms USING (hotel_id)
                                 JOIN reviews USING (hotel_id) 
@@ -130,6 +150,7 @@ $num_guest = $_SESSION["num_guest"];
           $select_stmt->bindParam(':get_location', $location);
           $select_stmt->bindParam(':num_guest', $num_guest);
           $select_stmt->execute();
+        }
 
         //นับจำนวนข้อมูลที่มี
         $row_count = $select_stmt->rowCount();

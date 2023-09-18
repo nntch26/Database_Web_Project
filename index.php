@@ -34,7 +34,7 @@ session_start();
 
             <!----Booking bar---->
             <div class="booking__container">
-                <form action="../BackEnd/search_db.php" method="post">
+                <form action="BackEnd/search_db.php" method="post">
                     <div class="form__group ">
                         <div class="input__group" for="location">
                             <input type="text" placeholder="ชื่อจังหวัด" name="location" />
