@@ -21,7 +21,7 @@ session_start();
 
     <!---- Navbar ---->
     <?php require('navbar.php'); ?>
-   
+
 
     <!---- header ---->
     <header class="section__container header__container">
@@ -34,7 +34,7 @@ session_start();
 
             <!----Booking bar---->
             <div class="booking__container">
-                <form action="BackEnd/search_db.php" method="post">
+                <form action="rooms.php" method="post">
                     <div class="form__group ">
                         <div class="input__group" for="location">
                             <input type="text" placeholder="ชื่อจังหวัด" name="location" />
@@ -45,7 +45,7 @@ session_start();
 
                     <div class="form__group">
                         <div class="input__group" for="checkin">
-                            <input type="date" name="checkin" min="<?php echo date('Y-m-d')?>"/>
+                            <input type="date" name="checkin" min="<?php echo date('Y-m-d') ?>" />
                             <label>Check In</label>
                         </div>
                         <p>Add date</p>
@@ -53,7 +53,7 @@ session_start();
 
                     <div class="form__group">
                         <div class="input__group" for="checkout">
-                            <input type="date" name="checkout" min="<?php echo date('Y-m-d')?>"/>
+                            <input type="date" name="checkout" min="<?php echo date('Y-m-d') ?>" />
                             <label>Check Out</label>
                         </div>
                         <p>Add date</p>
@@ -70,7 +70,7 @@ session_start();
                     <div class="form__group" style="text-align: center;">
                         <button type="submit" name="submit" class="btn btn-primary shadow-none me-lg-3 me-2">Search</button>
                     </div>
-                    
+
                 </form>
             </div>
         </div>
@@ -219,3 +219,12 @@ session_start();
 </body>
 
 </html>
+
+<?php
+if (isset($_SESSION['location']) || isset($_SESSION['checkin']) || isset($_SESSION['checkout']) || isset($_SESSION['num_guest'])) {
+    unset($_SESSION['location']);
+    unset($_SESSION['checkin']);
+    unset($_SESSION['checkout']);
+    unset($_SESSION['num_guest']);
+}
+?>

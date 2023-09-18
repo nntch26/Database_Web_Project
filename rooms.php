@@ -2,10 +2,10 @@
 session_start();
 include('BackEnd/includes/connect_database.php');
 
-$location = $_SESSION["location"];
-$checkin = $_SESSION["checkin"];
-$checkout = $_SESSION["checkout"];
-$num_guest = $_SESSION["num_guest"];
+$_SESSION["location"] = $_POST['location'];
+$_SESSION["checkin"] = $_POST['checkin'];
+$_SESSION["checkout"] = $_POST['checkout'];
+$_SESSION["num_guest"] = $_POST['num_guest'];
 
 ?>
 
@@ -60,13 +60,13 @@ $num_guest = $_SESSION["num_guest"];
                   <input type="text" class="form-control shadow-none mb-3" name="search_name" placeholder="ชื่อโรงแรมที่คุณต้องการค้นหา" />
 
                   <label class="form-label">Location</label>
-                  <input type="text" class="form-control shadow-none mb-3" placeholder="ชื่อจังหวัด" name="location" value="<?php echo isset($location) ? htmlspecialchars($location) : ''; ?>" />
+                  <input type="text" class="form-control shadow-none mb-3" placeholder="ชื่อจังหวัด" name="location" value="<?php echo isset($_SESSION["location"]) ? htmlspecialchars($_SESSION["location"]) : ''; ?>" />
 
                   <label class="form-label">Check-in</label>
-                  <input type="date" class="form-control shadow-none mb-3" name="checkin" min="<?php echo date('Y-m-d') ?>" value="<?php echo $checkin ?>">
+                  <input type="date" class="form-control shadow-none mb-3" name="checkin" min="<?php echo date('Y-m-d') ?>" value="<?php echo $_SESSION["checkin"]; ?>">
 
                   <label class="form-label">Check-out</label>
-                  <input type="date" class="form-control shadow-none" name="checkout" min="<?php echo date('Y-m-d') ?>" value="<?php echo $checkout ?>">
+                  <input type="date" class="form-control shadow-none" name="checkout" min="<?php echo date('Y-m-d') ?>" value="<?php echo $_SESSION["checkout"]; ?>">
 
                 </form>
 
@@ -119,37 +119,38 @@ $num_guest = $_SESSION["num_guest"];
       <div class="col-lg-9 col-md-12 px-4">
         <!-- ************************************* -->
         <?php
-        
 
         //ดึง Hotel ล่ะ JOIN กับตัว locations กับ rooms เพื่อดึงตัวโรงแรมที่ตรงตามเงื่อนไขที่ Tourist ค้นหา
-
-        if (!isset($location) && !isset($num_guest)){
-          $select_stmt = $db->prepare("SELECT * FROM hotels JOIN locations USING (location_id) 
-                                JOIN rooms USING (hotel_id)
-                                JOIN reviews USING (hotel_id)");
+        if ($_SESSION["location"] == null && $_SESSION["num_guest"] == null) {
+          $select_stmt = $db->prepare("SELECT * FROM hotels");
           $select_stmt->execute();
-        }else if (isset($location) && !isset($num_guest)){
-          $select_stmt = $db->prepare("SELECT * FROM hotels JOIN locations USING (location_id) 
-                                JOIN rooms USING (hotel_id)
-                                JOIN reviews USING (hotel_id) 
+          echo "case 1";
+        } else if ($_SESSION["location"] != null && $_SESSION["num_guest"] == null) {
+          $select_stmt = $db->prepare("SELECT * FROM hotels
+                                JOIN locations USING (location_id) 
+                                -- JOIN reviews USING (hotel_id) 
                                 WHERE location_name = :get_location");
-          $select_stmt->bindParam(':get_location', $location);
+          $select_stmt->bindParam(':get_location', $_SESSION["location"]);
           $select_stmt->execute();
-        }else if (!isset($location) && isset($num_guest)){
-          $select_stmt = $db->prepare("SELECT * FROM hotels JOIN locations USING (location_id) 
+          echo "case 2";
+        } else if ($_SESSION["location"] == null && $_SESSION["num_guest"] != null) {
+          $select_stmt = $db->prepare("SELECT * FROM hotels 
                                 JOIN rooms USING (hotel_id)
-                                JOIN reviews USING (hotel_id) 
-                                WHERE location_name = :get_location AND rooms_size <= :num_guest");
-          $select_stmt->bindParam(':num_guest', $num_guest);
+                                -- JOIN reviews USING (hotel_id) 
+                                WHERE rooms_size >= :num_guest");
+          $select_stmt->bindParam(':num_guest', $_SESSION["num_guest"]);
           $select_stmt->execute();
-        }else{
-          $select_stmt = $db->prepare("SELECT * FROM hotels JOIN locations USING (location_id) 
+          echo "case 3";
+        } else if ($_SESSION["location"] != null && $_SESSION["num_guest"] != null) {
+          $select_stmt = $db->prepare("SELECT * FROM hotels 
+                                JOIN locations USING (location_id) 
                                 JOIN rooms USING (hotel_id)
-                                JOIN reviews USING (hotel_id) 
-                                WHERE location_name = :get_location AND rooms_size <= :num_guest");
-          $select_stmt->bindParam(':get_location', $location);
-          $select_stmt->bindParam(':num_guest', $num_guest);
+                                -- JOIN reviews USING (hotel_id) 
+                                WHERE location_name = :get_location AND rooms_size >= :num_guest");
+          $select_stmt->bindParam(':get_location', $_SESSION["location"]);
+          $select_stmt->bindParam(':num_guest', $_SESSION["num_guest"]);
           $select_stmt->execute();
+          echo "case 4";
         }
 
         //นับจำนวนข้อมูลที่มี
@@ -219,11 +220,9 @@ $num_guest = $_SESSION["num_guest"];
         } else {
           echo "ไม่พบข้อมูลที่ตรงกับคำค้นหา";
         }
-
         ?>
+
       </div>
-
-
     </div>
   </div>
 
