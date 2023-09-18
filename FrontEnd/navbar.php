@@ -22,6 +22,7 @@
 
                 <?php if(isset($_SESSION['is_login'])) : ?>
 
+                    <a class="nav-link me-5" href="profilehotel.php"><i class="fa-solid fa-hotel"></i> ลงทะเบียนที่พัก</a>
                     <a class="nav-link me-5" href="profile.php"><i class="fas fa-user-circle"></i> Profile</a>
                     <a class="nav-link me-5" href="../BackEnd/logout_db.php"><i class="fas fa-sign-out-alt"></i> Logout</a>
 
