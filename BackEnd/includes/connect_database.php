@@ -2,8 +2,8 @@
 
 $db_host = "161.246.127.24";
 $db_port = "9068";
-$db_user = "clmonqc1t002nbsmncwt2af9x";
-$db_password = "JpxkLX8D978E639E5qBdCwIz";
+$db_user = "clmonqc1u002obsmnf8f9h7my";
+$db_password = "77o93FGfV3QfYHEAuIxyMrH4";
 $db_name = "dbtesto";
 
 try{
