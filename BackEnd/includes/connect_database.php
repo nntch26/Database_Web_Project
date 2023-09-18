@@ -1,7 +1,7 @@
 <?php 
 
 $db_host = "161.246.127.24";
-$db_port = 3306;
+$db_port = 9069;
 $db_user = "clmonqc1u002obsmnf8f9h7my";
 $db_password = "77o93FGfV3QfYHEAuIxyMrH4";
 $db_name = "dbtesto";
