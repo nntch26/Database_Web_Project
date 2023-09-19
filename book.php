@@ -523,18 +523,28 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <h3 class="name-re">Review</h3>
             </div>
             <div class="box">
-                <div class="scroll-box">
-                    <h5 class="pro-re">name review</h5>
-                    <h6 class="txt-re">i thing good good</h6>
-                </div>
-                <div class="scroll-box">
-                    <h5 class="pro-re">name review</h5>
-                    <h6 class="txt-re">i thing good good</h6>
-                </div>
-                <div class="scroll-box">
-                    <h5 class="pro-re">name review</h5>
-                    <h6 class="txt-re">i thing good good</h6>
-                </div>
+                <?php
+                $select_stmt = $db->prepare("SELECT * FROM reviews
+                JOIN hotels USING (hotel_id)
+                JOIN users ON (reviews.user_id = users.user_id)
+                WHERE hotel_id = :hotel_id");
+                $select_stmt->bindParam(':hotel_id', $_POST["hotel_id"]);
+                $select_stmt->execute();
+
+                $row_count = $select_stmt->rowCount();
+
+                if ($row_count > 0) {
+                    while ($row = $select_stmt->fetch(PDO::FETCH_ASSOC)) {
+                echo '<div class="scroll-box">';
+                echo    '<h5 class="pro-re">' . $row["users_username"] . '</h5>';
+                echo    '<h6 class="txt-re">' . $row["reviews_comment"] . '</h6>';
+                echo '</div>';
+                    }
+                }else{
+                    echo "ไม่พบข้อมูลที่ตรงกับคำค้นหา";
+                }
+                ?>
+
             </div>
         </div>
     </div>
