@@ -32,18 +32,18 @@
                     switch ($page) {
                         case 'user':
                             // แสดงหน้า User
-                            echo "<h3>User Page</h3>";
-                            // ตรวจสอบสิทธิ์และแสดงรายการผู้ใช้
+                            include("user.php");
+                            
                             break;
                         case 'room':
                             // แสดงหน้า Room
-                            echo "<h3>Room Page</h3>";
-                            // ตรวจสอบสิทธิ์และแสดงรายการห้อง
+                            include("room.php");
+
                             break;
                         case 'hotel':
                             // แสดงหน้า Hotel
-                            echo "<h3>Hotel Page</h3>";
-                            // ตรวจสอบสิทธิ์และแสดงรายการโรงแรม
+                            include("hotel.php");
+
                             break;
                         case 'requirement':
                             // แสดงหน้า Requirement
