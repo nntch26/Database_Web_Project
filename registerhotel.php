@@ -8,6 +8,10 @@ session_start();
 if (!isset($_SESSION['is_login'])) {
     header('location: login.php'); // ถ้าไม่มีให้เด้งไป login
 
+}elseif(!isset($_SESSION['is_login'])){
+
+
+
 }
 
 ?>
@@ -38,7 +42,7 @@ if (!isset($_SESSION['is_login'])) {
             <h1 class="mt-5">Register Hotel</h1>
             <p>ลงทะเบียนที่พักของคุณ</p>
 
-            <form class="p-5 card" action="/BackEnd/registerhotel_db.php" method="post">
+            <form class="p-5 card" action="BackEnd/registerhotel_db.php" method="post">
                 
                 <!-- เช็คว่ามี error มั้ย  ถ้าเป็นค่าว่าง -->
                 <?php if (isset($_SESSION['err_regis'])) : ?>
@@ -128,9 +132,6 @@ if (!isset($_SESSION['is_login'])) {
 
           
 
-                        
-
-                    
                         
                         <div class="text-center my-1">
                             <!-- ส่งข้อมูลแล้ว -->

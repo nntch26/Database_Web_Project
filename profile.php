@@ -78,7 +78,7 @@ else{
                 <div class="card mt-5">
                     <div class="card-body-profile" style="line-height: 3;">
                         <h4>แก้ไขข้อมูลส่วนตัวของคุณ</h4>
-                        <a href="../FrontEnd/editprofile.php" class="btn btn-primary shadow-none mb-5 mt-4 me-lg-3 me-2">แก้ไขข้อมูล</a>
+                        <a href="editprofile.php" class="btn btn-primary shadow-none mb-5 mt-4 me-lg-3 me-2">แก้ไขข้อมูล</a>
 
                         <h4>แสดงประวัติการจองของคุณ</h4>
                         <a href="#" class="btn btn-primary shadow-none mb-4 mt-4 me-lg-3 me-2">ดูประวัติการจอง</a>
