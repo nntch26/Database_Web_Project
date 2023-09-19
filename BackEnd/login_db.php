@@ -40,7 +40,10 @@ if (isset($_POST['submit'])) {
             if ($row['users_password'] == $password) {
                 $_SESSION["username"] = $username;
                 $_SESSION['is_login'] = true;
-                header('location: ../index.php');
+
+                echo '<script type="text/javascript">
+                window.location = "../index.php"; // เปลี่ยนเป็น URL ของหน้าที่ต้องการเปลี่ยนไป
+                </script>';
             }
 
             // กรณี login ไม่สำเร็จ
