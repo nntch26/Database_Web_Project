@@ -2,10 +2,10 @@
 session_start();
 include('BackEnd/includes/connect_database.php');
 
-$_SESSION["location"] = $_POST['location'];
-$_SESSION["checkin"] = $_POST['checkin'];
-$_SESSION["checkout"] = $_POST['checkout'];
-$_SESSION["num_guest"] = $_POST['num_guest'];
+$_SESSION["location"] = $_GET['location'];
+$_SESSION["checkin"] = $_GET['checkin'];
+$_SESSION["checkout"] = $_GET['checkout'];
+$_SESSION["num_guest"] = $_GET['num_guest'];
 
 ?>
 
@@ -158,7 +158,7 @@ $_SESSION["num_guest"] = $_POST['num_guest'];
 
         if ($row_count > 0) {
           while ($row = $select_stmt->fetch(PDO::FETCH_ASSOC)) {
-            echo '<form action="booknow.php" method="post">';
+            echo '<form action="book.php" method="post">';
             echo '<div class="card mb-4 border-0 shadow">';
             echo '<div class="row g-0 p-3 align-items-center">';
             echo '<div class="col-md-5 mb-lg-0 mb-md-0 mb-3">';
@@ -210,8 +210,6 @@ $_SESSION["num_guest"] = $_POST['num_guest'];
             echo '<h6 class="mb-4"> ฿ 2000 per night </h6>';
             echo '<button type="submit" name="submit" class="btn login-btn-blue btn-block text-white">Book Now</button>';
             echo '<input type="hidden" name="hotel_id" value="' . $row['hotel_id'] . '">';
-            echo '<input type="hidden" name="hotel_name" value="' . $row['hotels_name'] . '">';
-            echo '<input type="hidden" name="hotel_address" value="' . $row['hotels_address'] . '">';
             echo  '</div>';
             echo '</div>';
             echo '</div>';

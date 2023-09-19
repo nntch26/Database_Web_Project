@@ -34,7 +34,7 @@ session_start();
 
             <!----Booking bar---->
             <div class="booking__container">
-                <form action="rooms.php" method="post">
+                <form action="rooms.php" method="get">
                     <div class="form__group ">
                         <div class="input__group" for="location">
                             <input type="text" placeholder="ชื่อจังหวัด" name="location" />
