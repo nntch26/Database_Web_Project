@@ -7,10 +7,16 @@
     if (!isset($_SESSION['is_login'])) {
         header('location: login.php');
     }
+
+    // เช็คว่า ได้ลงทะเบียนที่พักหรือยัง
+    elseif ($_SESSION["role"] != 'HOTELOWNER'){
+        header('location: registerhotel.php');
+
+    }
     else{
         // query ข้อมูลของคนที่ login เข้ามา เพื่อแสดงผลใน html
-        $select_stmt3 = $db->prepare("SELECT * FROM users WHERE users_username = :username");
-        $select_stmt3->bindParam(':username', $_SESSION["username"]);
+        $select_stmt3 = $db->prepare("SELECT * FROM hotels WHERE user_id = :user_id");
+        $select_stmt3->bindParam(':user_id', $_SESSION["userid"]);
         $select_stmt3->execute();
         $row = $select_stmt3->fetch(PDO::FETCH_ASSOC);  // ทำบรรทัดนี้ กรณีที่เราต้องการดึงข้อมูลมาแสดง
         // query ข้อมูลของคนที่ login เข้ามา 
@@ -20,6 +26,7 @@
 
   
 ?>
+<!--+1-->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -51,10 +58,9 @@
                 <div class="card mt-5">
                     <div class="card-body-profile" style="line-height: 3;">
                         <h4>รายละเอียด</h4>
-                        <span class="mt-5" style="font-weight: 700;">Username</span> : <?php echo $_SESSION["username"]; ?> <br>
-                        <span style="font-weight: 700;">ชื่อ - นามสกุล</span> : <?php echo $_SESSION["firstname"]. " " . $_SESSION["lastname"] ;?> <br>
-                        <span class="mt-5" style="font-weight: 700;">Email</span> : <?php echo $_SESSION["email"]; ?>  <br>
-                        <span style="font-weight: 700;">หมายเลขโทรศัพท์ </span> : <?php echo $_SESSION["phonenumber"]; ?> <br>
+                        <span class="mt-5" style="font-weight: 700;">ชื่อโรงแรม</span> : <?php echo $_SESSION["username"]; ?> <br>
+                        <span style="font-weight: 700;">หมายเลขโทรศัพท์ติดต่อ</span> : <?php echo $_SESSION["firstname"]. " " . $_SESSION["lastname"] ;?> <br>
+                        <span class="mt-5" style="font-weight: 700;">รายละเอียดโรงแรม</span> : <?php echo $_SESSION["email"]; ?>  <br>
                         <span style="font-weight: 700;">ที่อยู่</span> : <?php echo $_SESSION["address"]; ?> <br>
                         <span style="font-weight: 700;">เมือง/จังหวัด</span> : <?php echo $_SESSION["city"]; ?>  
                         <span style="font-weight: 700;">รหัสไปรษณีย์</span> : <?php echo $_SESSION["postcode"]; ?>  <br>
@@ -68,10 +74,10 @@
                 <div class="card mt-5">
                     <div class="card-body-profile" style="line-height: 3;">
                         <h4>แก้ไขข้อมูล โรงแรมของคุณ</h4>
-                        <a href="../FrontEnd/edithotel.php" class="btn btn-primary shadow-none mb-5 mt-4 me-lg-3 me-2">แก้ไขข้อมูล</a>
+                        <a href="edithotel.php" class="btn btn-primary shadow-none mb-5 mt-4 me-lg-3 me-2">แก้ไขข้อมูล</a>
                         
                         <h4>แก้ไขข้อมูล ห้องพักของคุณ</h4>
-                        <a href="../FrontEnd/registerhotel.php" class="btn btn-primary shadow-none mb-5 mt-4 me-lg-3 me-2">แก้ไขข้อมูล</a>
+                        <a href="#" class="btn btn-primary shadow-none mb-5 mt-4 me-lg-3 me-2">แก้ไขข้อมูล</a>
 
                         <h4>แสดงประวัติการชำระของลูกค้า</h4>
                         <a href="#" class="btn btn-primary shadow-none mb-4 mt-4 me-lg-3 me-2">ดูประวัติชำระเงิน</a>

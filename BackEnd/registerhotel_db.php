@@ -52,7 +52,7 @@ if (isset($_POST['req_submit'])) {
         else {
 
             // ค้นหา location_id จากตาราง Locations โดยใช้ชื่อจังหวัดเป็นเงื่อนไข
-            $select_stmt2 = $db->prepare("SELECT location_id FROM Locations WHERE location_name = :hotels_city");
+            $select_stmt2 = $db->prepare("SELECT location_id FROM locations WHERE location_name = :hotels_city");
             $select_stmt2->bindParam(':hotels_city', $hotelcity);
             $select_stmt2->execute();
 
@@ -61,8 +61,10 @@ if (isset($_POST['req_submit'])) {
             
             // ส่ง requests  เพิ่มข้อมูลลงในตาราง requests
             $insert_stmt = $db->prepare("INSERT INTO requests
-            (user_id, req_hotels_name, req_hotels_phone, req_hotels_address, req_hotels_postcode, req_hotels_description, req_hotels_img, req_sent_date, req_status, location_id)
-            VALUES (:user_id, :hotels_name , :hotels_phone , :hotels_address, :hotels_postcode, :hotels_des, :hotels_img, :req_sent_date, 'WAITING', :location_id)");
+            (user_id, req_hotels_name, req_hotels_phone, req_hotels_address, req_hotels_postcode, 
+            req_hotels_description, req_hotels_img, req_sent_date, req_status, location_id)
+            VALUES (:user_id, :hotels_name , :hotels_phone , :hotels_address, :hotels_postcode, 
+            :hotels_des, :hotels_img, :req_sent_date, 'WAITING', :location_id)");
 
             
 

@@ -5,42 +5,98 @@ include('../BackEnd/includes/connect_database.php'); // ดึงไฟล์เ
 
 if (isset($_POST['ad_submit'])) {
     $request_id = $_POST["request_id"];
+    $user_id = $_POST["user_id"];
+    $location_id = $_POST["location_id"];
+
+    $sql = "SELECT * FROM requests r 
+            JOIN users u ON r.user_id = u.user_id 
+            JOIN locations l ON r.location_id = l.location_id
+            WHERE request_id = :request_id";
+
+    $stmt = $db->prepare($sql);
+    $stmt->bindParam(':request_id', $request_id);
+    $stmt->execute();
+
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
 
-     // ส่ง requests  เพิ่มข้อมูลลงในตาราง requests
-     $insert_stmt = $db->prepare("INSERT INTO requests
-     (user_id, req_hotels_name, req_hotels_phone, req_hotels_address, req_hotels_postcode, req_hotels_description, req_hotels_img, req_sent_date, req_status, location_id)
-     VALUES (:user_id, :hotels_name , :hotels_phone , :hotels_address, :hotels_postcode, :hotels_des, :hotels_img, :req_sent_date, 'WAITING', :location_id)");
+     // พิ่มข้อมูลลงในตาราง hotels
+     $insert_stmt = $db->prepare("INSERT INTO hotels (`hotels_name`, `hotels_phone`, `hotels_address`, 
+     `hotels_postcode`, `hotels_description`, `hotels_img`, `location_id`, `user_id`)
+     VALUES(:hotels_name, :hotels_phone, :hotels_address, 
+     :hotels_postcode, :hotels_description, :hotels_img, :location_id, :user_id);");
 
-     
-
-     $insert_stmt->bindParam(':user_id', $_SESSION["userid"]);
-     $insert_stmt->bindParam(':hotels_name', $hotelname);
-     $insert_stmt->bindParam(':hotels_phone', $hotelphone);
-     $insert_stmt->bindParam(':hotels_address', $hoteladd);
-     $insert_stmt->bindParam(':hotels_des', $hoteldes);
-     $insert_stmt->bindParam(':hotels_postcode', $hotelcode);
-     $insert_stmt->bindParam(':hotels_img', $hotelimg);
-     $insert_stmt->bindParam(':req_sent_date', $req_date);
-     $insert_stmt->bindParam(':location_id', $rowid['location_id']);
+     $insert_stmt->bindParam(':hotels_name', $row['req_hotels_name']);
+     $insert_stmt->bindParam(':hotels_phone',  $row['req_hotels_phone']);
+     $insert_stmt->bindParam(':hotels_address',  $row['req_hotels_address']);
+     $insert_stmt->bindParam(':hotels_description',  $row['req_hotels_description']);
+     $insert_stmt->bindParam(':hotels_postcode',  $row['req_hotels_postcode']);
+     $insert_stmt->bindParam(':hotels_img',  $row['req_hotels_img']);
+     $insert_stmt->bindParam(':location_id', $location_id);
+     $insert_stmt->bindParam(':user_id', $user_id);
 
      $insert_stmt->execute();
     
 
 
 
-    // สมัครสำเร็จ เช็คว่า ถ้าเพิ่มข้อมูลผ่านแล้ว จะให้ทำการเก็บ username เอาไปใช้ต่อ
+    // กดยืนยัน ถ้าเพิ่มข้อมูลผ่านแล้ว จะให้ทำการเก็บ username เอาไปใช้ต่อ
     if ($insert_stmt) {
-        header('location: ../FrontEnd/login.php');
+
+        // เปลี่ยนสถานะของ ผู้ใช้ที่ร้องขอ  เป็น Approve
+        $sql2 = "UPDATE requests SET req_status = 'APPROVE' WHERE request_id = :request_id";
+
+        $stmt2 = $db->prepare($sql2);
+        $stmt2->bindParam(':request_id', $request_id);
+        $stmt2->execute();
+
+        // ดึงสถานะการร้องขอ ของผู้ใช้
+        $select_stmt3 = $db->prepare("SELECT req_status FROM requests WHERE user_id = :user_id");
+        $select_stmt3->bindParam(':user_id', $user_id);
+        $select_stmt3->execute();
+
+        $rowstatus = $select_stmt3->fetch(PDO::FETCH_ASSOC); // ดึงข้อมูลออกมา 
+        $_SESSION["req_status"] = $rowstatus['req_status'];
+        $_SESSION['is_register'] = true;
+        
+
+
+        // เปลี่ยน role ของผู้ใช้
+        $sql3 = "UPDATE users SET users_role = 'HOTELOWNER' WHERE user_id = :user_id";
+
+        $stmt3 = $db->prepare($sql3);
+        $stmt3->bindParam(':user_id', $user_id);
+        $stmt3->execute();
+
+
+        header('location: admin.php');
+
     }
 
     // สมัครไม่สำเร็จ
     else {
         $_SESSION['err_insert'] = "ไม่สามารถนำเข้าข้อมูลได้";
-        header('location: ../FrontEnd/register.php');
+        header('location: admin.php');
         exit;
     }
 
         
+
     
+// ลงทะเบียนไม่ผ่าน
+
+}elseif(isset($_POST['ad_cancel'])){
+    $request_id = $_POST["request_id"];
+
+    // ลบคำร้องขอ ของผู้ใช้
+    $sql4 = "DELETE FROM requests WHERE request_id = :request_id";
+
+    $stmt4 = $db->prepare($sql4);
+    $stmt4->bindParam(':request_id', $request_id);
+    $stmt4->execute();
+
+    $_SESSION['is_register'] = false;
+    header('location: admin.php');
+
+
 }
