@@ -78,7 +78,7 @@ session_start();
 
             <div class="form-outline mb-3">
                 <label class="form-label" for="email">Email</label>
-                <input type="text" name="email" id="email" class="form-control" />
+                <input type="email" name="email" id="email" class="form-control" />
             </div>
 
             <div class="form-outline mb-3">

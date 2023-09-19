@@ -1,30 +1,29 @@
-<?php 
-    session_start(); 
-    include('BackEnd/includes/connect_database.php'); // ดึงไฟล์เชื่อม database เข้ามา
+<?php
+session_start();
+include('BackEnd/includes/connect_database.php'); // ดึงไฟล์เชื่อม database เข้ามา
 
 
-    // เช็คว่า login หรือยัง ถ้ายัง ให้กลับไปยังหน้า login.php เพื่อทำการ login ก่อน
-    if (!isset($_SESSION['is_login'])) {
-        header('location: login.php');
-    }
+// เช็คว่า login หรือยัง ถ้ายัง ให้กลับไปยังหน้า login.php เพื่อทำการ login ก่อน
+if (!isset($_SESSION['is_login'])) {
+    header('location: login.php');
+}
 
-    // เช็คว่า ได้ลงทะเบียนที่พักหรือยัง
-    elseif ($_SESSION["role"] != 'HOTELOWNER'){
-        header('location: registerhotel.php');
+// เช็คว่า ได้ลงทะเบียนที่พักหรือยัง
+elseif ($_SESSION["role"] != 'HOTELOWNER') {
+    header('location: registerhotel.php');
+} else {
+    // query ข้อมูลของคนที่ login เข้ามา เพื่อแสดงผลใน html
+    $select_stmt3 = $db->prepare("SELECT * FROM hotels
+                                    JOIN locations ON (hotels.location_id = locations.location_id) 
+                                    WHERE user_id = :user_id");
+    $select_stmt3->bindParam(':user_id', $_SESSION["userid"]);
+    $select_stmt3->execute();
+    $row = $select_stmt3->fetch(PDO::FETCH_ASSOC);  // ทำบรรทัดนี้ กรณีที่เราต้องการดึงข้อมูลมาแสดง
+    // query ข้อมูลของคนที่ login เข้ามา 
 
-    }
-    else{
-        // query ข้อมูลของคนที่ login เข้ามา เพื่อแสดงผลใน html
-        $select_stmt3 = $db->prepare("SELECT * FROM hotels WHERE user_id = :user_id");
-        $select_stmt3->bindParam(':user_id', $_SESSION["userid"]);
-        $select_stmt3->execute();
-        $row = $select_stmt3->fetch(PDO::FETCH_ASSOC);  // ทำบรรทัดนี้ กรณีที่เราต้องการดึงข้อมูลมาแสดง
-        // query ข้อมูลของคนที่ login เข้ามา 
+}
 
-           
-    }
 
-  
 ?>
 <!--+1-->
 
@@ -54,20 +53,18 @@
             <h1 class="mt-5">Profile Hotel</h1>
             <p>ข้อมูลส่วนของที่พัก อัปเดตข้อมูลที่พักของคุณ</p>
             <div class="col-md-6">
-                
+
                 <div class="card mt-5">
                     <div class="card-body-profile" style="line-height: 3;">
                         <h4>รายละเอียด</h4>
-                        <span class="mt-5" style="font-weight: 700;">ชื่อโรงแรม</span> : <?php echo $_SESSION["username"]; ?> <br>
-                        <span style="font-weight: 700;">หมายเลขโทรศัพท์ติดต่อ</span> : <?php echo $_SESSION["firstname"]. " " . $_SESSION["lastname"] ;?> <br>
-                        <span class="mt-5" style="font-weight: 700;">รายละเอียดโรงแรม</span> : <?php echo $_SESSION["email"]; ?>  <br>
-                        <span style="font-weight: 700;">ที่อยู่</span> : <?php echo $_SESSION["address"]; ?> <br>
-                        <span style="font-weight: 700;">เมือง/จังหวัด</span> : <?php echo $_SESSION["city"]; ?>  
-                        <span style="font-weight: 700;">รหัสไปรษณีย์</span> : <?php echo $_SESSION["postcode"]; ?>  <br>
-                        <span style="font-weight: 700;">Role</span> : <?php echo $_SESSION["role"]; ?> 
+                        <span class="mt-5" style="font-weight: 700;">ชื่อโรงแรม</span> : <?php echo $row["hotels_name"]; ?> <br>
+                        <span style="font-weight: 700;">หมายเลขโทรศัพท์ติดต่อ</span> : <?php echo $row["hotels_phone"]; ?> <br>
+                        <span class="mt-5" style="font-weight: 700;">รายละเอียดโรงแรม</span> : <?php echo $row["hotels_description"]; ?> <br>
+                        <span style="font-weight: 700;">ที่อยู่</span> : <?php echo $row["hotels_address"]; ?> <br>
+                        <span style="font-weight: 700;">เมือง/จังหวัด</span> : <?php echo $row["location_name"]; ?> <br>
+                        <span style="font-weight: 700;">รหัสไปรษณีย์</span> : <?php echo $row["hotels_postcode"]; ?> <br>
                     </div>
                 </div>
-
             </div>
 
             <div class="col-md-6">
@@ -75,7 +72,7 @@
                     <div class="card-body-profile" style="line-height: 3;">
                         <h4>แก้ไขข้อมูล โรงแรมของคุณ</h4>
                         <a href="edithotel.php" class="btn btn-primary shadow-none mb-5 mt-4 me-lg-3 me-2">แก้ไขข้อมูล</a>
-                        
+
                         <h4>แก้ไขข้อมูล ห้องพักของคุณ</h4>
                         <a href="#" class="btn btn-primary shadow-none mb-5 mt-4 me-lg-3 me-2">แก้ไขข้อมูล</a>
 
@@ -84,12 +81,7 @@
 
                     </div>
                 </div>
-
             </div>
-
-            
-
-            
         </div>
     </div>
 
