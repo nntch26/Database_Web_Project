@@ -1,5 +1,5 @@
-
 <?php
+ob_start();
 session_start();
 include('includes/connect_database.php'); // ดึงไฟล์เชื่อม database เข้ามา
 
@@ -88,3 +88,5 @@ if (isset($_POST['submit'])) {
         }
     }
 }
+ob_end_flush();
+?>
