@@ -19,7 +19,7 @@ if (isset($_POST['submit'])) {
 
         // พอมี error ให้ส่งกลับไปที่หน้า สมัครสมาชิกเหมือนเดิม
         header('location: ../register.php');
-        exit; // จบการทำงาน
+        exit(); // จบการทำงาน
     }
 
     // ถ้าข้อมูลไม่เป็นค่าว่าง มีข้อมูล
@@ -29,7 +29,7 @@ if (isset($_POST['submit'])) {
         if ($password != $confirm_password) {
             $_SESSION['err_pw'] = "กรุณากรอกรหัสผ่านให้ตรงกัน";
             header('location: ../register.php');
-            exit;
+            exit();
         }
 
         // ถ้าข้อมูลถูกต้อง ทำการเพิ่มข้อมูล ลงใน database
@@ -52,14 +52,14 @@ if (isset($_POST['submit'])) {
             if ($rowuser['count_uname'] != 0) {
                 $_SESSION['exist_uname'] = "มี Username นี้แล้วในระบบ";
                 header('location: ../register.php');
-                exit;
+                exit();
             }
 
             // ถ้า เมลในระบบ ซ้ำ
             else if ($rowem['count_email'] != 0) {
                 $_SESSION['exist_email'] = "มี Email นี้แล้วในระบบ";
                 header('location: ../register.php');
-                exit;
+                exit();
             }
 
             // ถ้าไม่มี username ซ้ำ สมัครได้
@@ -82,7 +82,7 @@ if (isset($_POST['submit'])) {
                 else {
                     $_SESSION['err_insert'] = "ไม่สามารถนำเข้าข้อมูลได้";
                     header('location: ../register.php');
-                    exit;
+                    exit();
                 }
             }
         }
