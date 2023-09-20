@@ -86,6 +86,7 @@
                 <div class="card mt-5">
                     <div class="card-body-profile" style="line-height: 3;">
                         <h4>ข้อมูลห้องพักของคุณ</h4>
+                        <a href="insertroom.php" class="btn btn-success shadow-none mb-4 mt-4 me-lg-3 me-2">เพิ่มข้อมูลห้องพัก</a>
                         <a href="#" class="btn btn-primary shadow-none mb-4 mt-4 me-lg-3 me-2">แก้ไขข้อมูล</a>
 
                     </div>
