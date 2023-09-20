@@ -23,7 +23,8 @@
                     $sql = "SELECT *
                             FROM requests r
                             JOIN users u ON r.user_id = u.user_id
-                            JOIN locations l ON r.location_id = l.location_id;";
+                            JOIN locations l ON r.location_id = l.location_id;
+                            ORDER BY r.req_sent_date DESC ";
 
                     $stmt = $db->prepare($sql);
                     $stmt->execute();

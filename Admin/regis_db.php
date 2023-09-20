@@ -69,14 +69,14 @@ if (isset($_POST['ad_submit'])) {
         $stmt3->execute();
 
 
-        header('location: admin.php');
+        header('location: admin.php?page=requirement');
 
     }
 
     // สมัครไม่สำเร็จ
     else {
         $_SESSION['err_insert'] = "ไม่สามารถนำเข้าข้อมูลได้";
-        header('location: admin.php');
+        header('location: admin.php?page=requirement');
         exit;
     }
 
@@ -96,7 +96,8 @@ if (isset($_POST['ad_submit'])) {
     $stmt4->execute();
 
     $_SESSION['is_register'] = false;
-    header('location: admin.php');
+    header('location: reqhotel.php');
+    //+1
 
 
 }
