@@ -73,11 +73,11 @@
                                     <!-- ส่วนนี้จะแสดงข้อมูลรายละเอียดใน Modal -->
                                     <div class="card">
                                         <div class="card-body">
-                                            <h5 class="card-title"><?php echo $row["req_hotels_name"]; ?></h5>
-                                            <p class="card-text">Description: <?php echo $row["req_hotels_description"]; ?></p>
-                                            <p class="card-text">Phone : <?php echo $row["req_hotels_phone"]; ?></p>
-                                            <p class="card-text">Location: <?php echo $row["location_name"]; ?></p>
-                                            <p class="card-text">Sent Date: <?php echo $row["req_sent_date"]; ?></p>
+                                            <h5 class="card-title"><b>ชื่อโรงแรม :</b> <?php echo $row["req_hotels_name"]; ?></h5>
+                                            <p class="card-text"><b>รายละเอียดโรงแรม : </b> <?php echo $row["req_hotels_description"]; ?></p>
+                                            <p class="card-text"> <b>เบอร์ติดต่อ :</b> <?php echo $row["req_hotels_phone"]; ?></p>
+                                            <p class="card-text"> <b>ที่อยู่ :</b> <?php echo  $row["req_hotels_address"]. " ".$row["location_name"]." ".$row["req_hotels_postcode"] ; ?></p>
+                                            <p class="card-text">  <b>วันเวลาส่งคำร้องขอ :</b> <?php echo $row["req_sent_date"]; ?></p>
 
                                         </div>
                                     </div>
