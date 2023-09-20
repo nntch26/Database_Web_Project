@@ -80,8 +80,8 @@ session_start();
 
     <!---- card  ---->
     <div class="container mt-5 mb-5">
-        <h1 class="text-primary mb-2">จุดหมายที่กำลังมาแรง</h1>
-        <p>ตัวเลือกยอดนิยมที่สุดสำหรับผู้เดินทางจากไทย</p>
+        <h1 class="text-primary mb-2">สถานที่ท่องเที่ยวที่กำลังมาแรง</h1>
+        <p>จังหวัดยอดนิยม รวมแหล่งท่องเที่ยวในไทย</p>
         <div class="row">
             <!-- Card แรก -->
             <div class="col-md-3">
@@ -126,8 +126,8 @@ session_start();
 
     <!---- room card ---->
     <div class="container mt-5 mb-5">
-        <h1 class="text-primary mb-2">ที่พักสไตล์ที่อยู่อาศัยที่คุณอาจชื่นชอบ</h1>
-        <p>ตัวเลือกห้องพักที่ลูกค้าอาจชื่นชอบ</p>
+        <h1 class="text-primary mb-2">แนะนำห้องพักที่คุณอาจชื่นชอบ</h1>
+        <p>ตัวเลือกห้องพักที่คุณอาจชื่นชอบ</p>
 
         <div class="row">
             <div class="col-md-3">

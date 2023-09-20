@@ -89,7 +89,7 @@ if (!isset($_SESSION['is_login'])) {
                         
                         <div class="col-md-12 ps-0 mb-3">
                             <label class="form-label">รายละเอียดโรงแรม</label>
-                            <input type="text" name="hotels_description" class="form-control shadow-none">
+                            <textarea type="text" name="hotels_description" class="form-control shadow-none"></textarea>
                         </div>
 
     

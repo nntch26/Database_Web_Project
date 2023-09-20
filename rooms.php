@@ -124,7 +124,7 @@ $_SESSION["num_guest"] = $_GET['num_guest'];
         if ($_SESSION["location"] == null && $_SESSION["num_guest"] == null) {
           $select_stmt = $db->prepare("SELECT * FROM hotels");
           $select_stmt->execute();
-          echo "case 1";
+          
         } else if ($_SESSION["location"] != null && $_SESSION["num_guest"] == null) {
           $select_stmt = $db->prepare("SELECT * FROM hotels
                                 JOIN locations USING (location_id) 
@@ -132,7 +132,7 @@ $_SESSION["num_guest"] = $_GET['num_guest'];
                                 WHERE location_name = :get_location");
           $select_stmt->bindParam(':get_location', $_SESSION["location"]);
           $select_stmt->execute();
-          echo "case 2";
+
         } else if ($_SESSION["location"] == null && $_SESSION["num_guest"] != null) {
           $select_stmt = $db->prepare("SELECT * FROM hotels 
                                 JOIN rooms USING (hotel_id)
@@ -140,7 +140,7 @@ $_SESSION["num_guest"] = $_GET['num_guest'];
                                 WHERE rooms_size >= :num_guest");
           $select_stmt->bindParam(':num_guest', $_SESSION["num_guest"]);
           $select_stmt->execute();
-          echo "case 3";
+
         } else if ($_SESSION["location"] != null && $_SESSION["num_guest"] != null) {
           $select_stmt = $db->prepare("SELECT * FROM hotels 
                                 JOIN locations USING (location_id) 
@@ -150,7 +150,7 @@ $_SESSION["num_guest"] = $_GET['num_guest'];
           $select_stmt->bindParam(':get_location', $_SESSION["location"]);
           $select_stmt->bindParam(':num_guest', $_SESSION["num_guest"]);
           $select_stmt->execute();
-          echo "case 4";
+
         }
 
         //นับจำนวนข้อมูลที่มี

@@ -121,21 +121,4 @@ elseif (isset($_POST['req_back'])){
 
 
 
-/*
 
-$insert_stmt = $db->prepare("INSERT INTO hotels (hotels_name, hotels_address, hotels_phone,hotels_city,
-hotels_postcode,hotels_imageUrl,hotels_description)
-VALUES (:hotels_name, :hotels_address, :hotels_phone,:hotels_city,
-:hotels_postcode,:hotels_imageUrl,:hotels_description)");
-
-$insert_stmt->bindParam(':hotels_name', $hotelname);
-$insert_stmt->bindParam(':hotels_address', $hoteladd);
-$insert_stmt->bindParam(':hotels_phone', $hoteladd);
-$insert_stmt->bindParam(':hotels_city', $hotelcity);
-$insert_stmt->bindParam(':hotels_postcode', $hotelcode);
-$insert_stmt->bindParam(':hotels_img', $hotelimg);
-$insert_stmt->bindParam(':hotels_description', $hoteldes)
-
-$insert_stmt->execute();
-
-*/

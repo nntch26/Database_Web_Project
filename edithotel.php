@@ -37,13 +37,13 @@ if (!isset($_SESSION['is_login'])) {
             <h1 class="mt-5">Change Hotel</h1>
             <p>แก้ไขข้อมูลโรงแรมของคุณ</p>
 
-            <form class="p-5 card" action="BackEnd/editprofile_db.php" method="post">
+            <form class="p-5 card" action="BackEnd/edithotel_db.php" method="post">
                 
                 <!-- เช็คว่ามี error มั้ย  ถ้าเป็นค่าว่าง -->
-                <?php if (isset($_SESSION['err_edit'])) : ?>
+                <?php if (isset($_SESSION['err_edithotel'])) : ?>
                     <!-- ถ้ามี error ให้แสดง alert  ถ้าเป็นข้อมูลว่าง แสดงข้อความเตือน-->
                     <div class="alert alert-danger" role="alert">
-                        <?php echo $_SESSION['err_edit']; ?>
+                        <?php echo $_SESSION['err_edithotel']; ?>
                     </div>
                 <?php endif; ?>
 
@@ -56,10 +56,10 @@ if (!isset($_SESSION['is_login'])) {
                 <?php endif; ?>
 
                     <!-- อัปเดตข้อมูลแล้ว -->
-                <?php if (isset($_SESSION['profile_update'])) : ?>
+                <?php if (isset($_SESSION['hotel_update'])) : ?>
                     <!-- ให้แสดง alert -->
                     <div class="alert alert-success" role="alert">
-                        <?php echo $_SESSION['profile_update']; ?>
+                        <?php echo $_SESSION['hotel_update']; ?>
                     </div>
                 <?php endif; ?>
 
@@ -82,7 +82,7 @@ if (!isset($_SESSION['is_login'])) {
                         
                         <div class="col-md-6 ps-0 mb-3">
                             <label class="form-label">รายละเอียดโรงแรม</label>
-                            <input type="text" name="hotels_description" class="form-control shadow-none">
+                            <textarea type="text" name="hotels_description" class="form-control shadow-none"></textarea>
                         </div>
 
                         <div class="col-md-6 ps-0 mb-3">
@@ -97,12 +97,23 @@ if (!isset($_SESSION['is_login'])) {
 
                         <div class="col-md-6 ps-0 mb-3">
                             <label class="form-label">เมือง/จังหวัด</label>
-                            <input type="text" name="hotel_city" class="form-control shadow-none">
+                            <select name="hotel_city" class="form-select shadow-none">
+                                <option value="กรุงเทพมหานคร">กรุงเทพมหานคร</option>
+                                <option value="เชียงใหม่">เชียงใหม่</option>
+                                <option value="เชียงราย">เชียงราย</option>
+                                <option value="ภูเก็ต">ภูเก็ต</option>
+                                <option value="พังงา">พังงา</option>
+                                <option value="กระบี่">กระบี่</option>
+                                <option value="เกาะสมุย">เกาะสมุย</option>
+                                <option value="เขาใหญ่">เขาใหญ่</option>
+                                <option value="นครศรีธรรมราช">นครศรีธรรมราช</option>
+                                <option value="ชลบุรี">ชลบุรี</option>
+                            </select>
                         </div>
 
                         <div class="col-md-6 ps-0 mb-3">
                             <label class="form-label">รหัสไปรษณีย์</label>
-                            <input type="text" name="postcode" class="form-control shadow-none">
+                            <input type="text" name="hotel_postcode" class="form-control shadow-none">
                         </div>
 
                         
@@ -110,14 +121,14 @@ if (!isset($_SESSION['is_login'])) {
                         
                         <div class="text-center my-1">
                             <!-- อัปเดตข้อมูลแล้ว -->
-                            <?php if (isset($_SESSION['profile_update'])) : ?>
+                            <?php if (isset($_SESSION['hotel_update'])) : ?>
                                 <!-- ให้แสดง button back -->
-                                <button type="submit" name="back" class="btn btn-danger shadow-none mb-4 mt-4 me-lg-3 me-2">Go Back</button>
-                                <button type="submit" name="update" class="btn btn-primary shadow-none mb-4 mt-4 me-lg-3 me-2">Update</button>
+                                <button type="submit" name="edithotel_back" class="btn btn-danger shadow-none mb-4 mt-4 me-lg-3 me-2">Go Back</button>
+                                <button type="submit" name="edithotel_update" class="btn btn-primary shadow-none mb-4 mt-4 me-lg-3 me-2">Update</button>
 
                             <?php else : ?>
-                                <button type="submit" name="cancel" class="btn btn-secondary shadow-none mb-4 mt-4 me-lg-3 me-2">Cancel</button>
-                                <button type="submit" name="update" class="btn btn-primary shadow-none mb-4 mt-4 me-lg-3 me-2">Update</button>
+                                <button type="submit" name="edithotel_cancel" class="btn btn-secondary shadow-none mb-4 mt-4 me-lg-3 me-2">Cancel</button>
+                                <button type="submit" name="edithotel_update" class="btn btn-primary shadow-none mb-4 mt-4 me-lg-3 me-2">Update</button>
 
                             <?php endif; ?>
                         
@@ -138,10 +149,10 @@ if (!isset($_SESSION['is_login'])) {
 
 <?php
 
-if (isset($_SESSION['err_edit']) || isset($_SESSION['err_update']) || isset($_SESSION['profile_update'])) {
-    unset($_SESSION['err_edit']);
+if (isset($_SESSION['err_edithotel']) || isset($_SESSION['err_update']) || isset($_SESSION['hotel_update'])) {
+    unset($_SESSION['err_edithotel']);
     unset($_SESSION['err_update']);
-    unset($_SESSION['profile_update']);
+    unset($_SESSION['hotel_update']);
 }
 
 
