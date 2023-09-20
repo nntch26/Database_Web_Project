@@ -1,4 +1,3 @@
-
 <?php
 
 session_start();
@@ -8,10 +7,7 @@ session_start();
 if (!isset($_SESSION['is_login'])) {
     header('location: login.php'); // ถ้าไม่มีให้เด้งไป login
 
-}elseif(!isset($_SESSION['is_login'])){
-
-
-
+} elseif (!isset($_SESSION['is_login'])) {
 }
 
 ?>
@@ -42,8 +38,8 @@ if (!isset($_SESSION['is_login'])) {
             <h1 class="mt-5">Register Hotel</h1>
             <p>ลงทะเบียนที่พักของคุณ</p>
 
-            <form class="p-5 card" action="BackEnd/registerhotel_db.php" method="post">
-                
+            <form class="p-5 card" action="BackEnd/registerhotel_db.php" method="post" enctype="multipart/form-data">
+
                 <!-- เช็คว่ามี error มั้ย  ถ้าเป็นค่าว่าง -->
                 <?php if (isset($_SESSION['err_regis'])) : ?>
                     <!-- ถ้ามี error ให้แสดง alert  ถ้าเป็นข้อมูลว่าง แสดงข้อความเตือน-->
@@ -60,7 +56,7 @@ if (!isset($_SESSION['is_login'])) {
                     </div>
                 <?php endif; ?>
 
-                    <!-- อัปเดตข้อมูลแล้ว -->
+                <!-- อัปเดตข้อมูลแล้ว -->
                 <?php if (isset($_SESSION['is_req'])) : ?>
                     <!-- ให้แสดง alert -->
                     <div class="alert alert-success" role="alert">
@@ -68,86 +64,78 @@ if (!isset($_SESSION['is_login'])) {
                     </div>
                 <?php endif; ?>
 
-
-
-
                 <div class="modal-body">
                     <span class="rounded-pill bg-light text-dark mb-5 text-wrap lh-base">หมายเหตุ: รายละเอียดของคุณต้องตรงกับข้อมูลเท็จจริง
                     </span>
 
-                <div class="container-fluid mt-5">
-                    <div class="row">
-                        <div class="col-md-6 ps-0 mb-3">
-                            <label class="form-label">ชื่อโรงแรม</label>
-                            <input type="text" name="hotel_name" class="form-control shadow-none">
-                        </div>
+                    <div class="container-fluid mt-5">
+                        <div class="row">
+                            <div class="col-md-6 ps-0 mb-3">
+                                <label class="form-label">ชื่อโรงแรม</label>
+                                <input type="text" name="hotel_name" class="form-control shadow-none">
+                            </div>
 
-                        <div class="col-md-6 ps-0 mb-3">
-                            <label class="form-label">หมายเลขโทรศัพท์</label>
-                            <input type="text" name="hotel_phone" class="form-control shadow-none">
-                        </div>
-                        
-                        <div class="col-md-12 ps-0 mb-3">
-                            <label class="form-label">รายละเอียดโรงแรม</label>
-                            <textarea type="text" name="hotels_description" class="form-control shadow-none"></textarea>
-                        </div>
+                            <div class="col-md-6 ps-0 mb-3">
+                                <label class="form-label">หมายเลขโทรศัพท์</label>
+                                <input type="text" name="hotel_phone" class="form-control shadow-none">
+                            </div>
 
-    
-                        
-                        <div class="col-md-12 p-0 mb-3">
-                            <label class="form-label">ที่อยู่</label>
-                            <input type="text" name="hotel_address" class="form-control shadow-none">
-                        </div>
+                            <div class="col-md-12 ps-0 mb-3">
+                                <label class="form-label">รายละเอียดโรงแรม</label>
+                                <input type="text" name="hotels_description" class="form-control shadow-none">
+                            </div>
 
-                        <div class="col-md-6 ps-0 mb-3">
-                            <label class="form-label">เมือง/จังหวัด</label>
-                            <select name="hotel_city" class="form-select shadow-none">
-                                <option value="กรุงเทพมหานคร">กรุงเทพมหานคร</option>
-                                <option value="เชียงใหม่">เชียงใหม่</option>
-                                <option value="เชียงราย">เชียงราย</option>
-                                <option value="ภูเก็ต">ภูเก็ต</option>
-                                <option value="พังงา">พังงา</option>
-                                <option value="กระบี่">กระบี่</option>
-                                <option value="เกาะสมุย">เกาะสมุย</option>
-                                <option value="เขาใหญ่">เขาใหญ่</option>
-                                <option value="นครศรีธรรมราช">นครศรีธรรมราช</option>
-                                <option value="ชลบุรี">ชลบุรี</option>
-                            </select>
-                        </div>
+                            <div class="col-md-12 p-0 mb-3">
+                                <label class="form-label">ที่อยู่</label>
+                                <input type="text" name="hotel_address" class="form-control shadow-none">
+                            </div>
 
-                        <div class="col-md-6 ps-0 mb-3">
-                            <label class="form-label">รหัสไปรษณีย์</label>
-                            <input type="text" name="hotel_postcode" class="form-control shadow-none">
-                        </div>
+                            <div class="col-md-6 ps-0 mb-3">
+                                <label class="form-label">เมือง/จังหวัด</label>
+                                <select name="hotel_city" class="form-select shadow-none">
+                                    <option value="กรุงเทพมหานคร">กรุงเทพมหานคร</option>
+                                    <option value="เชียงใหม่">เชียงใหม่</option>
+                                    <option value="เชียงราย">เชียงราย</option>
+                                    <option value="ภูเก็ต">ภูเก็ต</option>
+                                    <option value="พังงา">พังงา</option>
+                                    <option value="กระบี่">กระบี่</option>
+                                    <option value="เกาะสมุย">เกาะสมุย</option>
+                                    <option value="เขาใหญ่">เขาใหญ่</option>
+                                    <option value="นครศรีธรรมราช">นครศรีธรรมราช</option>
+                                    <option value="ชลบุรี">ชลบุรี</option>
+                                </select>
+                            </div>
 
-                        <div class="col-md-6 ps-0 mb-3">
-                            <label class="form-label">ระบุวันที่ส่งคำร้องขอ</label>
-                            <input type="date" name="req_date" class="form-control shadow-none" min="<?php echo date('Y-m-d')?>"/>
-                        </div>
+                            <div class="col-md-6 ps-0 mb-3">
+                                <label class="form-label">รหัสไปรษณีย์</label>
+                                <input type="text" name="hotel_postcode" class="form-control shadow-none">
+                            </div>
 
-                        <div class="col-md-6 ps-0 mb-3">
-                            <label class="form-label">อัปโหลดรูปภาพของคุณ</label>
-                            <input type="file" name="hotel_img" class="form-control shadow-none">
-                        </div>
+                            <div class="col-md-6 ps-0 mb-3">
+                                <label class="form-label">ระบุวันที่ส่งคำร้องขอ</label>
+                                <input type="date" name="req_date" class="form-control shadow-none" min="<?php echo date('Y-m-d') ?>" />
+                            </div>
 
-          
+                            <div class="col-md-6 ps-0 mb-3">
+                                <label for="hotel_img" class="form-label">อัปโหลดรูปภาพโรงแรมของคุณ</label>
+                                <input type="file" id="hotel_img" name="hotel_img" class="form-control shadow-none">
+                            </div>
 
-                        
-                        <div class="text-center my-1">
-                            <!-- ส่งข้อมูลแล้ว -->
-                            <?php if (isset($_SESSION['is_req'])) : ?>
-                                <!-- ให้แสดง button back -->
-                                <button type="submit" name="req_back" class="btn btn-danger shadow-none mb-4 mt-4 me-lg-3 me-2">Go Back</button>
+                            <div class="text-center my-1">
+                                <!-- ส่งข้อมูลแล้ว -->
+                                <?php if (isset($_SESSION['is_req'])) : ?>
+                                    <!-- ให้แสดง button back -->
+                                    <button type="submit" name="req_back" class="btn btn-danger shadow-none mb-4 mt-4 me-lg-3 me-2">Go Back</button>
 
-                            <?php else : ?>
-                                <button type="submit" name="req_cancel" class="btn btn-secondary shadow-none mb-4 mt-4 me-lg-3 me-2">Cancel</button>
-                                <button type="submit" name="req_submit" class="btn btn-primary shadow-none mb-4 mt-4 me-lg-3 me-2">Register Hotel</button>
+                                <?php else : ?>
+                                    <button type="submit" name="req_cancel" class="btn btn-secondary shadow-none mb-4 mt-4 me-lg-3 me-2">Cancel</button>
+                                    <button type="submit" name="req_submit" class="btn btn-primary shadow-none mb-4 mt-4 me-lg-3 me-2">Register Hotel</button>
 
-                            <?php endif; ?>
-                        
+                                <?php endif; ?>
+
+                            </div>
                         </div>
                     </div>
-                </div>	
             </form>
         </div>
     </div>
