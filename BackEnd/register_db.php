@@ -76,9 +76,7 @@ if (isset($_POST['submit'])) {
                 // สมัครสำเร็จ เช็คว่า ถ้าเพิ่มข้อมูลผ่านแล้ว จะให้ทำการเก็บ username เอาไปใช้ต่อ
                 if ($insert_stmt) {
                     header('../login.php');
-                    echo '<script type="text/javascript">
-                    window.location = "../login.php"; // เปลี่ยนเป็น URL ของหน้าที่ต้องการเปลี่ยนไป
-                    </script>';
+                  
                 }
 
                 // สมัครไม่สำเร็จ
