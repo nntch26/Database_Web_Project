@@ -21,9 +21,9 @@
 
         $select_stmt3->bindParam(':user_id', $_SESSION["userid"]);
         $select_stmt3->execute();
-
-        $row = $select_stmt3->fetch(PDO::FETCH_ASSOC);  // ทำบรรทัดนี้ กรณีที่เราต้องการดึงข้อมูลมาแสดง
-        // query ข้อมูลของคนที่ login เข้ามา 
+ 
+        $row = $select_stmt3->fetch(PDO::FETCH_ASSOC); // กรณีที่เราต้องการดึงข้อมูลมาแสดง
+        $_SESSION["hotel_id"] = $row['hotel_id']; // เอาไปใช้ต่อ
 
            
     }
@@ -86,8 +86,8 @@
                 <div class="card mt-5">
                     <div class="card-body-profile" style="line-height: 3;">
                         <h4>ข้อมูลห้องพักของคุณ</h4>
-                        <a href="insertroom.php" class="btn btn-success shadow-none mb-4 mt-4 me-lg-3 me-2">เพิ่มข้อมูลห้องพัก</a>
-                        <a href="#" class="btn btn-primary shadow-none mb-4 mt-4 me-lg-3 me-2">แก้ไขข้อมูล</a>
+                        <a href="insertroom.php" class="btn btn-primary shadow-none mb-4 mt-4 me-lg-3 me-2">เพิ่มข้อมูลห้องพัก</a>
+                        <a href="editroom_main.php" class="btn btn-primary shadow-none mb-4 mt-4 me-lg-3 me-2">แก้ไขข้อมูล</a>
 
                     </div>
                 </div>

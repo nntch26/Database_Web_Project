@@ -7,9 +7,17 @@ session_start();
 
 if (!isset($_SESSION['is_login'])) {
     header('location: login.php'); // ถ้าไม่มีให้เด้งไป login
+    
+}elseif ($_SESSION["role"] != 'HOTELOWNER'){
+    header('location: registerhotel.php');
+
 }
 
+
+
 ?>
+
+<!--+1-->
 
 <!DOCTYPE html>
 <html lang="en">
@@ -80,7 +88,7 @@ if (!isset($_SESSION['is_login'])) {
                             <input type="text" name="hotel_phone" class="form-control shadow-none">
                         </div>
                         
-                        <div class="col-md-6 ps-0 mb-3">
+                        <div class="col-md-12 ps-0 mb-3">
                             <label class="form-label">รายละเอียดโรงแรม</label>
                             <textarea type="text" name="hotels_description" class="form-control shadow-none"></textarea>
                         </div>
@@ -90,7 +98,7 @@ if (!isset($_SESSION['is_login'])) {
                             <input type="file" name="hotel_img" class="form-control shadow-none">
                         </div>
                         
-                        <div class="col-md-12 p-0 mb-3">
+                        <div class="col-md-6 p-0 mb-3">
                             <label class="form-label">ที่อยู่</label>
                             <input type="text" name="hotel_address" class="form-control shadow-none">
                         </div>

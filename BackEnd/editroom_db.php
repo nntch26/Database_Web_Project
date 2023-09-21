@@ -1,11 +1,13 @@
 
 <?php
+
 session_start();
 include('includes/connect_database.php'); // ดึงไฟล์เชื่อม database เข้ามา
 
-// เช็คว่ามีการกดปุ่ม submit มาหรือไม่
 
-if (isset($_POST['room_submit'])) {
+// เช็คว่า กดปุ่ม update
+
+if (isset($_POST['editroom_update'])) {
     $roomtype = $_POST['room_type'];
     $roomremake = $_POST['room_remake'];
     $roomdes = $_POST['room_description'];
@@ -115,51 +117,66 @@ if (isset($_POST['room_submit'])) {
 
         //////////////////////////// END IMAGE FILES ////////////////////////////
 
+   
 
 
-        //  เพิ่มข้อมูลลงในตาราง rooms
-        $sql = "INSERT INTO rooms (hotel_id, rooms_price, rooms_type, rooms_size, rooms_description ,rooms_img ,rooms_remake)
-        VALUES (:hotel_id, :room_price, :room_type, :room_size, :rooms_des, :rooms_img, :rooms_remake)";
+
+            //  เพิ่มข้อมูลลงในตาราง rooms
+        $sql = "UPDATE rooms 
+        SET rooms_price = :room_price, 
+        room_type = :room_type, 
+        rooms_size = :room_size, 
+        rooms_description = :rooms_description, 
+        rooms_img = :rooms_img,
+        room_remake = :room_remake 
+        WHERE room_id = :room_id";
         
         $insert_stmt = $db->prepare($sql);
 
 
-
-        $insert_stmt->bindParam(':hotel_id', $_SESSION["hotel_id"]);
         $insert_stmt->bindParam(':room_price', $roomprice);
         $insert_stmt->bindParam(':room_type', $roomtype);
         $insert_stmt->bindParam(':room_size', $roomsize);
         $insert_stmt->bindParam(':rooms_des', $roomdes);
         $insert_stmt->bindParam(':rooms_img', $filename);
         $insert_stmt->bindParam(':rooms_remake', $roomremake);
+        $insert_stmt->bindParam(':room_id', $_SESSION["room_id"]);
+
 
         $insert_stmt->execute();
 
-        // สำเร็จ  ถ้าเพิ่มข้อมูลผ่านแล้ว 
-        if ($insert_stmt) {
-            $_SESSION['is_room'] = true;
-
-            header('location: ../insertroom.php');
+        // เพิ่มข้อมูลแล้ว 
+        if ($update_stmt) {
+            $_SESSION['room_update'] = "อัปเดตข้อมูลของคุณเรียบร้อยแล้ว";
+            header('location: ../edithotel.php');
         }
 
-        // ไม่สำเร็จ
+        // เพิ่มข้อมูลไม่สำเร็จ
         else {
-            $_SESSION['err_roominsert'] = "ไม่สามารถนำเข้าข้อมูลได้";
-            header('location: ../insertroom.php');
+            $_SESSION['err_update'] = "ไม่สามารถนำเข้าข้อมูลได้";
+            header('location: ../edithotel.php');
             exit;
         }
-    } 
     
 
-} elseif (isset($_POST['room_back'])) {
+    }
+
+} elseif (isset($_POST['editroom_back'])){
+
+    header('location: ../profilehotel.php');
+    exit;
+    
+}elseif (isset($_POST['editroom_cancel'])){
+
     header('location: ../profilehotel.php');
     exit;
 
-} elseif (isset($_POST['room_cancel'])) {
-    header('location: ../profilehotel.php');
-    exit;
 }
 
 
 
+      
+
+
+?>
 
