@@ -13,7 +13,6 @@ if (isset($_POST['editroom_update'])) {
     $roomdes = $_POST['room_description'];
     $roomprice = $_POST['room_price'];
     $roomsize = $_POST['room_size'];
-    
 
     // เรียกใช้ hotel id
     $select_stmt4 = $db->prepare("SELECT * FROM hotels WHERE user_id = :user_id");
@@ -25,8 +24,10 @@ if (isset($_POST['editroom_update'])) {
 
 
     // เช็คว่า เป็นข้อมูลที่รับมาเป็นค่าว่าง หรือไม่
-    if (empty($roomtype) || empty($roomremake) || empty($roomdes) || empty($roomprice) 
-        || empty($roomsize)) {
+    if (
+        empty($roomtype) || empty($roomremake) || empty($roomdes) || empty($roomprice)
+        || empty($roomsize)
+    ) {
 
         $_SESSION['err_editroom'] = "โปรดระบุข้อมูลของคุณให้ครบถ้วน";
         header('location: ../insertroom.php'); // กลับไปหน้า edit
@@ -117,65 +118,63 @@ if (isset($_POST['editroom_update'])) {
 
         //////////////////////////// END IMAGE FILES ////////////////////////////
 
-   
+        // ลบรูปก่อนที่จะเก็บไฟล์ใหม่
+        $delete_stmt = $db->prepare('SELECT * FROM rooms WHERE room_id = :room_id');
+        $delete_stmt->bindParam(':room_id', $_SESSION["room_id"]);
+        $delete_stmt->execute();
+        $row = $delete_stmt->fetch(PDO::FETCH_ASSOC);
+
+        unlink(__DIR__ . "/uploads_img/" . $row['rooms_img']);
 
 
-
-            //  เพิ่มข้อมูลลงในตาราง rooms
+        //  เพิ่มข้อมูลลงในตาราง rooms
         $sql = "UPDATE rooms 
-        SET rooms_price = :room_price, 
-        room_type = :room_type, 
-        rooms_size = :room_size, 
-        rooms_description = :rooms_description, 
-        rooms_img = :rooms_img,
-        room_remake = :room_remake 
-        WHERE room_id = :room_id";
-        
-        $insert_stmt = $db->prepare($sql);
+            SET rooms_price = :room_price, 
+                rooms_type = :room_type, 
+                rooms_size = :room_size, 
+                rooms_description = :room_description, 
+                rooms_img = :rooms_img,
+                rooms_remake = :room_remake 
+            WHERE room_id = :room_id";
 
+        $update_stmt = $db->prepare($sql);
 
-        $insert_stmt->bindParam(':room_price', $roomprice);
-        $insert_stmt->bindParam(':room_type', $roomtype);
-        $insert_stmt->bindParam(':room_size', $roomsize);
-        $insert_stmt->bindParam(':rooms_des', $roomdes);
-        $insert_stmt->bindParam(':rooms_img', $filename);
-        $insert_stmt->bindParam(':rooms_remake', $roomremake);
-        $insert_stmt->bindParam(':room_id', $_SESSION["room_id"]);
+        $update_stmt->bindParam(':room_price', $roomprice);
+        $update_stmt->bindParam(':room_type', $roomtype);
+        $update_stmt->bindParam(':room_size', $roomsize);
+        $update_stmt->bindParam(':room_description', $roomdes);
+        $update_stmt->bindParam(':rooms_img', $filename);
+        $update_stmt->bindParam(':room_remake', $roomremake);
+        $update_stmt->bindParam(':room_id', $_SESSION["room_id"]);
 
-
-        $insert_stmt->execute();
+        $update_stmt->execute();
 
         // เพิ่มข้อมูลแล้ว 
         if ($update_stmt) {
             $_SESSION['room_update'] = "อัปเดตข้อมูลของคุณเรียบร้อยแล้ว";
-            header('location: ../edithotel.php');
+            header('location: ../editroom.php');
         }
 
         // เพิ่มข้อมูลไม่สำเร็จ
         else {
             $_SESSION['err_update'] = "ไม่สามารถนำเข้าข้อมูลได้";
-            header('location: ../edithotel.php');
+            header('location: ../editroom.php');
             exit;
         }
-    
-
     }
-
-} elseif (isset($_POST['editroom_back'])){
-
-    header('location: ../profilehotel.php');
-    exit;
-    
-}elseif (isset($_POST['editroom_cancel'])){
+} elseif (isset($_POST['editroom_back'])) {
 
     header('location: ../profilehotel.php');
     exit;
+} elseif (isset($_POST['editroom_cancel'])) {
 
+    header('location: ../profilehotel.php');
+    exit;
 }
 
 
 
-      
+
 
 
 ?>

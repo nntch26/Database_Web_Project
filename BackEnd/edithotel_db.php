@@ -14,11 +14,13 @@ if (isset($_POST['edithotel_update'])) {
     $hoteladd = $_POST['hotel_address'];
     $hotelcity = $_POST['hotel_city'];
     $hotelcode = $_POST['hotel_postcode'];
-    
+
 
     // เช็คว่า เป็นข้อมูลที่รับมาเป็นค่าว่าง หรือไม่
-    if (empty($hotelname) || empty($hotelphone) || empty($hoteldes) || empty($hotelimg) 
-    || empty($hoteladd)|| empty($hotelcity) || empty($hotelcode)) {
+    if (
+        empty($hotelname) || empty($hotelphone) || empty($hoteldes) || empty($hotelimg)
+        || empty($hoteladd) || empty($hotelcity) || empty($hotelcode)
+    ) {
         $_SESSION['err_edithotel'] = "โปรดระบุข้อมูลของคุณให้ครบถ้วน";
         header('location: ../edithotel.php'); // กลับไปหน้า edit
         exit; // จบการทำงาน
@@ -60,9 +62,17 @@ if (isset($_POST['edithotel_update'])) {
         }
 
 
-        
-         // กรอกข้อมูลครบ 
+
+        // กรอกข้อมูลครบ 
         else {
+
+            // ลบรูปก่อนที่จะเก็บไฟล์ใหม่
+            $delete_stmt = $db->prepare('SELECT * FROM hotels WHERE hotel_id = :hotel_id');
+            $delete_stmt->bindParam(':hotel_id', $_SESSION["hotel_id"]);
+            $delete_stmt->execute();
+            $row = $delete_stmt->fetch(PDO::FETCH_ASSOC);
+
+            unlink(__DIR__ . "/uploads_img/" . $row['hotels_img']);
 
             // ค้นหา location_id จากตาราง Locations โดยใช้ชื่อจังหวัดเป็นเงื่อนไข
             $select_stmt3 = $db->prepare("SELECT location_id FROM locations WHERE location_name = :hotels_city");
@@ -110,21 +120,17 @@ if (isset($_POST['edithotel_update'])) {
                 exit;
             }
         }
-
     }
-
-} elseif (isset($_POST['edithotel_back'])){
+} elseif (isset($_POST['edithotel_back'])) {
     header('location: ../profilehotel.php');
     exit;
-    
-}elseif (isset($_POST['edithotel_cancel'])){
+} elseif (isset($_POST['edithotel_cancel'])) {
     header('location: ../profilehotel.php');
     exit;
-
 }
 
 
-      
+
 
 
 ?>

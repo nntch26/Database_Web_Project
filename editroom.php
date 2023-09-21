@@ -44,7 +44,7 @@ if (!isset($_SESSION['is_login'])) {
             <h1 class="mt-5">Edit Room</h1>
             <p>แก้ไขข้อมูลห้องพักของคุณ</p>
 
-            <form class="p-5 card" action="BackEnd/editroom_db.php" method="post">
+            <form class="p-5 card" action="BackEnd/editroom_db.php" method="post" enctype="multipart/form-data">
                 
                 <!-- เช็คว่ามี error มั้ย  ถ้าเป็นค่าว่าง -->
                 <?php if (isset($_SESSION['err_editroom'])) : ?>
