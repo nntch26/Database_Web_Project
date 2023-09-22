@@ -131,9 +131,6 @@ $_SESSION["search_name"] = $_GET['search_name'];
 
         //ดึง Hotel ล่ะ JOIN กับตัว locations กับ rooms เพื่อดึงตัวโรงแรมที่ตรงตามเงื่อนไขที่ Tourist ค้นหา
         
-        print_r($_SESSION["location"]);
-        print_r($_SESSION["num_guest"]);
-
         if ($_SESSION['search_name'] != 'null'){
           $sql2 = "SELECT * FROM hotels
           WHERE hotels_name LIKE :text";
@@ -144,25 +141,14 @@ $_SESSION["search_name"] = $_GET['search_name'];
           $select_stmt->bindParam(':text', $searchText);
           $select_stmt->execute();
 
-        }else if ($_SESSION["location"] == null && $_SESSION["num_guest"] == null) {
-          $select_stmt = $db->prepare("SELECT * FROM hotels JOIN rooms USING (hotel_id)
-                                      -- JOIN reviews USING (hotel_id) 
-                                      ");
-          $select_stmt->execute();
-          
-        } else if ($_SESSION["location"] != null && $_SESSION["num_guest"] == null) {
-          $select_stmt = $db->prepare("SELECT * FROM hotels
-                                JOIN locations USING (location_id) 
-                                -- JOIN reviews USING (hotel_id) 
-                                WHERE location_name = :get_location");
-          $select_stmt->bindParam(':get_location', $_SESSION["location"]);
-          $select_stmt->execute();
-
+        
         } else if ($_SESSION["location"] == null && $_SESSION["num_guest"] != null) {
           $select_stmt = $db->prepare("SELECT * FROM hotels 
                                 JOIN rooms USING (hotel_id)
                                 -- JOIN reviews USING (hotel_id) 
-                                WHERE rooms_size >= :num_guest");
+                                WHERE rooms_size >= :num_guest
+                                GROUP BY hotel_id ");
+
           $select_stmt->bindParam(':num_guest', $_SESSION["num_guest"]);
           $select_stmt->execute();
 
