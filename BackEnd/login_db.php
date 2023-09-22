@@ -36,29 +36,29 @@ if (isset($_POST['submit'])) {
             exit;
         } else {
 
-            // query ข้อมูลของคนที่ login เข้ามา เพื่อแสดงผลใน html
-            $select_stmt3 = $db->prepare("SELECT * FROM users WHERE users_username = :username");
-            $select_stmt3->bindParam(':username', $_SESSION["username"]);
-            $select_stmt3->execute();
-            $result = $select_stmt3->fetch(PDO::FETCH_ASSOC);  // ทำบรรทัดนี้ กรณีที่เราต้องการดึงข้อมูลมาแสดง
-            // query ข้อมูลของคนที่ login เข้ามา 
-
-            $_SESSION["userid"] = $result['user_id'];
-            $_SESSION["firstname"] = $result['users_first_name'];
-            $_SESSION["lastname"] = $result['users_last_name'];
-            $_SESSION["username"] = $result['users_username'];
-            $_SESSION["email"] = $result['users_email'];
-            $_SESSION["password"] = $result['users_password'];
-            $_SESSION["phonenumber"] = $result['users_phone_number'];
-            $_SESSION["address"] = $result['users_address'];
-            $_SESSION["city"] = $result['users_city'];
-            $_SESSION["postcode"] = $result['users_postcode'];
-            $_SESSION["role"] = $result['users_role'];
-
             // กรณี login สำเร็จ
             if ($row['users_password'] == $password) {
                 $_SESSION["username"] = $username;
                 $_SESSION['is_login'] = true;
+
+                // query ข้อมูลของคนที่ login เข้ามา เพื่อแสดงผลใน html
+                $select_stmt3 = $db->prepare("SELECT * FROM users WHERE users_username = :username");
+                $select_stmt3->bindParam(':username', $_SESSION["username"]);
+                $select_stmt3->execute();
+                $result = $select_stmt3->fetch(PDO::FETCH_ASSOC);  // ทำบรรทัดนี้ กรณีที่เราต้องการดึงข้อมูลมาแสดง
+                // query ข้อมูลของคนที่ login เข้ามา 
+
+                $_SESSION["userid"] = $result['user_id'];
+                $_SESSION["firstname"] = $result['users_first_name'];
+                $_SESSION["lastname"] = $result['users_last_name'];
+                $_SESSION["username"] = $result['users_username'];
+                $_SESSION["email"] = $result['users_email'];
+                $_SESSION["password"] = $result['users_password'];
+                $_SESSION["phonenumber"] = $result['users_phone_number'];
+                $_SESSION["address"] = $result['users_address'];
+                $_SESSION["city"] = $result['users_city'];
+                $_SESSION["postcode"] = $result['users_postcode'];
+                $_SESSION["role"] = $result['users_role'];
 
                 if ($result['users_role'] == "ADMIN") {
                     header('location: ../Admin/admin.php');
