@@ -6,6 +6,7 @@ $_SESSION["location"] = $_GET['location'];
 $_SESSION["checkin"] = $_GET['checkin'];
 $_SESSION["checkout"] = $_GET['checkout'];
 $_SESSION["num_guest"] = $_GET['num_guest'];
+$_SESSION["search_name"] = $_GET['search_name'];
 
 ?>
 
@@ -53,12 +54,12 @@ $_SESSION["num_guest"] = $_GET['num_guest'];
 
               <div class="border bg-light p-3 rounded mb-3">
 
-                <form action="/BackEnd/search_db.php" method="post">
+                <form action="rooms.php" method="get">
                   <h5 class="mb-3" style="font-size: 18px;">CHECK AVAILABILITY</h5>
 
                   <label class="form-label">Search</label>
                   <input type="text" class="form-control shadow-none mb-3" name="search_name" placeholder="ชื่อโรงแรมที่คุณต้องการค้นหา" />
-
+                  
                   <label class="form-label">Location</label>
                   <input type="text" class="form-control shadow-none mb-3" placeholder="ชื่อจังหวัด" name="location" value="<?php echo isset($_SESSION["location"]) ? htmlspecialchars($_SESSION["location"]) : ''; ?>" />
 
@@ -67,7 +68,15 @@ $_SESSION["num_guest"] = $_GET['num_guest'];
 
                   <label class="form-label">Check-out</label>
                   <input type="date" class="form-control shadow-none" name="checkout" min="<?php echo date('Y-m-d') ?>" value="<?php echo $_SESSION["checkout"]; ?>">
+                  
+                  <label class="form-label">Guests</label>
+                  <input type="number" class="form-control shadow-none" name="num_guest" value="<?php echo $_SESSION["num_guest"]; ?>">
+                  
 
+                  <div class="form__group" style="text-align: center;">
+                        <button type="submit" name="submit" class="btn btn-primary shadow-none me-lg-3 me-2 mt-3">Search</button>
+                  </div>
+                  
                 </form>
 
               </div>
@@ -117,12 +126,28 @@ $_SESSION["num_guest"] = $_GET['num_guest'];
       </div>
 
       <div class="col-lg-9 col-md-12 px-4">
-        <!-- ************************************* -->
-        <?php
+
+      <?php
 
         //ดึง Hotel ล่ะ JOIN กับตัว locations กับ rooms เพื่อดึงตัวโรงแรมที่ตรงตามเงื่อนไขที่ Tourist ค้นหา
-        if ($_SESSION["location"] == null && $_SESSION["num_guest"] == null) {
-          $select_stmt = $db->prepare("SELECT * FROM hotels");
+        
+        print_r($_SESSION["location"]);
+        print_r($_SESSION["num_guest"]);
+
+        if ($_SESSION['search_name'] != 'null'){
+          $sql2 = "SELECT * FROM hotels
+          WHERE hotels_name LIKE :text";
+
+          $searchText = '%' . $_SESSION["search_name"] . '%'; // เพิ่ม % ด้านหน้าและด้านหลังของข้อความค้นหา
+
+          $select_stmt = $db->prepare($sql2);
+          $select_stmt->bindParam(':text', $searchText);
+          $select_stmt->execute();
+
+        }else if ($_SESSION["location"] == null && $_SESSION["num_guest"] == null) {
+          $select_stmt = $db->prepare("SELECT * FROM hotels JOIN rooms USING (hotel_id)
+                                      -- JOIN reviews USING (hotel_id) 
+                                      ");
           $select_stmt->execute();
           
         } else if ($_SESSION["location"] != null && $_SESSION["num_guest"] == null) {
@@ -154,75 +179,107 @@ $_SESSION["num_guest"] = $_GET['num_guest'];
         }
 
         //นับจำนวนข้อมูลที่มี
-        $row_count = $select_stmt->rowCount();
+        $row_count = $select_stmt->rowCount(); 
+    
 
-        if ($row_count > 0) {
+      ?>
+
+      <?php
+      if ($row_count > 0) {
           while ($row = $select_stmt->fetch(PDO::FETCH_ASSOC)) {
-            echo '<form action="book.php" method="post">';
-            echo '<div class="card mb-4 border-0 shadow">';
-            echo '<div class="row g-0 p-3 align-items-center">';
-            echo '<div class="col-md-5 mb-lg-0 mb-md-0 mb-3">';
-            echo '<img src="img/hotel-room-home.jpg" class="img-fluid rounded">';
-            echo '</div>';
-            echo '<div class="col-md-5 px-lg-3 px-md-3 px-0">';
-            echo '<h5 class="mb-3">Simple Room Name</h5>';
-            echo '<div class="features mb-4">';
-            echo '<h6 class="mb-1">' . $row['hotel_id'] . '</h6>';
-            echo '<span class="badge rounded-pill bg-light text-dark text-wrap">
-                    2 Rooms
-                  </span>';
-            echo '<span class="badge rounded-pill bg-light text-dark text-wrap">
-                    1 Bathroom
-                  </span>';
-            echo '<span class="badge rounded-pill bg-light text-dark text-wrap">
-                    1 Balcony
-                  </span>';
-            echo '<span class="badge rounded-pill bg-light text-dark text-wrap">
-                    3 Sofa
-                  </span>';
-            echo '</div>';
-            echo '<div class="Facilities mb-3">';
-            echo '<h6 class="mb-1">' . $row['hotels_name'] . '</h6>';
-            echo '<span class="badge rounded-pill bg-light text-dark text-wrap">
-                    Wifi
-                  </span>';
-            echo '<span class="badge rounded-pill bg-light text-dark text-wrap">
-                    Television
-                  </span>';
-            echo '<span class="badge rounded-pill bg-light text-dark text-wrap">
-                    AC
-                  </span>';
-            echo '<span class="badge rounded-pill bg-light text-dark text-wrap">
-                    Room Heater
-                  </span>';
-            echo '</div>';
-            echo '<div class="guests">';
-            echo '<h6 class="mb-1">' . $row['hotels_address'] . '</h6>';
-            echo '<span class="badge rounded-pill bg-light text-dark text-wrap">
-                    5 Adults
-                  </span>';
-            echo '<span class="badge rounded-pill bg-light text-dark text-wrap">
-                    4 Children
-                    </span>';
-            echo '</div>';
-            echo '</div>';
-            echo '<div class="col-md-2 mt-lg-0 mt-md-0 mt-4 text-center">';
-            echo '<h6 class="mb-4"> ฿ 2000 per night </h6>';
-            echo '<button type="submit" name="submit" class="btn login-btn-blue btn-block text-white">Book Now</button>';
-            echo '<input type="hidden" name="hotel_id" value="' . $row['hotel_id'] . '">';
-            echo  '</div>';
-            echo '</div>';
-            echo '</div>';
-            echo '</form>';
+      ?>
+          <form action="book.php" method="post">
+              <div class="card mb-4 border-0 shadow">
+                  <div class="row g-0 p-3 align-items-center">
+                    
+                    <!-- ดึงรูปโรงแรม -->
+                      <div class="col-md-5 mb-lg-0 mb-md-0 mb-3">
+                          <img src="BackEnd/uploads_img/<?= $row['hotels_img'] ?>" class="img-fluid rounded">
+                      </div>
+
+                      <!-- ชื่อโรงแรม -->
+                      <div class="col-md-5 px-lg-3 px-md-3 px-0">
+                          <h5 class="mb-3"><?= $row['hotels_name'] ?></h5>
+                          <span class="badge rounded-pill bg-light text-dark text-wrap">คะแนนรีวิว : </span>
+                          <span class="badge rounded-pill bg-light text-dark text-wrap">รีวิว : </span>
+
+                          <!-- ที่อยู่ -->
+                          <p class="mb-1 mt-2"><?= $row['hotels_address'] ?></p>
+
+                          <!-- จำนวนคนพักได้ -->
+                          <div class="guests">
+                              <?php if (isset($row['rooms_size'])) : ?>
+                                  <span class="badge rounded-pill bg-light text-dark text-wrap"><?= $row['rooms_size'] ?> Adults</span>
+                              <?php else : ?>
+                                  <span class="badge rounded-pill bg-light text-dark text-wrap">2 Adults</span>
+                              <?php endif; ?>
+                              <span class="badge rounded-pill bg-light text-dark text-wrap">1 Children</span>
+                          </div>
+
+
+                          <!-- รายละเอียดห้อง
+                          <div class="features mb-4">
+                              <?php
+                              $features = ['2 Rooms', '1 Bathroom', '1 Balcony', '3 Sofa'];
+                              foreach ($features as $feature) {
+                                  echo '<span class="badge rounded-pill bg-light text-dark text-wrap">' . $feature . '</span>';
+                              }
+                              ?>
+                          </div>-->
+                          
+                          <!-- สิ่งอำนวยความสะดวก -->
+                          <div class="Facilities mb-3">
+                              <?php
+                              $facilities = ['Free WiFi', 'Television', 'City view', 'Air conditioning'];
+                              foreach ($facilities as $facility) {
+                                  echo '<span class="badge rounded-pill bg-light text-dark text-wrap">' . $facility . '</span>';
+                              }
+                              ?>
+                          </div>
+
+                          
+
+                      </div>
+
+                      <?php
+                      // ราคาห้องถูกที่สุด
+                      $sql = "SELECT hotel_id, MIN(rooms_price) AS min_price FROM hotels 
+                              JOIN locations USING (location_id) 
+                              JOIN rooms USING (hotel_id)
+                              WHERE hotel_id = :hotel_id
+                              GROUP BY hotel_id";
+
+                      $select_stmt2 = $db->prepare($sql);
+                      $select_stmt2->bindParam(':hotel_id', $row['hotel_id']);
+                      $select_stmt2->execute();
+                      $row2 = $select_stmt2->fetch(PDO::FETCH_ASSOC)
+                      ?>
+
+                      <!-- ราคาห้องพักเริ่มต้น -->
+                      <div class="col-md-2 mt-lg-0 mt-md-0 mt-4 text-center">
+                          <h6 class="mb-4">ราคาเริ่มต้น/คืน</h6>
+                          <h1 class="mb-4"><?= $row2['min_price'] ?></h1>
+                          <button type="submit" name="submit" class="btn login-btn-blue btn-block text-white">Book Now</button>
+                          <input type="hidden" name="hotel_id" value="<?= $row['hotel_id'] ?>">
+                      </div>
+
+
+                  </div>
+              </div>
+          </form>
+      <?php
           }
-        } else {
+      } else {
           echo "ไม่พบข้อมูลที่ตรงกับคำค้นหา";
-        }
-        ?>
+      }
+      ?>
 
       </div>
     </div>
   </div>
+
+
+
 
   <!-- footer -->
   <footer class="footer">
