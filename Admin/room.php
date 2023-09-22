@@ -23,7 +23,9 @@
 
                     // คำสั่ง SQL สำหรับดึงข้อมูลจากตาราง Requests
                     $sql = "SELECT *
-                            FROM rooms";
+                            FROM rooms
+                            -- JOIN bookings USING (room_id)
+                            ";
 
                     $stmt = $db->prepare($sql);
                     $stmt->execute();
@@ -34,12 +36,12 @@
                         <form>
                             <td><?php echo $row["room_id"]; ?></td>
                             <td><?php echo $row["hotel_id"]; ?></td>
-                            <td><?php echo $row["room_price"]; ?></td>
-                            <td><?php echo $row["room_type"]; ?></td>
-                            <td><?php echo $row["room_size"]; ?></td>
-                            <td><?php echo $row["room_description"]; ?></td>
-                            <td><?php echo $row["room_img"]; ?></td>
-                            <td><?php echo $row["room_status"]; ?></td>
+                            <td><?php echo $row["rooms_price"]; ?></td>
+                            <td><?php echo $row["rooms_type"]; ?></td>
+                            <td><?php echo $row["rooms_size"]; ?></td>
+                            <td><?php echo $row["rooms_description"]; ?></td>
+                            <td><?php echo $row["rooms_img"]; ?></td>
+                            <!-- <td><?php //echo $row["bookings_status"]; ?></td> -->
                         </form>
                     </tr>
 
