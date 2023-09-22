@@ -208,11 +208,7 @@ $_SESSION["search_name"] = $_GET['search_name'];
 
                           <!-- จำนวนคนพักได้ -->
                           <div class="guests">
-                              <?php if (isset($row['rooms_size'])) : ?>
-                                  <span class="badge rounded-pill bg-light text-dark text-wrap"><?= $row['rooms_size'] ?> Adults</span>
-                              <?php else : ?>
-                                  <span class="badge rounded-pill bg-light text-dark text-wrap">2 Adults</span>
-                              <?php endif; ?>
+                              <span class="badge rounded-pill bg-light text-dark text-wrap"><?= $row['rooms_size'] ?> Adults</span>
                               <span class="badge rounded-pill bg-light text-dark text-wrap">1 Children</span>
                           </div>
 
