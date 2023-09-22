@@ -70,8 +70,8 @@ $_SESSION["search_name"] = $_GET['search_name'];
                   <input type="date" class="form-control shadow-none" name="checkout" min="<?php echo date('Y-m-d') ?>" value="<?php echo $_SESSION["checkout"]; ?>">
                   
                   <label class="form-label">Guests</label>
-                  <input type="number" class="form-control shadow-none" name="num_guest" value="<?php echo $_SESSION["num_guest"]; ?>">
-                  
+                  <input type="number" class="form-control shadow-none" name="num_guest" value="<?php echo $_SESSION["num_guest"]; ?>" required>
+
 
                   <div class="form__group" style="text-align: center;">
                         <button type="submit" name="submit" class="btn btn-primary shadow-none me-lg-3 me-2 mt-3">Search</button>
@@ -258,7 +258,7 @@ $_SESSION["search_name"] = $_GET['search_name'];
                       <!-- ราคาห้องพักเริ่มต้น -->
                       <div class="col-md-2 mt-lg-0 mt-md-0 mt-4 text-center">
                           <h6 class="mb-4">ราคาเริ่มต้น/คืน</h6>
-                          <h1 class="mb-4"><?= $row2['min_price'] ?></h1>
+                          <h2 class="mb-4">฿ <?= $row2['min_price'] ?></h2>
                           <button type="submit" name="submit" class="btn login-btn-blue btn-block text-white">Book Now</button>
                           <input type="hidden" name="hotel_id" value="<?= $row['hotel_id'] ?>">
                       </div>

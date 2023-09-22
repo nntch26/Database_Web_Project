@@ -61,13 +61,14 @@ session_start();
 
                     <div class="form__group">
                         <div class="input__group" for="num_guest">
-                            <input type="text" placeholder="จำนวนผู้ที่มาพัก" name="num_guest" />
+                            <input type="text" placeholder="จำนวนผู้ที่มาพัก" name="num_guest" required>
                             <label>Guests</label>
                         </div>
                         <p>Add guests</p>
                     </div>
 
                     <div class="form__group" style="text-align: center;">
+                        <input type="hidden" name="search_name" value="null">
                         <button type="submit" name="submit" class="btn btn-primary shadow-none me-lg-3 me-2">Search</button>
                     </div>
 
