@@ -12,7 +12,7 @@ if (!isset($_SESSION['is_login'])) {
     header('location: registerhotel.php');
 
 }
-
+echo 'asdsad'.$_SESSION['user_id'];
 
 ?>
 
@@ -65,18 +65,19 @@ if (!isset($_SESSION['is_login'])) {
 
 
                                     // คำสั่ง SQL สำหรับดึงข้อมูลจากตาราง room
-                                    $sql = "SELECT * FROM rooms WHERE hotel_id = :hotel_id";
-
+                                    $sql = "SELECT * FROM hotels 
+                                    JOIN locations l USING (location_id) JOIN rooms r USING (hotel_id) 
+                                    WHERE user_id = :user_id";
                                     $stmt = $db->prepare($sql);
-                                    $stmt->bindParam(':hotel_id', $_SESSION["hotel_id"]);
+                                    $stmt->bindParam(':user_id', $_SESSION["user_id"]);
                                     $stmt->execute();
-
+                                    
 
                                     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) :
                                 ?>
-                                    <tr>
+                                     <tr style="height: 100px; width: 200px;">
                                         <form method="POST" action="BackEnd/editroommain_db.php">
-                                            <td><?php echo $row["room_id"]; ?></td>
+                                            <td style="max-width: 100px;" ><img src="<?php echo 'BackEnd/uploads_img/'.$row["rooms_img"]; ?>" alt="รูปภาพของเรา"></td>
                                             <td><?php echo $row["rooms_type"]; ?></td>
                                             <td><?php echo $row["rooms_size"]; ?></td>
                                             <td><?php echo $row["rooms_description"]; ?></td>

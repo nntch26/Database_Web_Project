@@ -16,7 +16,7 @@
     else{
         // query ข้อมูลของคนที่ login เข้ามา เพื่อแสดงผลใน html
         $select_stmt3 = $db->prepare("SELECT * FROM hotels 
-        JOIN locations l USING (location_id)
+        JOIN locations l USING (location_id) JOIN rooms r USING (hotel_id) 
         WHERE user_id = :user_id");
 
         $select_stmt3->bindParam(':user_id', $_SESSION["userid"]);
@@ -24,7 +24,7 @@
  
         $row = $select_stmt3->fetch(PDO::FETCH_ASSOC); // กรณีที่เราต้องการดึงข้อมูลมาแสดง
         $_SESSION["hotel_id"] = $row['hotel_id']; // เอาไปใช้ต่อ
-
+        $_SESSION["user_id"] = $row['user_id'];
            
     }
 
@@ -42,8 +42,19 @@
     <link href="https://fonts.googleapis.com/css2?family=Mitr:wght@200;300;400;500;600&family=Noto+Sans+Thai:wght@100&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="css/styles.css">
+    <style>
 
+        .item {
+            background-color: #3498db; /* สีพื้นหลัง */
+            color: #fff; /* สีข้อความ */
+            padding: 10px;
+            text-align: center;
+            height: 200px; /* กำหนดความสูง */
+            width: 600px; /* กำหนดความกว้าง */
+        }
+    </style>
     <title>Profile Hotel</title>
+    
 
 </head>
 
@@ -105,7 +116,7 @@
             
         </div>
     </div>
-
+    
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 </body>
 

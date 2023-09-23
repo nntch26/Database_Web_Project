@@ -6,8 +6,9 @@ include('BackEnd/includes/connect_database.php'); // ดึงไฟล์เช
 //     header('location: login.php');
 // } else {
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-  $select_stmt = $db->prepare("SELECT * FROM hotels WHERE hotel_id =
-:hotel_id");
+  $select_stmt = $db->prepare("SELECT * FROM hotels 
+  JOIN locations l USING (location_id) JOIN rooms r USING (hotel_id)  
+  WHERE hotel_id = :hotel_id");
   $select_stmt->bindParam(':hotel_id', $_POST["hotel_id"]);
   $select_stmt->execute();
   $row = $select_stmt->fetch(PDO::FETCH_ASSOC);
@@ -33,40 +34,43 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 <body>
   <?php require('navbar.php'); ?>
-
+<!---- hotel img des  ---->
   <div class="wrapper">
     <div class="info">
       <div class="img">
-        <img src="https://static.leonardo-hotels.com/image/leonardohotelbucharestcitycenter_room_comfortdouble2_2022_4000x2600_7e18f254bc75491965d36cc312e8111f_1200x780_mobile_3.jpeg" class="img-first" alt="รูปโรงแรม" />
-        <img src="https://static.leonardo-hotels.com/image/leonardohotelbucharestcitycenter_room_comfortdouble2_2022_4000x2600_7e18f254bc75491965d36cc312e8111f_1200x780_mobile_3.jpeg" class="img-second" alt="รูปโรงแรม" />
-        <img src="https://static.leonardo-hotels.com/image/leonardohotelbucharestcitycenter_room_comfortdouble2_2022_4000x2600_7e18f254bc75491965d36cc312e8111f_1200x780_mobile_3.jpeg" class="img-third" alt="รูปโรงแรม" />
+      <img src="<?php echo 'BackEnd/uploads_img/'.$row["hotels_img"]; ?>" alt="รูปภาพของเรา">
       </div>
       <div class="info-txt">
-        <h2 class="name-info">Hotel Name</h2>
+        <h2 class="name-info"><?php echo $row["hotels_name"]?></h2>
         <p class="txt-info">
-          Location Hotelhaelaghgldghsiwf<br />ahaoewjbdfaljrwoanflsdkfaowjr<br />lalksdlllllklskdfnawfnfldvlanf
+        <?php echo $row["hotels_description"]?>
         </p>
       </div>
     </div>
-    <div class="desc">
-      <div class="desc-over">
+    <!---- hotel facility ---->
+    <?php include('BackEnd/includes/connect_database.php');
+           $select_stmt2 = $db->prepare("SELECT facility_name from hotels h join hotelsfacility h2 using (hotel_id) join hotelsfacilityname 
+           using (facility_id)  WHERE hotel_id = :hotel_id");
+           $select_stmt2->bindParam(':hotel_id', $_POST["hotel_id"]);
+           $select_stmt2->execute();
+           
+
+           
+      ?>
+      <!---- css มีปัญหา ---->
+    <div>
+      <div >
         <h3 class="desc-txt">Property Overview</h3>
-        <div class="desc-prop">
-          <img src="https://cdn-icons-png.flaticon.com/512/72/72234.png" class="img-i1" alt="Icon Description" />
-          <img src="https://cdn-icons-png.flaticon.com/512/6869/6869912.png" class="img-i2" alt="Icon Description" />
-          <img src="https://cdn-icons-png.flaticon.com/512/637/637270.png" class="img-i3" alt="Icon Description" />
-          <img src="https://cdn-icons-png.flaticon.com/512/818/818416.png" class="img-i4" alt="Icon Description" />
-          <img src="https://cdn-icons-png.flaticon.com/512/4162/4162840.png" class="img-i5" alt="Icon Description" />
-          <img src="https://cdn-icons-png.flaticon.com/512/59/59252.png" class="img-i6" alt="Icon Description" />
-          <p class="desc-info1">Free Wifi</p>
-          <p class="desc-info2">Air conditioning</p>
-          <p class="desc-info3">Private bathroom</p>
-          <p class="desc-info4">Key card access</p>
-          <p class="desc-info5">Free parking</p>
-          <p class="desc-info6">24-hours font desk</p>
+        <div">
+          <?php  while ($row2 = $select_stmt2->fetch(PDO::FETCH_ASSOC)) :?>
+          <p class="desc-info1"><?php  echo $row2["facility_name"];?></p>
+          <?php endwhile?>
         </div>
       </div>
     </div>
+
+    <!---- hotels rooms & roomfaciti ---->
+    
     <div class="center">
       <div class="table">
         <table class="table-type">
