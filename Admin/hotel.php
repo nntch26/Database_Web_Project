@@ -5,15 +5,14 @@
         <table class="table table-bordered">
             <thead>
                 <tr>
-                    <th>id</th>
+                    <th>Id</th>
                     <th>Name</th>
                     <th>Phone</th>
                     <th>Address</th>
+                    <th>Location</th>
                     <th>Postcode</th>
                     <th>Description</th>
-                    <th>img</th>
-                    <th>location id</th>
-                    <th>user id</th>
+                    <th>Username</th>
                 </tr>
             </thead>
             <tbody>
@@ -23,8 +22,9 @@
                     include('../BackEnd/includes/connect_database.php'); // ดึงไฟล์เชื่อม database เข้ามา
 
                     // คำสั่ง SQL สำหรับดึงข้อมูลจากตาราง Requests
-                    $sql = "SELECT *
-                            FROM hotels";
+                    $sql = "SELECT * FROM hotels
+                    JOIN locations USING (location_id)
+                    JOIN users USING (user_id)";
 
                     $stmt = $db->prepare($sql);
                     $stmt->execute();
@@ -37,11 +37,10 @@
                             <td><?php echo $row["hotels_name"]; ?></td>
                             <td><?php echo $row["hotels_phone"]; ?></td>
                             <td><?php echo $row["hotels_address"]; ?></td>
+                            <td><?php echo $row["location_name"]; ?></td>
                             <td><?php echo $row["hotels_postcode"]; ?></td>
                             <td><?php echo $row["hotels_description"]; ?></td>
-                            <td><?php echo $row["hotels_img"]; ?></td>
-                            <td><?php echo $row["location_id"]; ?></td>
-                            <td><?php echo $row["user_id"]; ?></td>
+                            <td><?php echo $row["users_username"]; ?></td>
                         </form>
                     </tr>
 

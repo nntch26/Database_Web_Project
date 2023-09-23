@@ -264,7 +264,9 @@ body {
 .name-info{
   color: rgb(39, 86, 255);
 }
-
+.txt-info{
+  margin-bottom: 5%;
+}
 .desc-txt{
   display: flex;
   justify-content: flex-start;
@@ -278,7 +280,7 @@ body {
 }
 
 .desc{
-  margin-top: 3%;
+  margin-top: 10%;
   display: grid;
   grid-template-columns: auto auto;
   justify-content: flex-start;
@@ -347,20 +349,7 @@ body {
 .info-txt{
   position: absolute;
   left: 5%;
-}
-
-
-.btn-book{
-  margin-top: 20%;
-  position: absolute;
-  right: 5%;
-  border: none;
-  padding: 10px 20px;
-  background-color: rgb(39, 86, 255);
-  color: white;
-  font-weight: bold;
-  border-radius: 5px;
-  align-items: stretch;
+  margin-bottom: 5%;
 }
 
 
@@ -399,7 +388,7 @@ body {
 
 
 .review{
-  margin-top: 65%;
+  margin-top: 25%;
   position: relative;
   margin-bottom: 15px;
 }
@@ -426,5 +415,54 @@ body {
   border: 0.5px solid #e1e1e1;
   padding: 15px;
 
+}
+
+table{
+  width: 100%;
+  border-collapse: collapse;
+}
+
+table, td, th {
+  border: 1px solid black;
+}
+
+th, td {
+  padding: 8px;
+  text-align: left;
+  vertical-align: top;
+}
+.center{
+  width: 90%;
+}
+.table{
+  margin-left: 5%;
+  margin-top: 38%;
+}
+
+.container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.btn-booking{
+  position: relative;
+  border: none;
+  padding: 15px 20%;
+  background-color: rgb(39, 86, 255);
+  color: white;
+  font-weight: bold;
+  border-radius: 30px;
+}
+.col-col{
+  color: red;
+}
+.col-head{
+  color: rgb(39, 86, 255);;
+}
+
+.price{
+  font-size: 2em;
+  text-align: center;
+  color: red;
 }
 
