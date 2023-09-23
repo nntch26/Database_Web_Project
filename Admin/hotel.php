@@ -23,8 +23,9 @@
                     include('../BackEnd/includes/connect_database.php'); // ดึงไฟล์เชื่อม database เข้ามา
 
                     // คำสั่ง SQL สำหรับดึงข้อมูลจากตาราง Requests
-                    $sql = "SELECT *
-                            FROM hotels";
+                    $sql = "SELECT * FROM hotels
+                    JOIN locations USING (location_id)
+                    JOIN users USING (user_id)";
 
                     $stmt = $db->prepare($sql);
                     $stmt->execute();
@@ -40,8 +41,8 @@
                             <td><?php echo $row["hotels_postcode"]; ?></td>
                             <td><?php echo $row["hotels_description"]; ?></td>
                             <td><?php echo $row["hotels_img"]; ?></td>
-                            <td><?php echo $row["location_id"]; ?></td>
-                            <td><?php echo $row["user_id"]; ?></td>
+                            <td><?php echo $row["location_name"]; ?></td>
+                            <td><?php echo $row["users_username"]; ?></td>
                         </form>
                     </tr>
 
