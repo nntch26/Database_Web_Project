@@ -5,15 +5,14 @@
         <table class="table table-bordered">
             <thead>
                 <tr>
-                    <th>id</th>
+                    <th>Id</th>
                     <th>Name</th>
                     <th>Phone</th>
                     <th>Address</th>
+                    <th>Location</th>
                     <th>Postcode</th>
                     <th>Description</th>
-                    <th>img</th>
-                    <th>location id</th>
-                    <th>user id</th>
+                    <th>Username</th>
                 </tr>
             </thead>
             <tbody>
@@ -38,10 +37,9 @@
                             <td><?php echo $row["hotels_name"]; ?></td>
                             <td><?php echo $row["hotels_phone"]; ?></td>
                             <td><?php echo $row["hotels_address"]; ?></td>
+                            <td><?php echo $row["location_name"]; ?></td>
                             <td><?php echo $row["hotels_postcode"]; ?></td>
                             <td><?php echo $row["hotels_description"]; ?></td>
-                            <td><?php echo $row["hotels_img"]; ?></td>
-                            <td><?php echo $row["location_name"]; ?></td>
                             <td><?php echo $row["users_username"]; ?></td>
                         </form>
                     </tr>
