@@ -5,36 +5,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css2?family=Mitr:wght@200;300;400;500;600&family=Noto+Sans+Thai:wght@100&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/payments.css">
+    <link rel="stylesheet" href="css/PaymentAndBooking.css">
     <title>Document</title>
 </head>
 <body>
-    <h1 class="checkout">Booking</h1>
+    <h1 class="checkout">Payments</h1>
     <div class="row">
         <div class="col-75">
             <div class="container">
-            <form action="/action_page.php">
-            
                 <div class="row">
                 <div class="col-50">
                     <h4>Billing Address</h4>
-                    <label for="fname"><i class="fa fa-user"></i> Full Name</label>
+                    <label for="fname"> Full Name</label>
                     <pre>Phum Butsricha</pre>
-                    <label for="email"><i class="fa fa-envelope"></i> Email</label>
+                    <label for="email"> Email</label>
                     <pre>pizza1150@bestfood.com</pre>
-                    <label for="phone"><i class="fa fa-envelope"></i> Phone Number</label>
+                    <label for="phone"> Phone Number</label>
                     <pre>086-666-6666</pre>
                     <div class="row">
-                    <div class="col-50">
-                        <label for="check-in">Check-In</label>
-                        <pre>mm/dd/yyyy</pre>
+                        <div class="col-50">
+                            <label for="check-in">Check-In</label>
+                            <pre>mm/dd/yyyy</pre>
+                        </div>
+                        <div class="col-50">
+                            <label for="check-out">Check-Out</label>
+                            <pre>mm/dd/yyyy</pre>
+                        </div>
                     </div>
-                    <div class="col-50">
-                        <label for="check-out">Check-Out</label>
-                        <pre>mm/dd/yyyy</pre>
-                    </div>
-                    </div>
-
                 </div>
 
                 <div class="col-50">
@@ -46,8 +43,7 @@
                 </div>
                 
                 </div>
-                <input type="submit" value="Checkout" class="btn">
-            </form>
+                <button type="summit" class="btn">checkout</button>
             </div>
         </div>
         <div class="col-25">

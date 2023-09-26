@@ -15,6 +15,7 @@ body {
   box-sizing: border-box;
 }
 
+
 .row {
   display: -ms-flexbox; /* IE10 */
   display: flex;
@@ -46,13 +47,12 @@ body {
 
 .container {
   background-color: white;
-  padding: 5px 20px 15px 20px;
+  padding: 5px 20px 15px 40px;
   box-shadow: 5px 5px 30px rgba(0, 0, 0, 0.1);
 }
 .card {
     background-color: white;
-    width: 100%;
-    height: 70%;
+    padding: 12px;
     box-shadow: 5px 5px 30px rgba(0, 0, 0, 0.1);
 }
 .card-title{
@@ -64,24 +64,6 @@ body {
     margin-left: 30px;
 }
 
-input[type=text] {
-  width: 100%;
-  margin-bottom: 20px;
-  padding: 12px;
-  border: 1px solid #ccc;
-  border-radius: 3px;
-}
-
-label {
-  margin-bottom: 10px;
-  display: block;
-}
-
-.icon-container {
-  margin-bottom: 20px;
-  padding: 7px 0;
-  font-size: 24px;
-}
 
 .btn {
   background-color: #04AA6D;
@@ -99,10 +81,6 @@ label {
   background-color: #45a049;
 }
 
-a {
-  color: #2196F3;
-}
-
 hr {
   border: 1px solid lightgrey;
 }
@@ -111,6 +89,27 @@ span.price {
   float: right;
   color: grey;
   margin-right: 30px;
+}
+
+label {
+  font-size: 16px;
+  margin-bottom: 10px;
+  display: block;
+  
+}
+
+input[type="text"] {
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  width: 80%;
+  height: 4%;
+  margin-bottom: 20px;
+}
+
+h4{
+  margin: 30px;
 }
 
 /* Responsive layout - when the screen is less than 800px wide, make the two columns stack on top of each other instead of next to each other (also change the direction - make the "cart" column go on top) */
