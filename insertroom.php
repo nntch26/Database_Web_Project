@@ -42,7 +42,7 @@ elseif ($_SESSION["role"] != 'HOTELOWNER'){
             <h1 class="mt-5">Register Room</h1>
             <p>เพิ่มข้อมูลห้องพักของคุณ</p>
 
-            <form class="p-5 card" action="BackEnd/insertroom_db.php" method="post" enctype="multipart/form-data">
+            <form class="p-5 card card-body-profile" action="BackEnd/insertroom_db.php" method="post" enctype="multipart/form-data">
 
                 <!-- เช็คว่ามี error มั้ย  ถ้าเป็นค่าว่าง -->
                 <?php if (isset($_SESSION['err_editroom'])) : ?>

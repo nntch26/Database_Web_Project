@@ -14,10 +14,10 @@
             <div class="box1">
                 <h2>Admin</h2>
                 <hr>
-                <a href="admin.php?page=user" class="btn" >User</a><br>
-                <a href="admin.php?page=room" class="btn" >Room</a><br>
-                <a href="admin.php?page=hotel" class="btn" >Hotel</a><br>
-                <a href="admin.php?page=requirement" class="btn" >Requirement</a><br>
+                <a href="admin.php?page=user" class="btn mb-3" >User</a><br>
+                <a href="admin.php?page=room" class="btn mb-3" >Room</a><br>
+                <a href="admin.php?page=hotel" class="btn mb-3" >Hotel</a><br>
+                <a href="admin.php?page=requirement" class="btn mb-5" >Requirement</a><br>
                 <hr>
                 <a href="../BackEnd/logout_db.php" class="btn" >Logout</a><br>
 

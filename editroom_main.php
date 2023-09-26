@@ -44,7 +44,7 @@ echo 'asdsad'.$_SESSION['user_id'];
             <h1 class="mt-5">Edit Room</h1>
             <p>แก้ไขข้อมูลห้องพักของคุณ</p>
 
-                <div class="modal-body">
+                <div class="modal-body card-body-profile">
                     <hr>
                     <div style="height: 100%; overflow: auto;">
                         <table class="table table-bordered">

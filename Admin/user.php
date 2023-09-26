@@ -1,8 +1,8 @@
 <div class="container">
-    <div class="modal-body">
+    <div class="card-body-profile">
         <h2>User Table</h2>
         <hr>
-        <div style="height: 100%; overflow: auto;">
+        <div  style="height: 100%; overflow: auto;">
             <table class="table table-bordered">
                 <thead>
                     <tr>

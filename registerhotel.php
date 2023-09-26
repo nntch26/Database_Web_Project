@@ -38,7 +38,7 @@ if (!isset($_SESSION['is_login'])) {
             <h1 class="mt-5">Register Hotel</h1>
             <p>ลงทะเบียนที่พักของคุณ</p>
 
-            <form class="p-5 card" action="BackEnd/registerhotel_db.php" method="post" enctype="multipart/form-data">
+            <form class="p-5 card card-body-profile" action="BackEnd/registerhotel_db.php" method="post" enctype="multipart/form-data">
 
                 <!-- เช็คว่ามี error มั้ย  ถ้าเป็นค่าว่าง -->
                 <?php if (isset($_SESSION['err_regis'])) : ?>

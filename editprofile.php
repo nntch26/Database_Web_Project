@@ -37,7 +37,7 @@ if (!isset($_SESSION['is_login'])) {
             <h1 class="mt-5">Change Profile</h1>
             <p>แก้ไขข้อมูลส่วนตัวของคุณ</p>
 
-            <form class="p-5 card" action="BackEnd/editprofile_db.php" method="post">
+            <form class="p-5 card card-body-profile" action="BackEnd/editprofile_db.php" method="post">
                 
                 <!-- เช็คว่ามี error มั้ย  ถ้าเป็นค่าว่าง -->
                 <?php if (isset($_SESSION['err_edit'])) : ?>
@@ -68,7 +68,7 @@ if (!isset($_SESSION['is_login'])) {
                     <span class="rounded-pill bg-light text-dark mb-5 text-wrap lh-base">หมายเหตุ: รายละเอียดของคุณต้องตรงกับบัตรประจำตัวของคุณ (บัตรประชาชน หนังสือเดินทาง ใบขับขี่ ฯลฯ) ที่จำเป็นในการเช็คอิน
                     </span>
 
-                <div class="container-fluid mt-5">
+                <div class="container-fluid mt-5 ">
                     <div class="row">
                         <div class="col-md-6 ps-0 mb-3">
                             <label class="form-label">ชื่อ</label>

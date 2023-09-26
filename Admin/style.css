@@ -15,10 +15,11 @@ body {
     margin: 0 -16px;
   }
 .box1 {
-    background-color: rgb(77, 77, 77);
     padding: 15px 20px 15px 20px;
     box-shadow: 5px 5px 30px rgba(0, 0, 0, 0.1);
     width: 100%;
+    background-color: rgb(77, 77, 77);
+
 }
 .box2 {
     background-color: white;
@@ -45,4 +46,10 @@ div.box1{
 .btn{
     color: white;
 }
-
+.card-body-profile{
+    flex: 1 1 auto;
+    padding: 3rem 3rem;
+    box-shadow: 5px 5px 30px rgba(0, 0, 0, 0.1);
+    border-radius: 12px;
+  }
+  
