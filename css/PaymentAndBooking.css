@@ -11,11 +11,6 @@ body {
     margin: 20px;
 }
 
-* {
-  box-sizing: border-box;
-}
-
-
 .row {
   display: -ms-flexbox; /* IE10 */
   display: flex;

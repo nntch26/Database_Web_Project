@@ -1,6 +1,7 @@
 <?php
 session_start();
 include('BackEnd/includes/connect_database.php');
+$_SESSION["room_id"] = $_GET["room_id"];
 $checkin_date = $_SESSION["checkin"]; // วันที่เช็คอิน
 $checkout_date = $_SESSION["checkout"]; // วันที่เช็คเอาท์
 
@@ -57,8 +58,6 @@ $number_of_nights = intval($number_of_nights);
                         required>
                     <label for="address"> ที่อยู่ : </label>
                     <input type="text" id="address" name="address" value="<?php echo $row["users_address"] ?>" required>
-                    <label for="booking_num"> จำนวนห้องที่จะเช่า : </label>
-                    <input type="text" id="booking_num" name="booking_num" required>
                     <button type="submit" class="btn">Next</button>
                 </form>
             </div>
@@ -81,6 +80,16 @@ $number_of_nights = intval($number_of_nights);
                 <h4>
                     <?php echo $result['hotels_name'] ?>
                 </h4>
+                <div class="row">
+                        <div class="col-50">
+                            <label for="check-in">Check-In</label>
+                            <pre>mm/dd/yyyy</pre>
+                        </div>
+                        <div class="col-50">
+                            <label for="check-out">Check-Out</label>
+                            <pre>mm/dd/yyyy</pre>
+                        </div>
+                    </div>
                 <label for="phone">
                     <?php echo 'เบอร์ติดต่อ : ' . $result['hotels_name'] ?>
                 </label>
@@ -99,6 +108,10 @@ $number_of_nights = intval($number_of_nights);
                 <br>
                 <p class="card-text">ราคา 1 ห้องต่อ 1 คืน <span class="price">
                         <?php echo "฿" . $result['rooms_price'] ?>
+                    </span></p>
+                    <br>
+                <p class="card-text">ระยะเวลาที่พัก <span class="price">
+                        <?php echo $number_of_nights . " คืน" ?>
                     </span></p>
                 <hr>
                 <p class="card-text">Total <span class="price">
