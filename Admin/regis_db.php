@@ -54,28 +54,28 @@ if (isset($_POST['ad_submit'])) {
 
 
     // ลบคำร้องขอ ของผู้ใช้
+
     $sql4 = "DELETE FROM requests WHERE request_id = :request_id";
 
     $sql5 = "DELETE FROM hotels WHERE request_id = :request_id";
-    
-    //$sql6 = "DELETE FROM hotelsfacility WHERE hotel_id = :hotel_id";
 
+   
     $stmt4 = $db->prepare($sql4);
     $stmt4->bindParam(':request_id', $request_id);
 
     $stmt5 = $db->prepare($sql5);
     $stmt5->bindParam(':request_id', $request_id);
 
-    //$stmt6 = $db->prepare($sql6);
-    //$stmt6->bindParam(':hotel_id', $hotel_id);
+    
 
-    $stmt4->execute();
     $stmt5->execute();
-    //$stmt6->execute();
+    $stmt4->execute();
+
 
 
     $_SESSION['is_register'] = false;
-    header('location: reqhotel.php');
+    header('location: admin.php?page=requirement');
+
 
 
 }
