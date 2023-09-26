@@ -14,13 +14,13 @@ if (isset($_POST['edithotel_update'])) {
     $hoteladd = $_POST['hotel_address'];
     $hotelcity = $_POST['hotel_city'];
     $hotelcode = $_POST['hotel_postcode'];
+    $hotel_facility = $_POST['hotel_facility'];
+
 
 
     // เช็คว่า เป็นข้อมูลที่รับมาเป็นค่าว่าง หรือไม่
-    if (
-        empty($hotelname) || empty($hotelphone) || empty($hoteldes) || empty($hotelimg)
-        || empty($hoteladd) || empty($hotelcity) || empty($hotelcode)
-    ) {
+    if (empty($hotelname) || empty($hotelphone) || empty($hoteldes) || empty($hotelimg)
+        || empty($hoteladd) || empty($hotelcity) || empty($hotelcode)) {
         $_SESSION['err_edithotel'] = "โปรดระบุข้อมูลของคุณให้ครบถ้วน";
         header('location: ../edithotel.php'); // กลับไปหน้า edit
         exit; // จบการทำงาน
@@ -106,6 +106,42 @@ if (isset($_POST['edithotel_update'])) {
 
 
             $update_stmt->execute();
+
+
+            /////////////////////////////////////////////////////
+
+            // อัปเดทข้อมูลลงในตาราง hotelsfacility
+
+            $select_stmt5 = $db->prepare("SELECT * FROM hotels WHERE user_id = :user_id");
+            $select_stmt5->bindParam(':user_id', $_SESSION["userid"]);
+            $select_stmt5->execute();
+
+            $rowidho = $select_stmt5->fetch(PDO::FETCH_ASSOC); // ดึงข้อมูลออกมา id
+
+
+            // ลบข้อมูลเก่า
+            $sql6 = "DELETE FROM hotelsfacility WHERE hotel_id = :hotel_id";
+            $destmt6 = $db->prepare($sql6);
+            $destmt6->bindParam(':hotel_id',  $rowidho['hotel_id']);
+            $destmt6->execute();
+
+
+             // เพิ่มข้อมูลลงในตาราง hotelsfacility
+ 
+            foreach ($hotel_facility as $facility_id) {
+                $sql = "INSERT INTO `hotelsfacility` (`facility_id`, `hotel_id`)
+                VALUES(:facility_id, :hotel_id)";
+    
+                $select_stmt6 = $db->prepare($sql);
+    
+                $select_stmt6->bindParam(':facility_id',  $facility_id);
+                $select_stmt6->bindParam(':hotel_id', $rowidho['hotel_id']);
+                $select_stmt6->execute();
+            }
+
+
+
+
 
             // เพิ่มข้อมูลแล้ว 
             if ($update_stmt) {

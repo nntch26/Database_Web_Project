@@ -63,6 +63,14 @@ if (!isset($_SESSION['is_login'])) {
                     </div>
                 <?php endif; ?>
 
+                   <!-- เช็คว่ามี error มั้ย  เบอร์ติดต่อซ้ำ -->
+                   <?php if (isset($_SESSION['exist_hotelp'])) : ?>
+                    <!-- ถ้ามี error ให้แสดง alert -->
+                    <div class="alert alert-danger" role="alert">
+                        <?php echo $_SESSION['exist_hotelp']; ?>
+                    </div>
+                <?php endif; ?>
+
                     <!-- อัปเดตข้อมูลแล้ว -->
                 <?php if (isset($_SESSION['hotel_update'])) : ?>
                     <!-- ให้แสดง alert -->
@@ -70,6 +78,8 @@ if (!isset($_SESSION['is_login'])) {
                         <?php echo $_SESSION['hotel_update']; ?>
                     </div>
                 <?php endif; ?>
+
+   
 
 
                 <div class="modal-body">
@@ -122,14 +132,12 @@ if (!isset($_SESSION['is_login'])) {
 
                         
                         <div class="col-md-6 ps-0 mb-3">
-                            <label class="form-label">สิ่งอำนวยความสะดวก</label>
-                            <select name="hotel_facility" class="form-select shadow-none">
-                                <option value="1">สระว่ายน้ำ</option>
-                                <option value="2">ร้านอาหาร</option>
-                                <option value="3">บริการทำความสะอาดแต่ละวัน</option>
-                                <option value="4">เครื่องปรับอากาศ</option>
-                                <option value="5">Free Wi-Fi</option>
-                            </select>
+                            <label class="form-label">สิ่งอำนวยความสะดวก</label> <br>
+                            <input type="checkbox" name="hotel_facility[]" value="1"> สระว่ายน้ำ<br>
+                            <input type="checkbox" name="hotel_facility[]" value="2"> ร้านอาหาร<br>
+                            <input type="checkbox" name="hotel_facility[]" value="3"> บริการทำความสะอาดแต่ละวัน<br>
+                            <input type="checkbox" name="hotel_facility[]" value="4"> เครื่องปรับอากาศ<br>
+                            <input type="checkbox" name="hotel_facility[]" value="5"> Free Wi-Fi<br>
                         </div>
 
                         <div class="col-md-6 ps-0 mb-3">
@@ -171,10 +179,12 @@ if (!isset($_SESSION['is_login'])) {
 
 <?php
 
-if (isset($_SESSION['err_edithotel']) || isset($_SESSION['err_update']) || isset($_SESSION['hotel_update'])) {
+if (isset($_SESSION['err_edithotel']) || isset($_SESSION['err_update']) 
+|| isset($_SESSION['hotel_update']) || isset($_SESSION['exist_hotelp'])) {
     unset($_SESSION['err_edithotel']);
     unset($_SESSION['err_update']);
     unset($_SESSION['hotel_update']);
+    unset($_SESSION['exist_hotelp']);
 }
 
 

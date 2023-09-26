@@ -67,9 +67,9 @@ if (isset($_POST['ad_submit'])) {
     $stmt5->bindParam(':request_id', $request_id);
 
     
-
-    $stmt5->execute();
     $stmt4->execute();
+    $stmt5->execute();
+
 
 
 

@@ -191,7 +191,7 @@ if (isset($_POST['req_submit'])) {
 
 
             // เพิ่มข้อมูลลงในตาราง hotelsfacility
-            $hotel_id = $rowidho['hotel_id'];
+ 
             foreach ($hotel_facility as $facility_id) {
                 $sql = "INSERT INTO `hotelsfacility` (`facility_id`, `hotel_id`)
                 VALUES(:facility_id, :hotel_id)";
