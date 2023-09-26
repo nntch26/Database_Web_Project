@@ -136,7 +136,7 @@ if (!isset($_SESSION['is_login'])) {
                             <input type="checkbox" name="hotel_facility[]" value="1"> สระว่ายน้ำ<br>
                             <input type="checkbox" name="hotel_facility[]" value="2"> ร้านอาหาร<br>
                             <input type="checkbox" name="hotel_facility[]" value="3"> บริการทำความสะอาดแต่ละวัน<br>
-                            <input type="checkbox" name="hotel_facility[]" value="4"> เครื่องปรับอากาศ<br>
+                            <input type="checkbox" name="hotel_facility[]" value="4"> ห้องปลอดบุหรี่<br>
                             <input type="checkbox" name="hotel_facility[]" value="5"> Free Wi-Fi<br>
                         </div>
 

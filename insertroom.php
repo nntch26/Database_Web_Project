@@ -92,20 +92,18 @@ elseif ($_SESSION["role"] != 'HOTELOWNER'){
                                 
                             </div>
 
-                            <div class="col-md-12 ps-0 mb-3">
-                                <label class="form-label">สิ่งอำนวยความสะดวก</label>
-                                <select name="room_remake" class="form-select shadow-none">
-                                    <option value="Standard Room">Standard Room</option>
-                                    <option value="Deluxe Room">Deluxe Room</option>
-                                    <option value="Family Room">Family Room</option>
-                                </select>
+                            <div class="col-md-4 ps-0 mb-3">
+                                <label class="form-label">กำหนดจำนวนห้องพักประเภทนี้</label>
+                                <input type="number" name="room_num" class="form-control shadow-none">
                             </div>
+
 
                             <div class="col-md-12 ps-0 mb-3">
                                 <label class="form-label">รายละเอียดเพิ่มเติมเกี่ยวกับห้องพัก</label>
                                 <textarea type="text" name="room_description" class="form-control shadow-none"></textarea>
                             </div>
 
+        
                             <div class="col-md-4 ps-0 mb-3">
                                 <label class="form-label">ระบุบราคาห้องพัก</label>
                                 <input type="number" name="room_price" class="form-control shadow-none">
@@ -115,6 +113,16 @@ elseif ($_SESSION["role"] != 'HOTELOWNER'){
                                 <label class="form-label">กำหนดจำนวนพักได้สูงสุด</label>
                                 <input type="number" name="room_size" class="form-control shadow-none">
                             </div>
+
+                            <div class="col-md-12 ps-0 mb-3">
+                                <label class="form-label">สิ่งอำนวยความสะดวก</label> <br>
+                                <input type="checkbox" name="room_facility[]" value="6"> มินิบาร์<br>
+                                <input type="checkbox" name="room_facility[]" value="7"> เครื่องปรับอากาศ<br>
+                                <input type="checkbox" name="room_facility[]" value="8"> ระเบียงส่วนตัว<br>
+                                <input type="checkbox" name="room_facility[]" value="9"> โทรทัศน์จอแบน<br>
+                                <input type="checkbox" name="room_facility[]" value="10"> ห้องน้ำในตัว<br>
+                            </div>
+
 
                             <div class="col-md-6 ps-0 mb-3">
                                 <label class="form-label">อัปโหลดรูปภาพห้องพักของคุณ</label>

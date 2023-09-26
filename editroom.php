@@ -44,7 +44,7 @@ if (!isset($_SESSION['is_login'])) {
             <h1 class="mt-5">Edit Room</h1>
             <p>แก้ไขข้อมูลห้องพักของคุณ</p>
 
-            <form class="p-5 card" action="BackEnd/editroom_db.php" method="post" enctype="multipart/form-data">
+            <form class="p-5 card card-body-profile" action="BackEnd/editroom_db.php" method="post" enctype="multipart/form-data">
                 
                 <!-- เช็คว่ามี error มั้ย  ถ้าเป็นค่าว่าง -->
                 <?php if (isset($_SESSION['err_editroom'])) : ?>
@@ -95,9 +95,9 @@ if (!isset($_SESSION['is_login'])) {
                                 
                             </div>
 
-                            <div class="col-md-12 ps-0 mb-3">
-                                <label class="form-label">สิ่งอำนวยความสะดวก</label>
-                                <textarea type="text" name="room_remake" class="form-control shadow-none"></textarea>
+                            <div class="col-md-4 ps-0 mb-3">
+                                <label class="form-label">กำหนดจำนวนห้องพักประเภทนี้</label>
+                                <input type="number" name="room_num" class="form-control shadow-none">
                             </div>
 
                             <div class="col-md-12 ps-0 mb-3">
@@ -113,6 +113,15 @@ if (!isset($_SESSION['is_login'])) {
                             <div class="col-md-4 ps-0 mb-3">
                                 <label class="form-label">กำหนดจำนวนพักได้สูงสุด</label>
                                 <input type="number" name="room_size" class="form-control shadow-none">
+                            </div>
+
+                            <div class="col-md-12 ps-0 mb-3">
+                                <label class="form-label">สิ่งอำนวยความสะดวก</label> <br>
+                                <input type="checkbox" name="room_facility[]" value="6"> มินิบาร์<br>
+                                <input type="checkbox" name="room_facility[]" value="7"> เครื่องปรับอากาศ<br>
+                                <input type="checkbox" name="room_facility[]" value="8"> ระเบียงส่วนตัว<br>
+                                <input type="checkbox" name="room_facility[]" value="9"> โทรทัศน์จอแบน<br>
+                                <input type="checkbox" name="room_facility[]" value="10"> ห้องน้ำในตัว<br>
                             </div>
 
                             <div class="col-md-6 ps-0 mb-3">

@@ -12,8 +12,6 @@ if (!isset($_SESSION['is_login'])) {
     header('location: registerhotel.php');
 
 }
-echo 'asdsad'.$_SESSION['user_id'];
-
 ?>
 
 
@@ -44,6 +42,14 @@ echo 'asdsad'.$_SESSION['user_id'];
             <h1 class="mt-5">Edit Room</h1>
             <p>แก้ไขข้อมูลห้องพักของคุณ</p>
 
+             <!-- อัปเดตข้อมูลแล้ว -->
+             <?php if (isset($_SESSION['is_roomedit'])) : ?>
+                    <!-- ให้แสดง alert -->
+                    <div class="alert alert-success" role="alert">
+                        <?php echo "การลบข้อมูลของคุณเรียบร้อยแล้ว"; ?>
+                    </div>
+                <?php endif; ?>
+
                 <div class="modal-body card-body-profile">
                     <hr>
                     <div style="height: 100%; overflow: auto;">
@@ -66,8 +72,10 @@ echo 'asdsad'.$_SESSION['user_id'];
 
                                     // คำสั่ง SQL สำหรับดึงข้อมูลจากตาราง room
                                     $sql = "SELECT * FROM hotels 
-                                    JOIN locations l USING (location_id) JOIN rooms r USING (hotel_id) 
+                                    JOIN locations l USING (location_id) 
+                                    JOIN rooms r USING (hotel_id) 
                                     WHERE user_id = :user_id";
+
                                     $stmt = $db->prepare($sql);
                                     $stmt->bindParam(':user_id', $_SESSION["user_id"]);
                                     $stmt->execute();
@@ -84,6 +92,9 @@ echo 'asdsad'.$_SESSION['user_id'];
                                             <td>
                                                 <?php $_SESSION["room_id"] = $row['room_id']; ?> 
                                                 <?php $_SESSION["hotel_id"] = $row['hotel_id']; ?>
+                                                
+                                                <input type="hidden" name="room_id" value="<?php echo $row['room_id']; ?>"> 
+                                                <input type="hidden" name="hotel_id" value="<?php echo $row["hotel_id"]; ?>">
 
 
                                                 <button type="submit" name="editroom" class="btn btn-success">Edit</button>
@@ -111,5 +122,14 @@ echo 'asdsad'.$_SESSION['user_id'];
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
 </body>
-
 </html>
+
+<?php
+
+if (isset($_SESSION['is_roomedit'])){
+    unset($_SESSION['is_roomedit']);
+   
+}
+
+
+?>

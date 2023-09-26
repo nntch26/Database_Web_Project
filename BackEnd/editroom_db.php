@@ -9,10 +9,12 @@ include('includes/connect_database.php'); // ดึงไฟล์เชื่�
 
 if (isset($_POST['editroom_update'])) {
     $roomtype = $_POST['room_type'];
-    $roomremake = $_POST['room_remake'];
     $roomdes = $_POST['room_description'];
     $roomprice = $_POST['room_price'];
     $roomsize = $_POST['room_size'];
+    $room_facility = $_POST['room_facility'];
+    $room_num = $_POST['room_num'];
+
 
     // เรียกใช้ hotel id
     $select_stmt4 = $db->prepare("SELECT * FROM hotels WHERE user_id = :user_id");
@@ -24,10 +26,8 @@ if (isset($_POST['editroom_update'])) {
 
 
     // เช็คว่า เป็นข้อมูลที่รับมาเป็นค่าว่าง หรือไม่
-    if (
-        empty($roomtype) || empty($roomremake) || empty($roomdes) || empty($roomprice)
-        || empty($roomsize)
-    ) {
+    if ((empty($roomtype) || empty($roomdes) || empty($roomprice) 
+    || empty($roomsize) || empty($room_facility) || empty($room_num))) {
 
         $_SESSION['err_editroom'] = "โปรดระบุข้อมูลของคุณให้ครบถ้วน";
         header('location: ../insertroom.php'); // กลับไปหน้า edit
@@ -134,7 +134,7 @@ if (isset($_POST['editroom_update'])) {
                 rooms_size = :room_size, 
                 rooms_description = :room_description, 
                 rooms_img = :rooms_img,
-                rooms_remake = :room_remake 
+                rooms_number = :room_num 
             WHERE room_id = :room_id";
 
         $update_stmt = $db->prepare($sql);
@@ -144,10 +144,38 @@ if (isset($_POST['editroom_update'])) {
         $update_stmt->bindParam(':room_size', $roomsize);
         $update_stmt->bindParam(':room_description', $roomdes);
         $update_stmt->bindParam(':rooms_img', $filename);
-        $update_stmt->bindParam(':room_remake', $roomremake);
+        $update_stmt->bindParam(':room_num', $room_num);
         $update_stmt->bindParam(':room_id', $_SESSION["room_id"]);
 
+
         $update_stmt->execute();
+
+
+        ////////////////////////////////////////////////////////////
+
+        // อัปเดทข้อมูลลงในตาราง roomsfacility
+
+         // ลบข้อมูลเก่า
+         $sql6 = "DELETE FROM roomsfacility WHERE room_id = :room_id";
+         $destmt6 = $db->prepare($sql6);
+         $destmt6->bindParam(':room_id',  $_SESSION["room_id"]);
+         $destmt6->execute();
+
+
+        // เพิ่มข้อมูลลงในตาราง roomsfacility
+
+        foreach ($room_facility as $facility_id) {
+            $sqlf = "INSERT INTO `roomsfacility` (`facility_id`, `room_id`)
+            VALUES(:facility_id, :room_id)";
+
+            $select_stmt6 = $db->prepare($sqlf);
+
+            $select_stmt6->bindParam(':facility_id',  $facility_id);
+            $select_stmt6->bindParam(':room_id', $_SESSION["room_id"]);
+            $select_stmt6->execute();
+        }
+
+
 
         // เพิ่มข้อมูลแล้ว 
         if ($update_stmt) {

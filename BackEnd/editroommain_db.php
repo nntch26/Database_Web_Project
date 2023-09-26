@@ -15,17 +15,21 @@ if (isset($_POST['editroom'])) {
 
 
 
-
-
 elseif(isset($_POST['editroom_delete'])){
     $room_id = $_POST["room_id"];
 
     // ลบห้องพัก
     $sql4 = "DELETE FROM rooms WHERE room_id = :room_id";
 
+    $sql5 = "DELETE FROM roomsfacility WHERE room_id = :room_id";
+
     $stmt4 = $db->prepare($sql4);
     $stmt4->bindParam(':room_id', $room_id);
     $stmt4->execute();
+
+    $stmt5 = $db->prepare($sql5);
+    $stmt5->bindParam(':room_id', $room_id);
+    $stmt5->execute();
 
     $_SESSION['is_roomedit'] = false;
     header('location: ../editroom_main.php');
