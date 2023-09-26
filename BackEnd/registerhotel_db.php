@@ -13,10 +13,12 @@ if (isset($_POST['req_submit'])) {
     $hotelcity = $_POST['hotel_city'];
     $hotelpos = $_POST['hotel_postcode'];
     $req_date = $_POST['req_date'];
+    $hotel_facility = $_POST['hotel_facility'];
+
 
     // เช็คว่าข้อมูลที่รับมา เป็นค่าว่างหรือไม่ มีข้อมูลมั้ย
     if (empty($hotelname) || empty($hotelphone) || empty($hoteldes || empty($hotelimg)
-        || empty($hoteladd) || empty($hotelcity) || empty($hotelcode) || empty($req_date))) {
+        || empty($hoteladd) || empty($hotelcity) || empty($hotelcode) || empty($req_date) || empty($hotel_facility))) {
 
         // ถ้าเป็นข้อมูลว่าง  กำหนด error จะเก็บไว้ใน session
         $_SESSION['err_regis'] = "กรุณากรอกข้อมูลให้ครบถ้วน";
@@ -155,7 +157,6 @@ if (isset($_POST['req_submit'])) {
 
             $rowidreq = $select_stmt4->fetch(PDO::FETCH_ASSOC); // ดึงข้อมูลออกมา id
 
-
             
             // พิ่มข้อมูลลงในตาราง hotels
             $sql = "INSERT INTO `hotels` (`hotels_name`, 
@@ -178,10 +179,31 @@ if (isset($_POST['req_submit'])) {
             $insert_stmt->bindParam(':request_id', $rowidreq['request_id']);
 
             $insert_stmt->execute();
-    
+
+
+
             
+            $select_stmt5 = $db->prepare("SELECT * FROM hotels WHERE user_id = :user_id");
+            $select_stmt5->bindParam(':user_id', $_SESSION["userid"]);
+            $select_stmt5->execute();
+
+            $rowidho = $select_stmt5->fetch(PDO::FETCH_ASSOC); // ดึงข้อมูลออกมา id
 
 
+            // เพิ่มข้อมูลลงในตาราง hotelsfacility
+            $hotel_id = $rowidho['hotel_id'];
+            foreach ($hotel_facility as $facility_id) {
+                $sql = "INSERT INTO `hotelsfacility` (`facility_id`, `hotel_id`)
+                VALUES(:facility_id, :hotel_id)";
+    
+                $select_stmt6 = $db->prepare($sql);
+    
+                $select_stmt6->bindParam(':facility_id',  $facility_id);
+                $select_stmt6->bindParam(':hotel_id', $rowidho['hotel_id']);
+                $select_stmt6->execute();
+            }
+
+           
 
             // ลงทะเบียนสำเร็จ  ถ้าเพิ่มข้อมูลผ่านแล้ว จะให้ทำการเก็บ status เอาไปใช้ต่อ
             if ($insert_stmt) {

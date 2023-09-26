@@ -43,6 +43,7 @@
                                 <input type="hidden" name="user_id" value="<?php echo $row["user_id"]; ?>"> <!-- ส่งค่าไป php แบบซ้อน-->
                                 <input type="hidden" name="request_id" value="<?php echo $row["request_id"]; ?>">
                                 <input type="hidden" name="location_id" value="<?php echo $row["location_id"]; ?>">
+                                <input type="hidden" name="hotel_id" value="<?php echo $row["hotel_id"]; ?>">
 
                                 <!-- อัปเดตข้อมูลแล้ว -->
                                 <?php if ($row["req_status"] == 'Approved') : ?>

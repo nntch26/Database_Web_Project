@@ -35,7 +35,7 @@
                     while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) :
                 ?>
                     <tr>
-                        <form>
+                        <form method="POST" action="hotel_db.php">
                             <td><?php echo $row["hotel_id"]; ?></td>
                             <td><?php echo $row["hotels_name"]; ?></td>
                             <td><?php echo $row["hotels_phone"]; ?></td>

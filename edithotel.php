@@ -93,12 +93,8 @@ if (!isset($_SESSION['is_login'])) {
                             <textarea type="text" name="hotels_description" class="form-control shadow-none"></textarea>
                         </div>
 
-                        <div class="col-md-6 ps-0 mb-3">
-                            <label class="form-label">อัปโหลดรูปภาพของคุณ</label>
-                            <input type="file" name="hotel_img" class="form-control shadow-none">
-                        </div>
                         
-                        <div class="col-md-6 p-0 mb-3">
+                        <div class="col-md-12 p-0 mb-3">
                             <label class="form-label">ที่อยู่</label>
                             <input type="text" name="hotel_address" class="form-control shadow-none">
                         </div>
@@ -123,6 +119,24 @@ if (!isset($_SESSION['is_login'])) {
                             <label class="form-label">รหัสไปรษณีย์</label>
                             <input type="text" name="hotel_postcode" class="form-control shadow-none">
                         </div>
+
+                        
+                        <div class="col-md-6 ps-0 mb-3">
+                            <label class="form-label">สิ่งอำนวยความสะดวก</label>
+                            <select name="hotel_facility" class="form-select shadow-none">
+                                <option value="1">สระว่ายน้ำ</option>
+                                <option value="2">ร้านอาหาร</option>
+                                <option value="3">บริการทำความสะอาดแต่ละวัน</option>
+                                <option value="4">เครื่องปรับอากาศ</option>
+                                <option value="5">Free Wi-Fi</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-6 ps-0 mb-3">
+                            <label class="form-label">อัปโหลดรูปภาพของคุณ</label>
+                            <input type="file" name="hotel_img" class="form-control shadow-none">
+                        </div>
+
 
                         
                          

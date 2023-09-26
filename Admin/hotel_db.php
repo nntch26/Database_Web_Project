@@ -9,12 +9,19 @@ if (isset($_POST['ad_delete'])) {
 
 
     $sql5 = "DELETE FROM hotels WHERE hotel_id = :hotel_id";
+    $sql6 = "DELETE FROM hotelsfacility WHERE hotel_id = :hotel_id";
+
 
 
     $stmt5 = $db->prepare($sql5);
     $stmt5->bindParam(':hotel_id', $hotel_id);
 
     $stmt5->execute();
+
+    $stmt6 = $db->prepare($sql6);
+    $stmt6->bindParam(':hotel_id', $hotel_id);
+
+    $stmt6->execute();
 
     // เปลี่ยน role ของผู้ใช้
     $sql3 = "UPDATE users SET users_role = 'TOURIST' WHERE user_id = :user_id";
@@ -26,11 +33,6 @@ if (isset($_POST['ad_delete'])) {
 
 
     header('location: admin.php?page=hotel');
-
-    
-
-    
-
 
     
 }

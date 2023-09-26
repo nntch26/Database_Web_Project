@@ -94,7 +94,11 @@ elseif ($_SESSION["role"] != 'HOTELOWNER'){
 
                             <div class="col-md-12 ps-0 mb-3">
                                 <label class="form-label">สิ่งอำนวยความสะดวก</label>
-                                <textarea type="text" name="room_remake" class="form-control shadow-none"></textarea>
+                                <select name="room_remake" class="form-select shadow-none">
+                                    <option value="Standard Room">Standard Room</option>
+                                    <option value="Deluxe Room">Deluxe Room</option>
+                                    <option value="Family Room">Family Room</option>
+                                </select>
                             </div>
 
                             <div class="col-md-12 ps-0 mb-3">

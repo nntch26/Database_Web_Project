@@ -23,8 +23,7 @@
                         include('../BackEnd/includes/connect_database.php'); // ดึงไฟล์เชื่อม database เข้ามา
 
                         // คำสั่ง SQL สำหรับดึงข้อมูลจากตาราง Requests
-                        $sql = "SELECT *
-                                FROM users";
+                        $sql = "SELECT * FROM users WHERE users_username NOT LIKE '%admin%'";
 
                         $stmt = $db->prepare($sql);
                         $stmt->execute();

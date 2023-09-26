@@ -85,7 +85,7 @@ if (!isset($_SESSION['is_login'])) {
                                 <input type="text" name="hotels_description" class="form-control shadow-none">
                             </div>
 
-                            <div class="col-md-12 p-0 mb-3">
+                            <div class="col-md-12 ps-0 mb-3">
                                 <label class="form-label">ที่อยู่</label>
                                 <input type="text" name="hotel_address" class="form-control shadow-none">
                             </div>
@@ -111,15 +111,26 @@ if (!isset($_SESSION['is_login'])) {
                                 <input type="text" name="hotel_postcode" class="form-control shadow-none">
                             </div>
 
+                    
                             <div class="col-md-6 ps-0 mb-3">
-                                <label class="form-label">ระบุวันที่ส่งคำร้องขอ</label>
-                                <input type="date" name="req_date" class="form-control shadow-none" min="<?php echo date('Y-m-d') ?>" />
+                                <label class="form-label">สิ่งอำนวยความสะดวก</label> <br>
+                                <input type="checkbox" name="hotel_facility[]" value="1"> สระว่ายน้ำ<br>
+                                <input type="checkbox" name="hotel_facility[]" value="2"> ร้านอาหาร<br>
+                                <input type="checkbox" name="hotel_facility[]" value="3"> บริการทำความสะอาดแต่ละวัน<br>
+                                <input type="checkbox" name="hotel_facility[]" value="4"> เครื่องปรับอากาศ<br>
+                                <input type="checkbox" name="hotel_facility[]" value="5"> Free Wi-Fi<br>
                             </div>
 
                             <div class="col-md-6 ps-0 mb-3">
                                 <label for="hotel_img" class="form-label">อัปโหลดรูปภาพโรงแรมของคุณ</label>
                                 <input type="file" id="hotel_img" name="hotel_img" class="form-control shadow-none">
                             </div>
+
+                            <div class="col-md-6 ps-0 mb-3">
+                                <label class="form-label">ระบุวันที่ส่งคำร้องขอ</label>
+                                <input type="date" name="req_date" class="form-control shadow-none" min="<?php echo date('Y-m-d') ?>" />
+                            </div>
+                            
 
                             <div class="text-center my-1">
                                 <!-- ส่งข้อมูลแล้ว -->

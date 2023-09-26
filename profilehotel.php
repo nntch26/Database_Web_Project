@@ -16,7 +16,8 @@
     else{
         // query ข้อมูลของคนที่ login เข้ามา เพื่อแสดงผลใน html
         $select_stmt3 = $db->prepare("SELECT * FROM hotels 
-        JOIN locations l USING (location_id) JOIN rooms r USING (hotel_id) 
+        JOIN locations l USING (location_id) 
+
         WHERE user_id = :user_id");
 
         $select_stmt3->bindParam(':user_id', $_SESSION["userid"]);
