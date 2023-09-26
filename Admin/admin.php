@@ -18,6 +18,8 @@
                 <a href="admin.php?page=room" class="btn" >Room</a><br>
                 <a href="admin.php?page=hotel" class="btn" >Hotel</a><br>
                 <a href="admin.php?page=requirement" class="btn" >Requirement</a><br>
+                <hr>
+                <a href="../BackEnd/logout_db.php" class="btn" >Logout</a><br>
 
                 <hr>
             </div>

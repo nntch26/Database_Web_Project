@@ -11,7 +11,7 @@ if (isset($_POST['req_submit'])) {
     $hoteldes = $_POST['hotels_description'];
     $hoteladd = $_POST['hotel_address'];
     $hotelcity = $_POST['hotel_city'];
-    $hotelcode = $_POST['hotel_postcode'];
+    $hotelpos = $_POST['hotel_postcode'];
     $req_date = $_POST['req_date'];
 
     // เช็คว่าข้อมูลที่รับมา เป็นค่าว่างหรือไม่ มีข้อมูลมั้ย
@@ -139,24 +139,49 @@ if (isset($_POST['req_submit'])) {
 
 
             // ส่ง requests  เพิ่มข้อมูลลงในตาราง requests
-            $insert_stmt = $db->prepare("INSERT INTO requests
-            (user_id, req_hotels_name, req_hotels_phone, req_hotels_address, req_hotels_postcode, 
-            req_hotels_description, req_hotels_img, req_sent_date, req_status, location_id)
-            VALUES (:user_id, :hotels_name , :hotels_phone , :hotels_address, :hotels_postcode, 
-            :hotels_des, :hotels_img, :req_sent_date, 'WAITING', :location_id)");
+            $insert_stmt2 = $db->prepare("INSERT INTO requests (user_id,  req_sent_date, req_status)
+            VALUES (:user_id, :req_sent_date, 'WAITING')");
+
+            $insert_stmt2->bindParam(':user_id', $_SESSION["userid"]);
+            $insert_stmt2->bindParam(':req_sent_date', $req_date);
+            $insert_stmt2->execute();
 
 
 
-            $insert_stmt->bindParam(':user_id', $_SESSION["userid"]);
+            // Select requests
+            $select_stmt4 = $db->prepare("SELECT * FROM requests WHERE user_id = :user_id");
+            $select_stmt4->bindParam(':user_id', $_SESSION["userid"]);
+            $select_stmt4->execute();
+
+            $rowidreq = $select_stmt4->fetch(PDO::FETCH_ASSOC); // ดึงข้อมูลออกมา id
+
+
+            
+            // พิ่มข้อมูลลงในตาราง hotels
+            $sql = "INSERT INTO `hotels` (`hotels_name`, 
+            `hotels_phone`, `hotels_address`, `hotels_postcode`, `hotels_description`, 
+            `hotels_img`, `location_id`, `user_id`, `request_id`)
+            
+            VALUES (:hotels_name, :hotels_phone, :hotels_address, :hotels_postcode, :hotels_description,   
+            :hotels_img, :location_id, :user_id, :request_id)";
+
+            $insert_stmt = $db->prepare($sql);
+
             $insert_stmt->bindParam(':hotels_name', $hotelname);
-            $insert_stmt->bindParam(':hotels_phone', $hotelphone);
-            $insert_stmt->bindParam(':hotels_address', $hoteladd);
-            $insert_stmt->bindParam(':hotels_des', $hoteldes);
-            $insert_stmt->bindParam(':hotels_postcode', $hotelcode);
-            $insert_stmt->bindParam(':hotels_img', $filename);
-            $insert_stmt->bindParam(':req_sent_date', $req_date);
+            $insert_stmt->bindParam(':hotels_phone',  $hotelphone);
+            $insert_stmt->bindParam(':hotels_address',  $hoteladd);
+            $insert_stmt->bindParam(':hotels_description',  $hoteldes);
+            $insert_stmt->bindParam(':hotels_postcode',  $hotelpos);
+            $insert_stmt->bindParam(':hotels_img',  $filename);
             $insert_stmt->bindParam(':location_id', $rowid['location_id']);
+            $insert_stmt->bindParam(':user_id', $_SESSION["userid"]);
+            $insert_stmt->bindParam(':request_id', $rowidreq['request_id']);
+
             $insert_stmt->execute();
+    
+            
+
+
 
             // ลงทะเบียนสำเร็จ  ถ้าเพิ่มข้อมูลผ่านแล้ว จะให้ทำการเก็บ status เอาไปใช้ต่อ
             if ($insert_stmt) {
@@ -186,24 +211,3 @@ if (isset($_POST['req_submit'])) {
     header('location: ../index.php');
     exit;
 }
-
-
-
-/*
-
-$insert_stmt = $db->prepare("INSERT INTO hotels (hotels_name, hotels_address, hotels_phone,hotels_city,
-hotels_postcode,hotels_imageUrl,hotels_description)
-VALUES (:hotels_name, :hotels_address, :hotels_phone,:hotels_city,
-:hotels_postcode,:hotels_imageUrl,:hotels_description)");
-
-$insert_stmt->bindParam(':hotels_name', $hotelname);
-$insert_stmt->bindParam(':hotels_address', $hoteladd);
-$insert_stmt->bindParam(':hotels_phone', $hoteladd);
-$insert_stmt->bindParam(':hotels_city', $hotelcity);
-$insert_stmt->bindParam(':hotels_postcode', $hotelcode);
-$insert_stmt->bindParam(':hotels_img', $hotelimg);
-$insert_stmt->bindParam(':hotels_description', $hoteldes)
-
-$insert_stmt->execute();
-
-*/

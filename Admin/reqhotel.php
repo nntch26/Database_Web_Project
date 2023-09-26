@@ -21,10 +21,11 @@
 
                     // คำสั่ง SQL สำหรับดึงข้อมูลจากตาราง Requests
                     $sql = "SELECT *
-                            FROM requests r
-                            JOIN users u ON r.user_id = u.user_id
-                            JOIN locations l ON r.location_id = l.location_id;
-                            ORDER BY r.req_sent_date DESC ";
+                    FROM hotels h
+                    JOIN users u ON h.user_id = u.user_id
+                    JOIN requests r ON r.request_id = h.request_id
+                    JOIN locations l ON h.location_id = l.location_id
+                    ORDER BY req_sent_date DESC";
 
                     $stmt = $db->prepare($sql);
                     $stmt->execute();
@@ -34,7 +35,7 @@
                     <tr>
                         <form method="POST" action="regis_db.php">
                             <td><?php echo $row["users_username"]; ?></td>
-                            <td><?php echo $row["req_hotels_name"]; ?></td>
+                            <td><?php echo $row["hotels_name"]; ?></td>
                             <td><?php echo $row["location_name"]; ?></td>
                             <td><?php echo $row["req_sent_date"]; ?></td>
                             <td><a href="#" class="btn btn-primary" data-toggle="modal" data-target="#myModal<?php echo $row["request_id"]; ?>">View Details</a></td>
@@ -44,11 +45,10 @@
                                 <input type="hidden" name="location_id" value="<?php echo $row["location_id"]; ?>">
 
                                 <!-- อัปเดตข้อมูลแล้ว -->
-                                <?php if ($row["req_status"] == 'APPROVE') : ?>
+                                <?php if ($row["req_status"] == 'Approved') : ?>
                                     <!-- ถ้าเป็น APPROVE ให้แสดงสถานะ -->
                                     <span style="color: green;"><b><?php echo $row["req_status"]; ?></b></span>
 
-                                        
                                 <?php else : ?>
                                     <!-- ถ้าไม่ใช่ APPROVE ให้แสดงปุ่ม Confirm และ Cancel -->
                                     <button type="submit" name="ad_submit" class="btn btn-success">Confirm</button>
@@ -73,10 +73,10 @@
                                     <!-- ส่วนนี้จะแสดงข้อมูลรายละเอียดใน Modal -->
                                     <div class="card">
                                         <div class="card-body">
-                                            <h5 class="card-title"><b>ชื่อโรงแรม :</b> <?php echo $row["req_hotels_name"]; ?></h5>
-                                            <p class="card-text"><b>รายละเอียดโรงแรม : </b> <?php echo $row["req_hotels_description"]; ?></p>
-                                            <p class="card-text"> <b>เบอร์ติดต่อ :</b> <?php echo $row["req_hotels_phone"]; ?></p>
-                                            <p class="card-text"> <b>ที่อยู่ :</b> <?php echo  $row["req_hotels_address"]. " ".$row["location_name"]." ".$row["req_hotels_postcode"] ; ?></p>
+                                            <h5 class="card-title"><b>ชื่อโรงแรม :</b> <?php echo $row["hotels_name"]; ?></h5>
+                                            <p class="card-text"><b>รายละเอียดโรงแรม : </b> <?php echo $row["hotels_description"]; ?></p>
+                                            <p class="card-text"> <b>เบอร์ติดต่อ :</b> <?php echo $row["hotels_phone"]; ?></p>
+                                            <p class="card-text"> <b>ที่อยู่ :</b> <?php echo  $row["hotels_address"]. " ".$row["location_name"]." ".$row["hotels_postcode"] ; ?></p>
                                             <p class="card-text">  <b>วันเวลาส่งคำร้องขอ :</b> <?php echo $row["req_sent_date"]; ?></p>
 
                                         </div>
