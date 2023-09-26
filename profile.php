@@ -23,8 +23,6 @@ else{
     $_SESSION["password"] = $row['users_password'];
     $_SESSION["phonenumber"] = $row['users_phone_number'];
     $_SESSION["address"] = $row['users_address'];
-    $_SESSION["city"] = $row['users_city'];
-    $_SESSION["postcode"] = $row['users_postcode'];
     $_SESSION["role"] = $row['users_role'];
 
 }
@@ -66,8 +64,6 @@ else{
                         <span class="mt-5" style="font-weight: 700;">Email</span> : <?php echo $_SESSION["email"]; ?> <br>
                         <span style="font-weight: 700;">หมายเลขโทรศัพท์ </span> : <?php echo $_SESSION["phonenumber"]; ?> <br>
                         <span style="font-weight: 700;">ที่อยู่</span> : <?php echo $_SESSION["address"]; ?> <br>
-                        <span style="font-weight: 700;">เมือง/จังหวัด</span> : <?php echo $_SESSION["city"]; ?> <br>
-                        <span style="font-weight: 700;">รหัสไปรษณีย์</span> : <?php echo $_SESSION["postcode"]; ?> <br>
                         <span style="font-weight: 700;">Role</span> : <?php echo $_SESSION["role"]; ?>
                     </div>
                 </div>

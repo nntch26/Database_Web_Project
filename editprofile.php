@@ -86,16 +86,6 @@ if (!isset($_SESSION['is_login'])) {
                         </div>
 
                         <div class="col-md-6 ps-0 mb-3">
-                            <label class="form-label">เมือง/จังหวัด</label>
-                            <input type="text" name="city" class="form-control shadow-none">
-                        </div>
-
-                        <div class="col-md-6 ps-0 mb-3">
-                            <label class="form-label">รหัสไปรษณีย์</label>
-                            <input type="text" name="postcode" class="form-control shadow-none">
-                        </div>
-
-                        <div class="col-md-6 ps-0 mb-3">
                             <label class="form-label">หมายเลขโทรศัพท์</label>
                             <input type="text" name="phone" class="form-control shadow-none">
                         </div>
