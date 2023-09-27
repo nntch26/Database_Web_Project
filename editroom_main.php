@@ -2,8 +2,8 @@
 <?php
 
 session_start();
+include('BackEnd/includes/connect_database.php'); // ดึงไฟล์เชื่อม database เข้ามา
 
-// ถ้ามี $_SESSION['is_logged_in'] แสดงว่ามีการ login เข้ามาแล้ว
 
 if (!isset($_SESSION['is_login'])) {
     header('location: login.php'); // ถ้าไม่มีให้เด้งไป login
@@ -12,6 +12,25 @@ if (!isset($_SESSION['is_login'])) {
     header('location: registerhotel.php');
 
 }
+else{
+      // query ข้อมูลของคนที่ login เข้ามา เพื่อแสดงผลใน html
+      $select_stmt3 = $db ->prepare("SELECT * FROM rooms 
+      WHERE hotel_id = :hotel_id");
+  
+      $select_stmt3->bindParam(':hotel_id', $_SESSION["hotel_id"]);
+      $select_stmt3->execute();
+  
+      $row = $select_stmt3->fetch(PDO::FETCH_ASSOC); // กรณีที่เราต้องการดึงข้อมูลมาแสดง
+      $_SESSION["room_id"] = $row["room_id"]; // เอาไปใช้ต่อ
+      $_SESSION["rooms_price"] = $row['rooms_price'];
+      $_SESSION["rooms_type"] = $row['rooms_type'];
+      $_SESSION["rooms_size"] = $row['rooms_size'];
+      $_SESSION["rooms_description"] = $row['rooms_description'];
+      $_SESSION["rooms_number"] = $row['rooms_number'];
+}
+
+
+
 ?>
 
 
@@ -57,6 +76,7 @@ if (!isset($_SESSION['is_login'])) {
                             <thead>
                                 <tr>
                                     <th>Room Id</th>
+                                    <th>Room Image</th>
                                     <th>Room Type</th>
                                     <th>Room Size</th>
                                     <th>Description</th>
@@ -85,6 +105,7 @@ if (!isset($_SESSION['is_login'])) {
                                 ?>
                                      <tr style="height: 100px; width: 200px;">
                                         <form method="POST" action="BackEnd/editroommain_db.php">
+                                            <td><?php echo $row["room_id"]; ?></td>
                                             <td style="max-width: 100px;" ><img src="<?php echo 'BackEnd/uploads_img/'.$row["rooms_img"]; ?>" alt="รูปภาพของเรา"></td>
                                             <td><?php echo $row["rooms_type"]; ?></td>
                                             <td><?php echo $row["rooms_size"]; ?></td>

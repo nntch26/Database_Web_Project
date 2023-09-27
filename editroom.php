@@ -3,8 +3,6 @@
 
 session_start();
 
-// ถ้ามี $_SESSION['is_logged_in'] แสดงว่ามีการ login เข้ามาแล้ว
-
 if (!isset($_SESSION['is_login'])) {
     header('location: login.php'); // ถ้าไม่มีให้เด้งไป login
 
@@ -12,7 +10,6 @@ if (!isset($_SESSION['is_login'])) {
     header('location: registerhotel.php');
 
 }
-
 
 ?>
 
@@ -97,22 +94,22 @@ if (!isset($_SESSION['is_login'])) {
 
                             <div class="col-md-4 ps-0 mb-3">
                                 <label class="form-label">กำหนดจำนวนห้องพักประเภทนี้</label>
-                                <input type="number" name="room_num" class="form-control shadow-none">
+                                <input type="number" name="room_num" value="<?php echo isset($_SESSION["rooms_number"]) ? $_SESSION["rooms_number"] : ''; ?>" class="form-control shadow-none">
                             </div>
 
                             <div class="col-md-12 ps-0 mb-3">
                                 <label class="form-label">รายละเอียดเพิ่มเติมเกี่ยวกับห้องพัก</label>
-                                <textarea type="text" name="room_description" class="form-control shadow-none"></textarea>
+                                <textarea name="room_description" class="form-control shadow-none"><?php echo isset($_SESSION["rooms_description"]) ? $_SESSION["rooms_description"] : ''; ?></textarea>
                             </div>
 
                             <div class="col-md-4 ps-0 mb-3">
                                 <label class="form-label">ระบุบราคาห้องพัก</label>
-                                <input type="number" name="room_price" class="form-control shadow-none">
+                                <input type="number" name="room_price" value="<?php echo isset($_SESSION["rooms_price"]) ? $_SESSION["rooms_price"] : ''; ?>" class="form-control shadow-none">
                             </div>
 
                             <div class="col-md-4 ps-0 mb-3">
                                 <label class="form-label">กำหนดจำนวนพักได้สูงสุด</label>
-                                <input type="number" name="room_size" class="form-control shadow-none">
+                                <input type="number" name="room_size" value="<?php echo isset($_SESSION["rooms_size"]) ? $_SESSION["rooms_size"] : ''; ?>" class="form-control shadow-none">
                             </div>
 
                             <div class="col-md-12 ps-0 mb-3">
