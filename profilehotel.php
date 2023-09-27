@@ -17,7 +17,6 @@
         // query ข้อมูลของคนที่ login เข้ามา เพื่อแสดงผลใน html
         $select_stmt3 = $db->prepare("SELECT * FROM hotels 
         JOIN locations l USING (location_id) 
-
         WHERE user_id = :user_id");
 
         $select_stmt3->bindParam(':user_id', $_SESSION["userid"]);
@@ -26,6 +25,11 @@
         $row = $select_stmt3->fetch(PDO::FETCH_ASSOC); // กรณีที่เราต้องการดึงข้อมูลมาแสดง
         $_SESSION["hotel_id"] = $row['hotel_id']; // เอาไปใช้ต่อ
         $_SESSION["user_id"] = $row['user_id'];
+        $_SESSION["hotelname"] = $row['hotels_name'];
+        $_SESSION["hotelphone"] = $row['hotels_phone'];
+        $_SESSION["hoteladdress"] = $row['hotels_address'];
+        $_SESSION["hotelpostcode"] = $row['hotels_postcode'];
+        $_SESSION['hoteldes'] = $row['hotels_description'];
            
     }
 

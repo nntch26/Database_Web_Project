@@ -56,8 +56,6 @@ if (isset($_POST['submit'])) {
                 $_SESSION["password"] = $result['users_password'];
                 $_SESSION["phonenumber"] = $result['users_phone_number'];
                 $_SESSION["address"] = $result['users_address'];
-                $_SESSION["city"] = $result['users_city'];
-                $_SESSION["postcode"] = $result['users_postcode'];
                 $_SESSION["role"] = $result['users_role'];
 
                 if ($result['users_role'] == "ADMIN") {

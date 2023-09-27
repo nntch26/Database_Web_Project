@@ -90,24 +90,24 @@ if (!isset($_SESSION['is_login'])) {
 
                         <div class="col-md-6 ps-0 mb-3">
                             <label class="form-label">ชื่อโรงแรม</label>
-                            <input type="text" name="hotel_name" class="form-control shadow-none">
+                            <input type="text" name="hotelname" value="<?php echo isset($_SESSION["hotelname"]) ? $_SESSION["hotelname"] : ''; ?>" class="form-control shadow-none">
                         </div>
 
                         <div class="col-md-6 ps-0 mb-3">
                             <label class="form-label">หมายเลขโทรศัพท์</label>
-                            <input type="text" name="hotel_phone" class="form-control shadow-none">
-                        </div>
-                        
-                        <div class="col-md-12 ps-0 mb-3">
-                            <label class="form-label">รายละเอียดโรงแรม</label>
-                            <textarea type="text" name="hotels_description" class="form-control shadow-none"></textarea>
+                            <input type="text" name="hotel_phone" value="<?php echo $_SESSION["hotelphone"];?>" class="form-control shadow-none">
                         </div>
 
-                        
+                        <div class="col-md-12 ps-0 mb-3">
+                            <label class="form-label">รายละเอียดโรงแรม</label>
+                            <textarea name="hotels_description" class="form-control shadow-none"><?php echo $_SESSION["hoteldes"];?></textarea>
+                        </div>
+
                         <div class="col-md-12 p-0 mb-3">
                             <label class="form-label">ที่อยู่</label>
-                            <input type="text" name="hotel_address" class="form-control shadow-none">
+                            <input type="text" name="hotel_address" value="<?php echo $_SESSION["hoteladdress"]; ?>" class="form-control shadow-none">
                         </div>
+
 
                         <div class="col-md-6 ps-0 mb-3">
                             <label class="form-label">เมือง/จังหวัด</label>
@@ -127,7 +127,7 @@ if (!isset($_SESSION['is_login'])) {
 
                         <div class="col-md-6 ps-0 mb-3">
                             <label class="form-label">รหัสไปรษณีย์</label>
-                            <input type="text" name="hotel_postcode" class="form-control shadow-none">
+                            <input type="text" name="hotel_postcode" value="<?php echo $_SESSION["hotelpostcode"]; ?>" class="form-control shadow-none">
                         </div>
 
                         

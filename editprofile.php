@@ -72,22 +72,22 @@ if (!isset($_SESSION['is_login'])) {
                     <div class="row">
                         <div class="col-md-6 ps-0 mb-3">
                             <label class="form-label">ชื่อ</label>
-                            <input type="text" name="firstname" class="form-control shadow-none">
+                            <input type="text" name="firstname" value="<?php echo isset($_SESSION["firstname"]) ? $_SESSION["firstname"] : ''; ?>" class="form-control shadow-none">
                         </div>
-                        
+
                         <div class="col-md-6 ps-0 mb-3">
                             <label class="form-label">นามสกุล</label>
-                            <input type="text" name="lastname" class="form-control shadow-none">
+                            <input type="text" name="lastname" value="<?php echo isset($_SESSION["lastname"]) ? $_SESSION["lastname"] : ''; ?>" class="form-control shadow-none">
                         </div>
 
                         <div class="col-md-12 p-0 mb-3">
                             <label class="form-label">ที่อยู่</label>
-                            <input type="text" name="address" class="form-control shadow-none">
+                            <input type="text" name="address" value="<?php echo isset($_SESSION["address"]) ? $_SESSION["address"] : ''; ?>" class="form-control shadow-none">
                         </div>
 
                         <div class="col-md-6 ps-0 mb-3">
                             <label class="form-label">หมายเลขโทรศัพท์</label>
-                            <input type="text" name="phone" class="form-control shadow-none">
+                            <input type="text" name="phone" value="<?php echo isset($_SESSION["phonenumber"]) ? $_SESSION["phonenumber"] : ''; ?>" class="form-control shadow-none">
                         </div>
 
                         
