@@ -45,7 +45,7 @@ if (!isset($_SESSION['is_login'])) {
             <h1 class="mt-5">Change Hotel</h1>
             <p>แก้ไขข้อมูลโรงแรมของคุณ</p>
 
-            <form class="p-5 card card-body-profile" action="BackEnd/edithotel_db.php" method="post">
+            <form class="p-5 card card-body-profile" action="BackEnd/edithotel_db.php" method="post" enctype="multipart/form-data">
                 
                 <!-- เช็คว่ามี error มั้ย  ถ้าเป็นค่าว่าง -->
                 <?php if (isset($_SESSION['err_edithotel'])) : ?>
@@ -136,7 +136,7 @@ if (!isset($_SESSION['is_login'])) {
                             <input type="checkbox" name="hotel_facility[]" value="1"> สระว่ายน้ำ<br>
                             <input type="checkbox" name="hotel_facility[]" value="2"> ร้านอาหาร<br>
                             <input type="checkbox" name="hotel_facility[]" value="3"> บริการทำความสะอาดแต่ละวัน<br>
-                            <input type="checkbox" name="hotel_facility[]" value="4"> เครื่องปรับอากาศ<br>
+                            <input type="checkbox" name="hotel_facility[]" value="4"> ห้องปลอดบุหรี่<br>
                             <input type="checkbox" name="hotel_facility[]" value="5"> Free Wi-Fi<br>
                         </div>
 
@@ -148,7 +148,6 @@ if (!isset($_SESSION['is_login'])) {
 
                         
                          
-                        
                         <div class="text-center my-1">
                             <!-- อัปเดตข้อมูลแล้ว -->
                             <?php if (isset($_SESSION['hotel_update'])) : ?>

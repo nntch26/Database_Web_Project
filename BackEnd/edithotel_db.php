@@ -7,10 +7,11 @@ include('includes/connect_database.php'); // ดึงไฟล์เชื่�
 
 // เช็คว่า กดปุ่ม update
 if (isset($_POST['edithotel_update'])) {
+
     $hotelname = $_POST['hotel_name'];
     $hotelphone = $_POST['hotel_phone'];
     $hoteldes = $_POST['hotels_description'];
-    $hotelimg = $_POST['hotel_img'];
+
     $hoteladd = $_POST['hotel_address'];
     $hotelcity = $_POST['hotel_city'];
     $hotelcode = $_POST['hotel_postcode'];
@@ -19,7 +20,7 @@ if (isset($_POST['edithotel_update'])) {
 
 
     // เช็คว่า เป็นข้อมูลที่รับมาเป็นค่าว่าง หรือไม่
-    if (empty($hotelname) || empty($hotelphone) || empty($hoteldes) || empty($hotelimg)
+    if (empty($hotelname) || empty($hotelphone) || empty($hoteldes)
         || empty($hoteladd) || empty($hotelcity) || empty($hotelcode)) {
         $_SESSION['err_edithotel'] = "โปรดระบุข้อมูลของคุณให้ครบถ้วน";
         header('location: ../edithotel.php'); // กลับไปหน้า edit
@@ -74,6 +75,92 @@ if (isset($_POST['edithotel_update'])) {
 
             unlink(__DIR__ . "/uploads_img/" . $row['hotels_img']);
 
+
+            // เพิ่มไฟล์รูป
+           
+            
+            //////////////////////////// IMAGE FILES ////////////////////////////
+
+            if ($_SERVER["REQUEST_METHOD"] !== "POST") {
+                exit('POST request method required');
+            }
+
+            if (empty($_FILES)) {
+                exit('$_FILES is empty - is file_uploads set to "Off" in php.ini?');
+            }
+
+            if ($_FILES["hotel_img"]["error"] !== UPLOAD_ERR_OK) {
+
+                switch ($_FILES["hotel_img"]["error"]) {
+                    case UPLOAD_ERR_PARTIAL:
+                        exit('File only partially uploaded');
+                    case UPLOAD_ERR_NO_FILE:
+                        exit('No file was uploaded');
+                    case UPLOAD_ERR_EXTENSION:
+                        exit('File upload stopped by a PHP extension');
+                    case UPLOAD_ERR_FORM_SIZE:
+                        exit('File exceeds MAX_FILE_SIZE in the HTML form');
+                    case UPLOAD_ERR_INI_SIZE:
+                        exit('File exceeds upload_max_filesize in php.ini');
+                    case UPLOAD_ERR_NO_TMP_DIR:
+                        exit('Temporary folder not found');
+                    case UPLOAD_ERR_CANT_WRITE:
+                        exit('Failed to write file');
+                    default:
+                        exit('Unknown upload error');
+                }
+            }
+
+            // กำหนดขนาดไฟล์
+            // if ($_FILES["hotel_img"]["size"] > 1048576) {
+            //     exit('File too large (max 1MB)');
+            // }
+
+            // เช็คว่านามสกุลไฟล์เป็น
+            $finfo = new finfo(FILEINFO_MIME_TYPE);
+            $mime_type = $finfo->file($_FILES["hotel_img"]["tmp_name"]);
+
+            $mime_types = ["image/gif", "image/png", "image/jpeg"];
+
+            if (!in_array($_FILES["hotel_img"]["type"], $mime_types)) {
+                print_r($_FILES);
+                exit("Invalid file type");
+            }
+
+            // แก้ชื่อไฟล์ถ้าชื่อไฟล์มีตัวอักษรพิเศษ
+            $pathinfo = pathinfo($_FILES["hotel_img"]["name"]);
+
+            $base = $pathinfo["filename"];
+
+            $base = preg_replace("/[^\w-]/", "_", $base);
+
+            $filename = $base . "." . $pathinfo["extension"];
+
+            //ตำแหน่งไฟล์
+            $destination = __DIR__ . "/uploads_img/" . $filename;
+
+            // ชื่อไฟล์ซ้ำ
+            $i = 1;
+
+            while (file_exists($destination)) {
+
+                $filename = $base . "($i)." . $pathinfo["extension"];
+                $destination = __DIR__ . "/uploads_img/" . $filename;
+
+                $i++;
+            }
+
+            if (!move_uploaded_file($_FILES["hotel_img"]["tmp_name"], $destination)) {
+
+                exit("Can't move uploaded file");
+            }
+
+            // echo "File uploaded successfully.";
+
+            //////////////////////////// END IMAGE FILES ////////////////////////////
+     
+
+
             // ค้นหา location_id จากตาราง Locations โดยใช้ชื่อจังหวัดเป็นเงื่อนไข
             $select_stmt3 = $db->prepare("SELECT location_id FROM locations WHERE location_name = :hotels_city");
             $select_stmt3->bindParam(':hotels_city', $hotelcity);
@@ -100,7 +187,7 @@ if (isset($_POST['edithotel_update'])) {
             $update_stmt->bindParam(':hotels_address', $hoteladd);
             $update_stmt->bindParam(':hotels_des', $hoteldes);
             $update_stmt->bindParam(':hotels_postcode', $hotelcode);
-            $update_stmt->bindParam(':hotels_img', $hotelimg);
+            $update_stmt->bindParam(':hotels_img', $filename);
             $update_stmt->bindParam(':location_id', $rowid['location_id']);
             $update_stmt->bindParam(':user_id', $_SESSION["userid"]);
 

@@ -7,10 +7,11 @@ include('includes/connect_database.php'); // ดึงไฟล์เชื่�
 
 if (isset($_POST['room_submit'])) {
     $roomtype = $_POST['room_type'];
-    $roomremake = $_POST['room_remake'];
     $roomdes = $_POST['room_description'];
     $roomprice = $_POST['room_price'];
     $roomsize = $_POST['room_size'];
+    $room_facility = $_POST['room_facility'];
+    $room_num = $_POST['room_num'];
     
 
     // เรียกใช้ hotel id
@@ -23,8 +24,8 @@ if (isset($_POST['room_submit'])) {
 
 
     // เช็คว่า เป็นข้อมูลที่รับมาเป็นค่าว่าง หรือไม่
-    if (empty($roomtype) || empty($roomremake) || empty($roomdes) || empty($roomprice) 
-        || empty($roomsize)) {
+    if (empty($roomtype) || empty($roomdes) || empty($roomprice) 
+        || empty($roomsize) || empty($room_facility) || empty($room_num)) {
 
         $_SESSION['err_editroom'] = "โปรดระบุข้อมูลของคุณให้ครบถ้วน";
         header('location: ../insertroom.php'); // กลับไปหน้า edit
@@ -118,8 +119,8 @@ if (isset($_POST['room_submit'])) {
 
 
         //  เพิ่มข้อมูลลงในตาราง rooms
-        $sql = "INSERT INTO rooms (hotel_id, rooms_price, rooms_type, rooms_size, rooms_description ,rooms_img ,rooms_remake)
-        VALUES (:hotel_id, :room_price, :room_type, :room_size, :rooms_des, :rooms_img, :rooms_remake)";
+        $sql = "INSERT INTO rooms (hotel_id, rooms_price, rooms_type, rooms_size, rooms_description ,rooms_img ,rooms_number)
+        VALUES (:hotel_id, :room_price, :room_type, :room_size, :rooms_des, :rooms_img, :rooms_num)";
         
         $insert_stmt = $db->prepare($sql);
 
@@ -131,9 +132,33 @@ if (isset($_POST['room_submit'])) {
         $insert_stmt->bindParam(':room_size', $roomsize);
         $insert_stmt->bindParam(':rooms_des', $roomdes);
         $insert_stmt->bindParam(':rooms_img', $filename);
-        $insert_stmt->bindParam(':rooms_remake', $roomremake);
+        $insert_stmt->bindParam(':rooms_num', $room_num);
 
         $insert_stmt->execute();
+
+        ////////////////////////////////////////////////////////////
+
+        $select_stmt5 = $db->prepare("SELECT * FROM rooms WHERE hotel_id = :hotel_id ORDER BY room_id DESC");
+        $select_stmt5->bindParam(':hotel_id', $_SESSION["hotel_id"]);
+        $select_stmt5->execute();
+
+        $rowidro = $select_stmt5->fetch(PDO::FETCH_ASSOC); // ดึงข้อมูลออกมา id ล่าสุดออกมา
+
+         // เพิ่มข้อมูลลงในตาราง roomsfacility
+ 
+         foreach ($room_facility as $facility_id) {
+            $sqlf = "INSERT INTO `roomsfacility` (`facility_id`, `room_id`)
+            VALUES(:facility_id, :room_id)";
+
+            $select_stmt6 = $db->prepare($sqlf);
+
+            $select_stmt6->bindParam(':facility_id',  $facility_id);
+            $select_stmt6->bindParam(':room_id', $rowidro['room_id']);
+            $select_stmt6->execute();
+        }
+
+
+
 
         // สำเร็จ  ถ้าเพิ่มข้อมูลผ่านแล้ว 
         if ($insert_stmt) {
