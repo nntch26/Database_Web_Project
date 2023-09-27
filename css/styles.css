@@ -284,7 +284,10 @@ body {
   justify-content: flex-start;
 }
 
-
+.big2{
+  position: relative;
+  left: 5%;
+}
 
 .desc-over{
   position: absolute;
@@ -427,4 +430,5 @@ body {
   padding: 15px;
 
 }
+
 

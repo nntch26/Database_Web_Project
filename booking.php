@@ -1,13 +1,20 @@
 <?php
 session_start();
 include('BackEnd/includes/connect_database.php');
-$_SESSION["room_id"] = $_GET["room_id"];
-$checkin_date = $_SESSION["checkin"]; // วันที่เช็คอิน
-$checkout_date = $_SESSION["checkout"]; // วันที่เช็คเอาท์
+if (isset($_GET['submit2'])){
+    $_SESSION["room_id"] = $_GET["room_id"];
+    $_SESSION["checkin"] =$_GET["checkin_date"]; // วันที่เช็คอิน
+    $_SESSION["checkout"] = $_GET["checkout_date"]; // วันที่เช็คเอาท์
+    $_SESSION["hotel_id"] = $_GET["hotel_id"];
+    $_SESSION["available_rooms"] = $_GET["available_rooms"];
+    header('location: booking.php');
+
+}
+ echo  'room_id and hotel_id'.$_SESSION["room_id"]. $_SESSION["hotel_id"] . "จำนวนห้องที่เหลือ".$_SESSION["available_rooms"]  ;
 
 // แปลงวันที่เช็คอินและเช็คเอาท์เป็น timestamp
-$checkin_timestamp = strtotime($checkin_date);
-$checkout_timestamp = strtotime($checkout_date);
+$checkin_timestamp = strtotime($_SESSION["checkin"]);
+$checkout_timestamp = strtotime($_SESSION["checkout"]);
 
 // คำนวณจำนวนวินาทีที่แตกต่างกัน
 $time_difference = $checkout_timestamp - $checkin_timestamp;
@@ -58,14 +65,17 @@ $number_of_nights = intval($number_of_nights);
                         required>
                     <label for="address"> ที่อยู่ : </label>
                     <input type="text" id="address" name="address" value="<?php echo $row["users_address"] ?>" required>
+                    <label for="address"> จำนวนห้องที่จะเข้าพัก : </label>
+                    <input type="text" id="bookings_number" name="bookings_number" required>
                     <button type="submit" class="btn">Next</button>
+                    
                 </form>
             </div>
         </div>
 
         <?php
         $select_stmt = $db->prepare("SELECT * FROM hotels
-                                    JOIN rooms USING (room_id)
+                                    JOIN rooms USING (hotel_id)
                                     WHERE hotel_id = :hotel_id AND room_id = :room_id");
         $select_stmt->bindParam(':hotel_id', $_SESSION["hotel_id"]);
         $select_stmt->bindParam(':room_id', $_SESSION["room_id"]);
@@ -76,34 +86,38 @@ $number_of_nights = intval($number_of_nights);
         ?>
         <div class="col-50">
             <div class="card">
-                <img src="img/hotel-room-home.jpg" class="card-img-top" height="400">
+                <img src="<?php echo 'BackEnd/uploads_img/'.$result['rooms_img']; ?>" class="card-img-top" height="400">
                 <h4>
-                    <?php echo $result['hotels_name'] ?>
+                    <?php echo $result['hotels_name']. $result['rooms_img'] ?>
+
                 </h4>
                 <div class="row">
                         <div class="col-50">
                             <label for="check-in">Check-In</label>
-                            <pre>mm/dd/yyyy</pre>
+                            <pre><?php echo $_SESSION["checkin"]?></pre>
                         </div>
                         <div class="col-50">
                             <label for="check-out">Check-Out</label>
-                            <pre>mm/dd/yyyy</pre>
+                            <pre><?php echo $_SESSION["checkout"]?></pre>
                         </div>
                     </div>
                 <label for="phone">
-                    <?php echo 'เบอร์ติดต่อ : ' . $result['hotels_name'] ?>
+                    <?php echo 'เบอร์ติดต่อ : ' . $result['hotels_phone'] ?>
                 </label>
                 <label for="information">
-                    <?php echo 'รายละเอียดโรงแรม : ' . $result['hotels_name'] ?>
+                    <?php echo 'รายละเอียดโรงแรม : ' . $result['hotels_description']?>
                 </label>
                 <label for="address">
-                    <?php echo 'ที่อยู่ : ' . $result['hotels_name'] ?>
+                    <?php echo 'ที่อยู่ : ' . $result['hotels_address']?>
                 </label>
                 <label for="city">
-                    <?php echo 'เมือง/จังหวัด : ' . $result['hotels_name'] ?>
+                    <?php echo 'เมือง/จังหวัด : ' . $result['location_id'] ?>
                 </label>
                 <label for="postaddress">
-                    <?php echo 'รหัสไปรษณีย์ : ' . $result['hotels_name'] ?>
+                    <?php echo 'รหัสไปรษณีย์ : ' . $result['hotels_postcode'] ?>
+                </label>
+                <label for="roomdes">
+                    <?php echo 'รายละเอียดห้อง : ' . $result['rooms_description'] ?>
                 </label>
                 <br>
                 <p class="card-text">ราคา 1 ห้องต่อ 1 คืน <span class="price">

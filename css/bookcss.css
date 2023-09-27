@@ -284,6 +284,7 @@ body {
   display: grid;
   grid-template-columns: auto auto;
   justify-content: flex-start;
+  margin-bottom: 10%;
 }
 
 
@@ -291,6 +292,7 @@ body {
 .desc-over{
   position: absolute;
   left: 5%;
+  margin-bottom: 5%;
 }
 
 
@@ -464,5 +466,23 @@ th, td {
   font-size: 2em;
   text-align: center;
   color: red;
+}
+
+
+.mos{
+  margin-top: 10%;
+}
+
+.ta-desc{
+  width: 90%;
+}
+
+.mos2{
+  margin-left: 5%;
+  font-size: 2em;
+  text-align: center;
+  color: red;
+  margin-top: 5%;
+  width: 90%;
 }
 
