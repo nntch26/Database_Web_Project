@@ -47,6 +47,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </p>
       </div>
     </div>
+    
     <!---- hotel facility ---->
     <?php include('BackEnd/includes/connect_database.php');
            $select_stmt2 = $db->prepare("SELECT facility_name from hotels h join hotelsfacility h2 using (hotel_id) join hotelsfacilityname 
