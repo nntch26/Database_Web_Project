@@ -41,7 +41,6 @@
                                 <td><?php echo $row["rooms_type"]; ?></td>
                                 <td><?php echo $row["rooms_size"]; ?></td>
                                 <td><?php echo $row["rooms_description"]; ?></td>
-                                <td><?php echo $row["rooms_img"]; ?></td>
                                 <!-- <td><?php //echo $row["bookings_status"]; ?></td> -->
                             </form>
                         </tr>
