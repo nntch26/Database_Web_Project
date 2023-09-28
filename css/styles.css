@@ -65,6 +65,16 @@ button.booknow:hover{
   background-color:  rgb(31, 72, 219);
   color: white;
 }
+.login-background-blue{
+  background-color: #77bbff;
+}
+.login-btn-blue{
+  background-color: rgb(39, 86, 255);
+}
+.login-card-custom{
+  border-radius: 12px;
+  width: 30%;
+}
 
 
 
