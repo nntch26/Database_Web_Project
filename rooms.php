@@ -6,14 +6,71 @@ $_SESSION["location"] = $_GET['location'];
 $_SESSION["checkin"] = $_GET['checkin'];
 $_SESSION["checkout"] = $_GET['checkout'];
 $_SESSION["search_name"] = $_GET['search_name'];
+$_SESSION["num_guest"] = $_GET['num_guest'];
 
-if (isset($_GET['num_guest'])) {
-  $_SESSION["num_guest"] = $_GET['num_guest'];
-} else {
-  // ให้ค่าเริ่มต้นหากไม่มีการระบุใน URL
-  $_SESSION["num_guest"] = 1;
+
+//ดึง Hotel ล่ะ JOIN กับตัว locations กับ rooms เพื่อดึงตัวโรงแรมที่ตรงตามเงื่อนไขที่ Tourist ค้นหา
+        
+// ค้นหาจาก ชื่อโรงแรม
+if ($_SESSION['search_name'] != null){
+
+  $searchText = '%' . $_SESSION["search_name"] . '%';
+
+  $select_stmt = $db->prepare("SELECT hotels.*, locations.*, rooms.*
+                              FROM hotels
+                              JOIN locations USING (location_id)
+                              JOIN rooms USING (hotel_id)
+                              WHERE hotels_name LIKE :text
+                              GROUP BY hotels.hotel_id;");
+
+  $select_stmt->bindParam(':text', $searchText);
+  $select_stmt->execute();
+  echo "11110";
+
+  
+
+
+// ค้นหาจาก จำนวนคน
+} else if ($_SESSION["location"] == null && $_SESSION["num_guest"] != null) {
+  $select_stmt = $db->prepare("SELECT hotels.*, locations.*, rooms.*
+                              FROM hotels
+                              JOIN locations USING (location_id)
+                              JOIN rooms USING (hotel_id)
+                              WHERE rooms_size >= :num_guest
+                              GROUP BY hotels.hotel_id ");
+
+  $select_stmt->bindParam(':num_guest', $_SESSION["num_guest"]);
+  $select_stmt->execute();
+  echo "22220";
+
+  
+
+// ค้นหาจาก จังหวัด จำนวนคน
+} else if ($_SESSION["location"] != null && $_SESSION["num_guest"] != null) {
+
+  $searchText = '%' . $_SESSION["location"] . '%';
+
+  $select_stmt = $db->prepare("SELECT hotels.*, locations.*, rooms.*
+                              FROM hotels
+                              JOIN locations USING (location_id)
+                              JOIN rooms USING (hotel_id)
+                              WHERE location_name LIKE :get_location AND rooms_size >= :num_guest
+                              GROUP BY hotels.hotel_id ");
+
+  $select_stmt->bindParam(':get_location', $searchText);
+  $select_stmt->bindParam(':num_guest', $_SESSION["num_guest"]);
+  $select_stmt->execute();
+  echo "33330";
 
 }
+
+echo $_SESSION["location"];
+echo $_SESSION["num_guest"];
+echo $_SESSION['search_name'];
+
+//นับจำนวนข้อมูลที่มี
+$row_count = $select_stmt->rowCount(); 
+
 ?>
 
 <!DOCTYPE html>
@@ -50,152 +107,13 @@ if (isset($_GET['num_guest'])) {
     <div class="row">
       <div class="col-lg-3 col-md-12 mb-lg-0 mb-4 px-0">
 
-        <nav class="navbar navbar-expand-lg navbar-light bg-white rounded shadow">
-          <div class="container-fluid flex-lg-column align-items-stretch">
-            <h4 class="mt-2">FILTERS</h4>
-            <button class="navbar-toggler shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#filterDropdown" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-              <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse flex-column align-items-stretch mt-2" id="filterDropdown">
-
-              <div class="border bg-light p-3 rounded mb-3">
-
-                <form action="rooms.php" method="get">
-                  <h5 class="mb-3" style="font-size: 18px;">CHECK AVAILABILITY</h5>
-
-                  <label class="form-label">Search</label>
-                  <input type="text" class="form-control shadow-none mb-3" name="search_name" placeholder="ชื่อโรงแรมที่คุณต้องการค้นหา" />
-                  
-                  <label class="form-label">Location</label>
-                  <input type="text" class="form-control shadow-none mb-3" placeholder="ชื่อจังหวัด" name="location"  />
-
-                  <label class="form-label">Check-in</label>
-                  <input type="date" class="form-control shadow-none mb-3" name="checkin" min="<?php echo date('Y-m-d') ?>" value="<?php echo $_SESSION["checkin"]; ?>">
-
-                  <label class="form-label">Check-out</label>
-                  <input type="date" class="form-control shadow-none" name="checkout" min="<?php echo date('Y-m-d') ?>" value="<?php echo $_SESSION["checkout"]; ?>">
-                  
-                  <label class="form-label">Guests</label>
-                  <input type="number" class="form-control shadow-none" name="num_guest"  required>
-
-
-                  <div class="form__group" style="text-align: center;">
-                        <button type="submit" name="submit" class="btn btn-primary shadow-none me-lg-3 me-2 mt-3">Search</button>
-                  </div>
-                  
-                </form>
-
-              </div>
-              <div class="border bg-light p-3 rounded mb-3">
-                <h5 class="mb-3" style="font-size: 18px;">Property Class</h5>
-                <div class="mb-2">
-                  <input type="radio" id="f1" class="form-check-input shadow-none me-1">
-                  <label class="form-check-label" value="1" for="f1" name="rating">1 ★</label>
-                </div>
-                <div class="mb-2">
-                  <input type="radio" id="f1" class="form-check-input shadow-none me-1">
-                  <label class="form-check-label" value="2" for="f2" name="rating">2 ★★</label>
-                </div>
-                <div class="mb-2">
-                  <input type="radio" id="f1" class="form-check-input shadow-none me-1">
-                  <label class="form-check-label" value="3" for="f3" name="rating">3 ★★★</label>
-                </div>
-                <div class="mb-2">
-                  <input type="radio" id="f1" class="form-check-input shadow-none me-1">
-                  <label class="form-check-label" value="4 " for="f3" name="rating">4 ★★★★</label>
-                </div>
-                <div class="mb-2">
-                  <input type="radio" id="f1" class="form-check-input shadow-none me-1">
-                  <label class="form-check-label" value="5" for="f3" name="rating">5 ★★★★★</label>
-                </div>
-                <div class="mb-2">
-                  <input type="radio" id="f1" class="form-check-input shadow-none me-1">
-                  <label class="form-check-label" value="6" for="f3" name="rating">ALL ★ - ★★★★★</label>
-                </div>
-              </div>
-              <div class="border bg-light p-3 rounded mb-3">
-                <h5 class="mb-3" style="font-size: 18px;">Price</h5>
-                <div class="d-flex">
-                  <div class="me-2">
-                    <label class="form-label">Min</label>
-                    <input type="text" class="form-control shadow-none">
-                  </div>
-                  <div>
-                    <label class="form-label">Max</label>
-                    <input type="text" class="form-control shadow-none">
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </nav>
+        <!-- Filters -->
+        <?php require('inc/filters.php'); ?>
       </div>
 
       <div class="col-lg-9 col-md-12 px-4">
 
-      <?php
-
-        //ดึง Hotel ล่ะ JOIN กับตัว locations กับ rooms เพื่อดึงตัวโรงแรมที่ตรงตามเงื่อนไขที่ Tourist ค้นหา
-        
-        // ค้นหาจาก ชื่อโรงแรม
-        if ($_SESSION['search_name'] != 'null'){
-
-          $searchText = '%' . $_SESSION["search_name"] . '%';
-
-          
-
-          $select_stmt = $db->prepare("SELECT hotels.*, locations.*
-                                      FROM hotels
-                                      JOIN locations USING (location_id)
-                                      JOIN rooms USING (hotel_id)
-                                      WHERE hotels_name LIKE :text
-                                      GROUP BY hotels.hotel_id;");
-
-          $select_stmt->bindParam(':text', $searchText);
-          $select_stmt->execute();
-
-          
-
-        
-        // ค้นหาจาก จำนวนคน
-        } else if ($_SESSION["location"] == null && $_SESSION["num_guest"] != null) {
-          $select_stmt = $db->prepare("SELECT hotels.*, locations.*
-                                      FROM hotels
-                                      JOIN locations USING (location_id)
-                                      JOIN rooms USING (hotel_id)
-                                      WHERE rooms_size >= :num_guest
-                                      GROUP BY hotels.hotel_id ");
-
-          $select_stmt->bindParam(':num_guest', $_SESSION["num_guest"]);
-          $select_stmt->execute();
-
-          
-        
-        // ค้นหาจาก จังหวัด จำนวนคน
-        } else if ($_SESSION["location"] != null && $_SESSION["num_guest"] != null) {
-
-          $searchText = '%' . $_SESSION["location"] . '%';
-
-          $select_stmt = $db->prepare("SELECT hotels.*, locations.*
-                                      FROM hotels
-                                      JOIN locations USING (location_id)
-                                      JOIN rooms USING (hotel_id)
-                                      WHERE location_name LIKE :get_location AND rooms_size >= :num_guest
-                                      GROUP BY hotels.hotel_id ");
-
-          $select_stmt->bindParam(':get_location', $searchText);
-          $select_stmt->bindParam(':num_guest', $_SESSION["num_guest"]);
-          $select_stmt->execute();
-
-
-        }
-
-
-        //นับจำนวนข้อมูลที่มี
-        $row_count = $select_stmt->rowCount(); 
-    
-
-      ?>
+      <!-- Hotel listings -->
 
       <?php
       if ($row_count > 0) {
@@ -224,11 +142,7 @@ if (isset($_GET['num_guest'])) {
                           <!-- จำนวนคนพักได้ -->
                       
                           <div class="guests">
-                            <?php if (isset($row['rooms_size'])): ?>
-                                <span class="badge rounded-pill bg-light text-dark text-wrap"><?= $row['rooms_size'] ?> Adults</span>
-                            <?php else: ?>
-                                <span class="badge rounded-pill bg-light text-dark text-wrap"><?= $_SESSION["num_guest"] ?> Adults</span>
-                            <?php endif; ?>
+                            <span class="badge rounded-pill bg-light text-dark text-wrap"><?= $row['rooms_size'] ?> Adults</span>
                           </div>
 
                           
