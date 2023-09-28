@@ -264,7 +264,7 @@ if (isset($_GET['num_guest'])) {
                       <div class="col-md-2 mt-lg-0 mt-md-0 mt-4 text-center">
                           <h6 class="mb-4">ราคาเริ่มต้น/คืน</h6>
                           <h2 class="mb-4">฿ <?= number_format($row2['min_price']) ?></h2>
-                          <button type="submit" name="submit" class="btn login-btn-blue btn-block text-white">Book Now</button>
+                          <button type="submit" name="submit" class="booknow">Book Now</button>
                           <input type="hidden" name="hotel_id" value="<?= $row['hotel_id'] ?>">
                       </div>
 

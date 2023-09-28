@@ -15,6 +15,19 @@
   padding: 0;
   box-sizing: border-box;
 }
+.mos {
+  margin-top: 10%;
+}
+
+
+.mos2 {
+  margin-left: 5%;
+  font-size: 2em;
+  text-align: center;
+  color: red;
+  margin-top: 5%;
+  width: 90%;
+}
 
 .section__container {
   max-width: var(--max-width);

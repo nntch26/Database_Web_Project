@@ -94,32 +94,26 @@ $number_of_nights = intval($number_of_nights);
                 <div class="row">
                     <div class="col-50">
                         <label for="check-in">Check-In</label>
-                        <pre><?php echo $_SESSION["checkin"] ?></pre>
+                        <p><?php echo $_SESSION["checkin"] ?></p>
                     </div>
                     <div class="col-50">
                         <label for="check-out">Check-Out</label>
-                        <pre><?php echo $_SESSION["checkout"] ?></pre>
+                        <p><?php echo $_SESSION["checkout"] ?></p>
                     </div>
                 </div>
-                <label for="phone">
-                    <?php echo 'เบอร์ติดต่อ : ' . $result['hotels_phone'] ?>
-                </label>
-                <label for="information">
-                    <?php echo 'รายละเอียดโรงแรม : ' . $result['hotels_description'] ?>
-                </label>
-                <label for="address">
-                    <?php echo 'ที่อยู่ : ' . $result['hotels_address'] ?>
-                </label>
-                <label for="city">
-                    <?php echo 'เมือง/จังหวัด : ' . $result['location_id'] ?>
-                </label>
-                <label for="postaddress">
-                    <?php echo 'รหัสไปรษณีย์ : ' . $result['hotels_postcode'] ?>
-                </label>
-                <label for="roomdes">
-                    <?php echo 'รายละเอียดห้อง : ' . $result['rooms_description'] ?>
-                </label>
-                <br>
+                <label for="phone">เบอร์ติดต่อ : </label>
+                    <p><?php echo $result['hotels_phone'] ?></p>
+                <label for="information">รายละเอียดโรงแรม : </label>
+                    <p><?php echo $result['hotels_description'] ?></p>
+                <label for="address">ที่อยู่ : </label>
+                    <p><?php echo $result['hotels_address'] ?></p>
+                <label for="city">เมือง/จังหวัด : </label>
+                    <p><?php echo $result['location_id'] ?></p>
+                <label for="postaddress">รหัสไปรษณีย์ : </label>
+                    <p><?php echo $result['hotels_postcode'] ?></p>
+                <label for="roomdes">รายละเอียดห้อง : </label>
+                    <p><?php echo $result['rooms_description'] ?></p>
+                <hr>
                 <p class="card-text">ราคา 1 ห้องต่อ 1 คืน <span class="price">
                         <?php echo "฿" .  number_format($result['rooms_price'])  ?>
                     </span></p>

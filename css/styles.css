@@ -54,19 +54,18 @@ body {
   margin: 0 auto;
   max-width: 100%;
 }
-
-.login-background-blue {
-  background-color: #77bbff;
-}
-
-.login-btn-blue {
+button.booknow{
   background-color: rgb(39, 86, 255);
+  color: white;
+  border-radius: 7px;
+  padding: 7px;
+  border: none;
+}
+button.booknow:hover{
+  background-color:  rgb(31, 72, 219);
+  color: white;
 }
 
-.login-card-custom {
-  border-radius: 12px;
-  width: 30%;
-}
 
 
 /* Header image  */

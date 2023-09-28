@@ -40,24 +40,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   <title>Document</title>
   <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
   <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-  <style>
-    .mos {
-      margin-top: 10%;
-    }
-
-    .ta-desc {
-      width: 90%;
-    }
-
-    .mos2 {
-      margin-left: 5%;
-      font-size: 2em;
-      text-align: center;
-      color: red;
-      margin-top: 5%;
-      width: 90%;
-    }
-  </style>
 </head>
 
 <body>
