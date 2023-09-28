@@ -34,7 +34,8 @@ elseif ($_SESSION["role"] != 'HOTELOWNER'){
 <body>
 
     <!---- Navbar ---->
-    <?php require('navbar.php'); ?>
+    <?php require('inc/navbar.php'); ?>
+
 
     <!-- hotel -->
     <div class="container">

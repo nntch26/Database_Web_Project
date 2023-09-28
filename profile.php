@@ -47,7 +47,8 @@ else{
 <body>
 
     <!---- Navbar ---->
-    <?php require('navbar.php'); ?>
+    <?php require('inc/navbar.php'); ?>
+
 
     <!-- profile -->
     <div class="container">

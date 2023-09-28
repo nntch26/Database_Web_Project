@@ -121,7 +121,7 @@ $number_of_nights = intval($number_of_nights);
                 </label>
                 <br>
                 <p class="card-text">ราคา 1 ห้องต่อ 1 คืน <span class="price">
-                        <?php echo "฿" . $result['rooms_price'] ?>
+                        <?php echo "฿" .  number_format($result['rooms_price'])  ?>
                     </span></p>
                 <br>
                 <p class="card-text">ระยะเวลาที่พัก <span class="price">

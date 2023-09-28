@@ -37,7 +37,8 @@ if (!isset($_SESSION['is_login'])) {
 <body>
 
     <!---- Navbar ---->
-    <?php require('navbar.php'); ?>
+    <?php require('inc/navbar.php'); ?>
+
 
     <!-- Change Profile-->
     <div class="container">

@@ -20,7 +20,8 @@ session_start();
 <body>
 
     <!---- Navbar ---->
-    <?php require('navbar.php'); ?>
+    <?php require('inc/navbar.php'); ?>
+
 
 
     <!---- header ---->
