@@ -53,7 +53,8 @@ else{
 <body>
 
     <!---- Navbar ---->
-    <?php require('navbar.php'); ?>
+    <?php require('inc/navbar.php'); ?>
+
 
     <!-- Change Profile-->
     <div class="container">

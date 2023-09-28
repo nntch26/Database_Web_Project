@@ -64,7 +64,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 </head>
 
 <body>
-  <?php require('navbar.php'); ?>
+  <?php require('inc/navbar.php'); ?>
+
 <!---- hotel img des  ---->
   <div class="wrapper">
     <div class="info">

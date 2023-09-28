@@ -34,7 +34,7 @@ if (isset($_GET['num_guest'])) {
 <body>
 
   <!---- Navbar ---->
-  <?php require('navbar.php'); ?>
+  <?php require('inc/navbar.php'); ?>
 
   <!---- header ---->
   <header class="section__container header__container">
