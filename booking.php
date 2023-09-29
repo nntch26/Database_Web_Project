@@ -7,6 +7,7 @@ if (isset($_GET['submit2']) && isset($_SESSION['userid']) && ($_SESSION["role"] 
     $_SESSION["checkout"] = $_GET["checkout_date"]; // วันที่เช็คเอาท์
     $_SESSION["hotel_id"] = $_GET["hotel_id"];
     $_SESSION["available_rooms"] = $_GET["available_rooms"];
+    
 }else if ($_SESSION["role"] == "HOTELOWNER" && isset($_SESSION['userid'])){
     $_SESSION['ur_hotel'] = "คุณไม่สามารถจองได้";
     header('location: book.php');

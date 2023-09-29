@@ -25,7 +25,6 @@ if ($_SESSION['search_name'] != null){
 
   $select_stmt->bindParam(':text', $searchText);
   $select_stmt->execute();
-  echo "11110";
 
   
 
@@ -41,7 +40,6 @@ if ($_SESSION['search_name'] != null){
 
   $select_stmt->bindParam(':num_guest', $_SESSION["num_guest"]);
   $select_stmt->execute();
-  echo "22220";
 
   
 
@@ -60,13 +58,9 @@ if ($_SESSION['search_name'] != null){
   $select_stmt->bindParam(':get_location', $searchText);
   $select_stmt->bindParam(':num_guest', $_SESSION["num_guest"]);
   $select_stmt->execute();
-  echo "33330";
 
 }
 
-echo $_SESSION["location"];
-echo $_SESSION["num_guest"];
-echo $_SESSION['search_name'];
 
 //นับจำนวนข้อมูลที่มี
 $row_count = $select_stmt->rowCount(); 
@@ -178,7 +172,9 @@ $row_count = $select_stmt->rowCount();
                       <div class="col-md-2 mt-lg-0 mt-md-0 mt-4 text-center">
                           <h6 class="mb-4">ราคาเริ่มต้น/คืน</h6>
                           <h2 class="mb-4">฿ <?= number_format($row2['min_price']) ?></h2>
-                          <button type="submit" name="submit" class="booknow">Book Now</button>
+
+                          <button type="submit" name="Book_now" class="booknow">Book Now</button>
+
                           <input type="hidden" name="hotel_id" value="<?= $row['hotel_id'] ?>">
                       </div>
 
