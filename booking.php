@@ -1,16 +1,16 @@
 <?php
 session_start();
 include('BackEnd/includes/connect_database.php');
-if (isset($_GET['submit2'])){
+if (isset($_GET['submit2']) && isset($_SESSION['userid']) && ($_SESSION["role"] != "HOTELOWNER")) {
     $_SESSION["room_id"] = $_GET["room_id"];
-    $_SESSION["checkin"] =$_GET["checkin_date"]; // วันที่เช็คอิน
+    $_SESSION["checkin"] = $_GET["checkin_date"]; // วันที่เช็คอิน
     $_SESSION["checkout"] = $_GET["checkout_date"]; // วันที่เช็คเอาท์
     $_SESSION["hotel_id"] = $_GET["hotel_id"];
     $_SESSION["available_rooms"] = $_GET["available_rooms"];
-    header('location: booking.php');
-
+}else{
+    header('location: login.php');
 }
- echo  'room_id and hotel_id'.$_SESSION["room_id"]. $_SESSION["hotel_id"] . "จำนวนห้องที่เหลือ".$_SESSION["available_rooms"] .$_SESSION["checkin_date"] ;
+ //echo  'room_id and hotel_id'.$_SESSION["room_id"]. $_SESSION["hotel_id"] . "จำนวนห้องที่เหลือ".$_SESSION["available_rooms"] .$_SESSION["checkin_date"] ;
 
 // แปลงวันที่เช็คอินและเช็คเอาท์เป็น timestamp
 $checkin_timestamp = strtotime($_SESSION["checkin"]);
@@ -33,21 +33,33 @@ $number_of_nights = intval($number_of_nights);
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
-    <link
-        href="https://fonts.googleapis.com/css2?family=Mitr:wght@200;300;400;500;600&family=Noto+Sans+Thai:wght@100&display=swap"
-        rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css2?family=Mitr:wght@200;300;400;500;600&family=Noto+Sans+Thai:wght@100&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="css/PaymentAndBooking.css">
     <title>Document</title>
 </head>
 
 <body>
     <?php
-    $select_stmt = $db->prepare("SELECT * FROM users");
+    $select_stmt = $db->prepare("SELECT * FROM users
+                                WHERE user_id = :user_id");
+    $select_stmt->bindParam(':user_id', $_SESSION["userid"]);
     $select_stmt->execute();
     $row = $select_stmt->fetch(PDO::FETCH_ASSOC);
+
+    // ************************************************************ //
+
+    $select_stmt = $db->prepare("SELECT * FROM hotels
+                                    JOIN rooms USING (hotel_id)
+                                    WHERE hotel_id = :hotel_id AND room_id = :room_id");
+    $select_stmt->bindParam(':hotel_id', $_SESSION["hotel_id"]);
+    $select_stmt->bindParam(':room_id', $_SESSION["room_id"]);
+    $select_stmt->execute();
+    $result = $select_stmt->fetch(PDO::FETCH_ASSOC);
+
+    $price_with_night = $number_of_nights * $result['rooms_price'];
     ?>
+
     <h1 class="checkout">Booking</h1>
     <div class="row">
         <div class="col-25">
@@ -55,41 +67,29 @@ $number_of_nights = intval($number_of_nights);
                 <form method="post" action="BackEnd/process_booking.php">
                     <h4>ข้อมูลผู้ใช้งาน</h4>
                     <label for="fname"> ชื่อ : </label>
-                    <input type="text" id="fname" name="fname" value="<?php echo $row["users_first_name"] ?> " required>
+                    <input type="text" id="fname" name="fname" placeholder="โปรดระบุชื่อจริงของคุณ" value="<?php echo isset($row["users_first_name"]) ? $row["users_first_name"] : ''; ?>" required>
                     <label for="lname"> นามสกุล : </label>
-                    <input type="text" id="lname" name="lname" value="<?php echo $row["users_last_name"] ?>" required>
+                    <input type="text" id="lname" name="lname" placeholder="โปรดระบุนามสกุลของคุณ" value="<?php echo isset($row["users_last_name"]) ? $row["users_last_name"] : ''; ?>" required>
                     <label for="email"> Email : </label>
-                    <input type="email" id="email" name="email" value="<?php echo $row["users_email"] ?>" required>
+                    <input type="email" id="email" name="email" value="<?php echo $row["users_email"] ?>" readonly>
                     <label for="phone"> หมายเลขโทรศัพท์ : </label>
-                    <input type="text" id="phone" name="phone" value="<?php echo $row["users_phone_number"] ?>"
-                        required>
+                    <input type="text" id="phone" name="phone" placeholder="โปรดระบุหมายเลขโทรศัพท์" value="<?php echo isset($row["users_phone_number"]) ? $row["users_phone_number"] : ''; ?>" required>
                     <label for="address"> ที่อยู่ : </label>
                     <input type="text" id="address" name="address" value="<?php echo $row["users_address"] ?>" required>
                     <label for="address"> จำนวนห้องที่จะเข้าพัก : <?php echo '(จำนวนห้องตอนนี้'. $_SESSION["available_rooms"] . ')';?></label>
                     <input type="text" id="bookings_number" name="bookings_number" required>
+                    <input type="hidden" name="price_with_night" value="<?= $price_with_night ?>">
+                    <input type="hidden" name="number_of_nights" value="<?= $number_of_nights ?>">
                     <button type="submit" class="btn">Next</button>
-                    
                 </form>
             </div>
         </div>
 
-        <?php
-        $select_stmt = $db->prepare("SELECT * FROM hotels
-                                    JOIN rooms USING (hotel_id)
-                                    WHERE hotel_id = :hotel_id AND room_id = :room_id");
-        $select_stmt->bindParam(':hotel_id', $_SESSION["hotel_id"]);
-        $select_stmt->bindParam(':room_id', $_SESSION["room_id"]);
-        $select_stmt->execute();
-        $result = $select_stmt->fetch(PDO::FETCH_ASSOC);
-
-        $price_with_night = $number_of_nights * $result['rooms_price'];
-        ?>
         <div class="col-50">
             <div class="card">
-                <img src="<?php echo 'BackEnd/uploads_img/'.$result['rooms_img']; ?>" class="card-img-top" height="400">
+                <img src="<?php echo 'BackEnd/uploads_img/' . $result['rooms_img']; ?>" class="card-img-top" height="400">
                 <h4>
-                    <?php echo $result['hotels_name']. $result['rooms_img'] ?>
-
+                    <?php echo $result['hotels_name'] ?>
                 </h4>
                 <div class="row">
                         <div class="col-50">
@@ -100,15 +100,20 @@ $number_of_nights = intval($number_of_nights);
                             <label for="check-out">Check-Out   (10:00 - 12:00)</label>
                             <pre><?php echo $_SESSION["checkout"]?></pre>
                         </div>
+                 
+                    <div class="col-50">
+                        <label for="check-out">Check-Out</label>
+                        <p><?php echo $_SESSION["checkout"] ?></p>
                     </div>
+                </div>
                 <label for="phone">
                     <?php echo 'เบอร์ติดต่อ : ' . $result['hotels_phone'] ?>
                 </label>
                 <label for="information">
-                    <?php echo 'รายละเอียดโรงแรม : ' . $result['hotels_description']?>
+                    <?php echo 'รายละเอียดโรงแรม : ' . $result['hotels_description'] ?>
                 </label>
                 <label for="address">
-                    <?php echo 'ที่อยู่ : ' . $result['hotels_address']?>
+                    <?php echo 'ที่อยู่ : ' . $result['hotels_address'] ?>
                 </label>
                 <label for="city">
                     <?php echo 'เมือง/จังหวัด : ' . $result['location_id'] ?>
@@ -120,17 +125,21 @@ $number_of_nights = intval($number_of_nights);
                     <?php echo 'รายละเอียดห้อง : ' . $result['rooms_description'] ?>
                 </label>
                 <br>
-                <p class="card-text">ราคา 1 ห้องต่อ 1 คืน <span class="price">
-                        <?php echo "฿" . $result['rooms_price'] ?>
+                <p class="card-text">ราคา 1 ห้องต่อ 1 คืน 
+                    <span class="price">
+                        <?php echo "฿" .  number_format($result['rooms_price'])  ?>
                     </span></p>
-                    <br>
-                <p class="card-text">ระยะเวลาที่พัก <span class="price">
+                <br>
+                <p class="card-text">ระยะเวลาที่พัก 
+                    <span class="price">
                         <?php echo $number_of_nights . " คืน" ?>
                     </span></p>
                 <hr>
-                <p class="card-text">Total <span class="price">
+                <p class="card-text">Total
+                    <span class="price">
                         <?php echo "฿" . $price_with_night ?>
-                    </span></p>
+                    </span>
+                </p>
             </div>
         </div>
     </div>
