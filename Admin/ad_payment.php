@@ -8,6 +8,7 @@
                     <tr>
                         <th>Payment Id</th>
                         <th>Booking Id</th>
+                        <th>User Id</th>
                         <th>Amount</th>
                         <th>Date</th>
                         <th>Receipt</th>
@@ -21,8 +22,9 @@
                         include('../BackEnd/includes/connect_database.php'); // ดึงไฟล์เชื่อม database เข้ามา
 
                         // คำสั่ง SQL สำหรับดึงข้อมูลจากตาราง payment
-                        $sql = "SELECT * FROM payments ORDER BY payment_date DESC
-                                -- JOIN bookings USING (room_id)
+                        $sql = "SELECT * FROM payments 
+                                JOIN bookings USING (booking_id)
+                                ORDER BY payment_date DESC
                                 ";
 
                         $stmt = $db->prepare($sql);
@@ -34,6 +36,7 @@
                             <form method="POST" action="ad_pay_db.php">
                                 <td><?php echo $row["payment_id"]; ?></td>
                                 <td><?php echo $row["booking_id"]; ?></td>
+                                <td><?php echo $row["user_id"]; ?></td>
                                 <td><?php echo $row["payments_amount"]; ?></td>
                                 <td><?php echo $row["payment_date"]; ?></td>
                                 <td><a href="#" class="btn btn-primary" data-toggle="modal" data-target="#myModal<?php echo $row["payment_id"]; ?>">View Details</a></td>
