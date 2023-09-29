@@ -15,8 +15,8 @@
                 <h2>Admin</h2>
                 <hr>
                 <a href="admin.php?page=user" class="btn mb-3" >User</a><br>
-                <a href="admin.php?page=room" class="btn mb-3" >Room</a><br>
                 <a href="admin.php?page=hotel" class="btn mb-3" >Hotel</a><br>
+                <a href="admin.php?page=payment" class="btn mb-3" >Payments</a><br>
                 <a href="admin.php?page=requirement" class="btn mb-5" >Requirement</a><br>
                 <hr>
                 <a href="../BackEnd/logout_db.php" class="btn" >Logout</a><br>
@@ -37,9 +37,9 @@
                             include("user.php");
                             
                             break;
-                        case 'room':
-                            // แสดงหน้า Room
-                            include("room.php");
+                        case 'payment':
+                            // แสดงหน้า payment
+                            include("ad_payment.php");
 
                             break;
                         case 'hotel':
