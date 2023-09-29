@@ -41,7 +41,7 @@
         </tbody>
       </table>
       <br>
-      <button class="btn btn-primary" type="submit">ย้อนกลับ</button>
+      <button class="btn btn-primary btn-lg" type="submit">ย้อนกลับ</button>
 </body>
 </html>
 
