@@ -84,6 +84,14 @@ if (($_SERVER["REQUEST_METHOD"] == "POST") & ($_SESSION['checkin'] == null | $_S
     //echo 'inelse';
     
    }
+
+  // hotel facility 
+    
+  $select_stmt2 = $db->prepare("SELECT facility_name from hotels h join hotelsfacility h2 using (hotel_id) join facilityname 
+  using (facility_id)  WHERE hotel_id = :hotel_id");
+  $select_stmt2->bindParam(':hotel_id', $_SESSION["hotel_id"]);
+  $select_stmt2->execute();
+  
  
 ?>
 <!DOCTYPE html>
@@ -118,13 +126,6 @@ if (($_SERVER["REQUEST_METHOD"] == "POST") & ($_SESSION['checkin'] == null | $_S
       </div>
     </div>
     
-    <!---- hotel facility ---->
-    <?php 
-           $select_stmt2 = $db->prepare("SELECT facility_name from hotels h join hotelsfacility h2 using (hotel_id) join facilityname 
-           using (facility_id)  WHERE hotel_id = :hotel_id");
-           $select_stmt2->bindParam(':hotel_id', $_SESSION["hotel_id"]);
-           $select_stmt2->execute();
-           ?>
     <!---- css มีปัญหา ---->
 
     <div class="desc">

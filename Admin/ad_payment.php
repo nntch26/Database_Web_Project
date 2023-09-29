@@ -21,7 +21,7 @@
                         include('../BackEnd/includes/connect_database.php'); // ดึงไฟล์เชื่อม database เข้ามา
 
                         // คำสั่ง SQL สำหรับดึงข้อมูลจากตาราง payment
-                        $sql = "SELECT * FROM payments
+                        $sql = "SELECT * FROM payments ORDER BY payment_date DESC
                                 -- JOIN bookings USING (room_id)
                                 ";
 
@@ -37,17 +37,27 @@
                                 <td><?php echo $row["payments_amount"]; ?></td>
                                 <td><?php echo $row["payment_date"]; ?></td>
                                 <td><a href="#" class="btn btn-primary" data-toggle="modal" data-target="#myModal<?php echo $row["payment_id"]; ?>">View Details</a></td>
-                                <td><?php echo $row["payments_status"]; ?></td>
-                             
+                                
+                                <td>
+                                    <?php if ($row["payments_status"] == 'Paid'): ?>
+                                        <!-- ถ้าเป็น Paid ให้แสดงสถานะ -->
+                                        <span style="color: green;"><b><?php echo $row["payments_status"]; ?></b></span>
+                                    <?php elseif ($row["payments_status"] == 'Declined'): ?>
+                                        <span style="color: red;"><b><?php echo $row["payments_status"]; ?></b></span>
+                                    <?php else: ?>
+                                        <?php echo $row["payments_status"]; ?>
+                                    <?php endif; ?>
+                                </td>
+
+
+                                                             
                                 <td>
 
                                     <input type="hidden" name="payment_id" value="<?php echo $row["payment_id"]; ?>"> <!-- ส่งค่าไป php แบบซ้อน-->
                                     <input type="hidden" name="booking_id" value="<?php echo $row["booking_id"]; ?>">
                                    
                                  <!-- อัปเดตข้อมูลแล้ว -->
-                                 <?php if ($row["pay_status"] == 'Paid') : ?>
-                                    <!-- ถ้าเป็น APPROVE ให้แสดงสถานะ -->
-                                    <span style="color: green;"><b><?php echo $row["pay_status"]; ?></b></span>
+                                 <?php if ($row["payments_status"] == 'Paid' || $row["payments_status"] == 'Declined') : ?>
 
                                 <?php else : ?>
                                     <!-- ถ้าไม่ใช่ APPROVE ให้แสดงปุ่ม Confirm และ Cancel -->
