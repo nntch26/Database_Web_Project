@@ -8,15 +8,19 @@ echo 'here';
 if (isset($_GET['search'])){
     $_SESSION['GetSearch'] = 'getsearch';
     $_SESSION["hotel_id"] = $_GET["hotel_id"];
-    $_SESSION["checkin_date"] = $_GET["checkin_date"];
-    $_SESSION["checkout_date"] = $_GET["checkout_date"];
-    $checkin_date = new DateTime($_GET['checkin_date']);
-    $checkout_date = new DateTime($_GET['checkout_date']);
-    $interval = $checkin_date->diff($checkout_date);
-    $day_difference = $interval->days;
+    $_SESSION["checkin"] = $_GET["checkin_date"];
+    $_SESSION["checkout"] = $_GET["checkout_date"];
+
+    // เช็คว่ามีการกดปุ่ม submit มาหรือไม่
+    //$checkin_date = new DateTime($_GET['checkin_date']);
+   // $checkout_date = new DateTime($_GET['checkout_date']);
+    //$interval = $checkin_date->diff($checkout_date);
+   // $day_difference = $interval->days;
     $hotel_id = $_GET["hotel_id"];
     $checkin = $_GET["checkin_date"];
     $checkout = $_GET["checkout_date"];
+    // เช็คว่ามีการกดปุ่ม submit มาหรือไม่
+
     echo  $hotel_id;
     echo $_GET["checkout_date"];
     echo "จำนวนวันระหว่าง check-in และ check-out: " . $day_difference . "คืน";
@@ -65,6 +69,8 @@ try {
 
 }
   header('location: ../book.php');
+}else{
+  
 }
 ob_end_flush();
 ?>

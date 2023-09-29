@@ -7,6 +7,11 @@ $_SESSION["checkin"] = $_GET['checkin'];
 $_SESSION["checkout"] = $_GET['checkout'];
 $_SESSION["num_guest"] = $_GET['num_guest'];
 $_SESSION["search_name"] = $_GET['search_name'];
+if ($_SESSION["checkin"] == null){
+    echo $_SESSION["checkin"]. $_SESSION["checkout"] .'null';
+}else {
+  echo $_SESSION["checkin"]. $_SESSION["checkout"] .'not null';
+}
 
 ?>
 
@@ -243,8 +248,13 @@ $_SESSION["search_name"] = $_GET['search_name'];
                           <h2 class="mb-4">฿ <?= $row2['min_price'] ?></h2>
                           <button type="submit" name="submit" class="btn login-btn-blue btn-block text-white">Book Now</button>
                           <input type="hidden" name="hotel_id" value="<?= $row['hotel_id'] ?>">
-                      </div>
+                         
+                         
+                          
 
+
+                      </div>
+ 
 
                   </div>
               </div>

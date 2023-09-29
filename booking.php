@@ -10,7 +10,7 @@ if (isset($_GET['submit2'])){
     header('location: booking.php');
 
 }
- echo  'room_id and hotel_id'.$_SESSION["room_id"]. $_SESSION["hotel_id"] . "จำนวนห้องที่เหลือ".$_SESSION["available_rooms"]  ;
+ echo  'room_id and hotel_id'.$_SESSION["room_id"]. $_SESSION["hotel_id"] . "จำนวนห้องที่เหลือ".$_SESSION["available_rooms"] .$_SESSION["checkin_date"] ;
 
 // แปลงวันที่เช็คอินและเช็คเอาท์เป็น timestamp
 $checkin_timestamp = strtotime($_SESSION["checkin"]);
@@ -65,7 +65,7 @@ $number_of_nights = intval($number_of_nights);
                         required>
                     <label for="address"> ที่อยู่ : </label>
                     <input type="text" id="address" name="address" value="<?php echo $row["users_address"] ?>" required>
-                    <label for="address"> จำนวนห้องที่จะเข้าพัก : </label>
+                    <label for="address"> จำนวนห้องที่จะเข้าพัก : <?php echo '(จำนวนห้องตอนนี้'. $_SESSION["available_rooms"] . ')';?></label>
                     <input type="text" id="bookings_number" name="bookings_number" required>
                     <button type="submit" class="btn">Next</button>
                     
@@ -93,11 +93,11 @@ $number_of_nights = intval($number_of_nights);
                 </h4>
                 <div class="row">
                         <div class="col-50">
-                            <label for="check-in">Check-In</label>
+                            <label for="check-in">Check-In   (12:00 - 14:00)</label>
                             <pre><?php echo $_SESSION["checkin"]?></pre>
                         </div>
                         <div class="col-50">
-                            <label for="check-out">Check-Out</label>
+                            <label for="check-out">Check-Out   (10:00 - 12:00)</label>
                             <pre><?php echo $_SESSION["checkout"]?></pre>
                         </div>
                     </div>
