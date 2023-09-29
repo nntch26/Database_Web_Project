@@ -4,7 +4,7 @@ session_start();
 include('includes/connect_database.php'); // ดึงไฟล์เชื่อม database เข้ามา
 
 // เช็คว่ามีการกดปุ่ม submit มาหรือไม่
-echo 'here';
+
 if (isset($_GET['search'])){
     $_SESSION['GetSearch'] = 'getsearch';
     $_SESSION["hotel_id"] = $_GET["hotel_id"];
