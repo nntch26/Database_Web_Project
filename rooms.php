@@ -6,11 +6,64 @@ $_SESSION["location"] = $_GET['location'];
 $_SESSION["checkin"] = $_GET['checkin'];
 $_SESSION["checkout"] = $_GET['checkout'];
 $_SESSION["search_name"] = $_GET['search_name'];
-if ($_SESSION["checkin"] == null){
-    echo $_SESSION["checkin"]. $_SESSION["checkout"] .'null';
-}else {
-  echo $_SESSION["checkin"]. $_SESSION["checkout"] .'not null';
+$_SESSION["num_guest"] = $_GET['num_guest'];
+
+
+//ดึง Hotel ล่ะ JOIN กับตัว locations กับ rooms เพื่อดึงตัวโรงแรมที่ตรงตามเงื่อนไขที่ Tourist ค้นหา
+        
+// ค้นหาจาก ชื่อโรงแรม
+if ($_SESSION['search_name'] != null){
+
+  $searchText = '%' . $_SESSION["search_name"] . '%';
+
+  $select_stmt = $db->prepare("SELECT hotels.*, locations.*, rooms.*
+                              FROM hotels
+                              JOIN locations USING (location_id)
+                              JOIN rooms USING (hotel_id)
+                              WHERE hotels_name LIKE :text
+                              GROUP BY hotels.hotel_id;");
+
+  $select_stmt->bindParam(':text', $searchText);
+  $select_stmt->execute();
+
+  
+
+
+// ค้นหาจาก จำนวนคน
+} else if ($_SESSION["location"] == null && $_SESSION["num_guest"] != null) {
+  $select_stmt = $db->prepare("SELECT hotels.*, locations.*, rooms.*
+                              FROM hotels
+                              JOIN locations USING (location_id)
+                              JOIN rooms USING (hotel_id)
+                              WHERE rooms_size >= :num_guest
+                              GROUP BY hotels.hotel_id ");
+
+  $select_stmt->bindParam(':num_guest', $_SESSION["num_guest"]);
+  $select_stmt->execute();
+
+  
+
+// ค้นหาจาก จังหวัด จำนวนคน
+} else if ($_SESSION["location"] != null && $_SESSION["num_guest"] != null) {
+
+  $searchText = '%' . $_SESSION["location"] . '%';
+
+  $select_stmt = $db->prepare("SELECT hotels.*, locations.*, rooms.*
+                              FROM hotels
+                              JOIN locations USING (location_id)
+                              JOIN rooms USING (hotel_id)
+                              WHERE location_name LIKE :get_location AND rooms_size >= :num_guest
+                              GROUP BY hotels.hotel_id ");
+
+  $select_stmt->bindParam(':get_location', $searchText);
+  $select_stmt->bindParam(':num_guest', $_SESSION["num_guest"]);
+  $select_stmt->execute();
+
 }
+
+
+//นับจำนวนข้อมูลที่มี
+$row_count = $select_stmt->rowCount(); 
 
 ?>
 
@@ -123,13 +176,8 @@ if ($_SESSION["checkin"] == null){
                           <button type="submit" name="Book_now" class="booknow">Book Now</button>
 
                           <input type="hidden" name="hotel_id" value="<?= $row['hotel_id'] ?>">
-                         
-                         
-                          
-
-
                       </div>
- 
+
 
                   </div>
               </div>
