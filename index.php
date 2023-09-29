@@ -38,7 +38,7 @@ session_start();
                 <form action="rooms.php" method="get">
                     <div class="form__group ">
                         <div class="input__group" for="location">
-                            <input type="text" placeholder="ชื่อจังหวัด" name="location" required>
+                            <input type="text" placeholder="ชื่อจังหวัด" name="location" />
                             <label>Location</label>
                         </div>
                         <p>Where are you going?</p>
