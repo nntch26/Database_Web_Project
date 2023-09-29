@@ -1,12 +1,13 @@
 <?php
 session_start();
-include('BackEnd/includes/connect_database.php'); // ดึงไฟล์เชื่อม database เข้ามา
-
+include('BackEnd/includes/connect_database.php'); // ดึงไฟล์เชื่อม database เข้ามาecho $_SESSION['checkout'] . '1111';
 // if (!isset($_SESSION['is_login'])) {
 //     header('location: login.php');
-// } else {
-
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
+// } else {z
+  
+  //echo 'date'.$_SESSION["checkin"]. '<br>';
+  //echo 'date'.$_SESSION["checkout"]. '<br>';
+if (($_SERVER["REQUEST_METHOD"] == "POST") & ($_SESSION['checkin'] == null | $_SESSION['checkout'] == null)){
   $select_stmt = $db->prepare("SELECT * FROM hotels 
                               JOIN locations l USING (location_id) JOIN rooms r USING (hotel_id)  
                               WHERE hotel_id = :hotel_id");
@@ -17,76 +18,31 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $row = $select_stmt->fetch(PDO::FETCH_ASSOC);
   $_SESSION["hotel_id"] = $_POST["hotel_id"];
   echo '';
-
-
-} else if (isset($_SESSION['GetSearch'])) {
+} else if(isset($_SESSION['GetSearch'])) {
   echo $_SESSION['GetSearch'];
   echo $_SESSION["hotel_id"];
   echo $_SESSION["checkin_date"];
-
   $select_stmt = $db->prepare("SELECT * FROM hotels 
                               JOIN locations l USING (location_id) JOIN rooms r USING (hotel_id)  
                               WHERE hotel_id = :hotel_id");
 
   $select_stmt->bindParam(':hotel_id', $_SESSION["hotel_id"]);
   $select_stmt->execute();
-
   $row = $select_stmt->fetch(PDO::FETCH_ASSOC);
+
+ 
   
-}
-
-
-// hotel facility 
-$select_stmt2 = $db->prepare("SELECT facility_name FROM hotels h 
-                              JOIN hotelsfacility h2 USING (hotel_id) 
-                              JOIN facilityname USING (facility_id)  WHERE hotel_id = :hotel_id");
-
-$select_stmt2->bindParam(':hotel_id', $_SESSION["hotel_id"]);
-$select_stmt2->execute();
-
-
-// ส่วนแสดงห้องพัก และจองห้องพัก
-if (isset($_SESSION['GetSearch'])) {
-  $sql = "SELECT r.room_id, rooms_price ,rooms_img, rooms_type, rooms_size, rooms_number - IFNULL(num_booked, 0) AS available_rooms, rooms_description
-          FROM hotels h
-          JOIN rooms r USING (hotel_id)
-          LEFT JOIN (
-            SELECT b.room_id, COUNT(bookings_status), SUM(bookings_number)AS num_booked
-            FROM hotels h
-            JOIN rooms r USING (hotel_id)
-            LEFT JOIN bookings b USING (hotel_id, room_id)
-            WHERE hotel_id = :hotel_id
-            AND bookings_status = 'Confirmed'
-            AND (
-              (bookings_check_in >= :checkin AND bookings_check_in < :checkout)
-              OR (bookings_check_out > :checkin AND bookings_check_out <= :checkout)
-              OR (bookings_check_in <= :checkin AND bookings_check_out >= :checkout)
-            )
-            GROUP BY b.room_id
-          ) AS booked_rooms ON r.room_id = booked_rooms.room_id
-          WHERE h.hotel_id = :hotel_id";
-
-
-  $stmt = $db->prepare($sql);
-  $stmt->bindParam(':hotel_id',  $_SESSION["hotel_id"], PDO::PARAM_INT);
-  $stmt->bindParam(':checkin',  $_SESSION["checkin_date"], PDO::PARAM_STR);
-  $stmt->bindParam(':checkout', $_SESSION["checkout_date"], PDO::PARAM_STR);
-  $stmt->execute();
-
-} else {
-
-  // คำสั่ง SQL สำหรับดึงข้อมูลจากตาราง room
-  $sql = "SELECT * FROM hotels 
-                          JOIN locations l USING (location_id) 
-                          JOIN rooms r USING (hotel_id) 
-                          WHERE hotel_id = :hotel_id";
-  $stmt = $db->prepare($sql);
-  $stmt->bindParam(':hotel_id', $_SESSION["hotel_id"]);
-  $stmt->execute();
-}
-
+}else if(($_SESSION['checkin'] != null && $_SESSION['checkout'] != null));
+ 
+  $select_stmt = $db->prepare("SELECT * FROM hotels 
+  JOIN locations l USING (location_id) JOIN rooms r USING (hotel_id)  
+  WHERE hotel_id = :hotel_id");
+  $select_stmt->bindParam(':hotel_id', $_SESSION["hotel_id"]);
+  $select_stmt->execute();
+  $row = $select_stmt->fetch(PDO::FETCH_ASSOC);
+  //echo $_SESSION["checkin"]. $_SESSION["hotel_id"].'55sdsd';
+ 
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -118,7 +74,14 @@ if (isset($_SESSION['GetSearch'])) {
         </p>
       </div>
     </div>
-
+    
+    <!---- hotel facility ---->
+    <?php 
+           $select_stmt2 = $db->prepare("SELECT facility_name from hotels h join hotelsfacility h2 using (hotel_id) join facilityname 
+           using (facility_id)  WHERE hotel_id = :hotel_id");
+           $select_stmt2->bindParam(':hotel_id', $_SESSION["hotel_id"]);
+           $select_stmt2->execute();
+           ?>
     <!---- css มีปัญหา ---->
 
     <div class="desc">
@@ -142,22 +105,16 @@ if (isset($_SESSION['GetSearch'])) {
             <input type="hidden" name="hotel_id" value=<?php echo $_SESSION['hotel_id']; ?>>
             <div class="col-md-6 ps-0 mb-3">
               <label class="form-label">วันเช็คอิน</label>
-              <input type="date" name="checkin_date" class="form-control shadow-none" min="<?php echo date('Y-m-d') ?>" />
+              <input type="date" name="checkin_date" class="form-control shadow-none" min="<?php echo date('Y-m-d') ?>" value = "<?php echo $_SESSION["checkin"] ?>" />
             </div>
             <div class="col-md-6 ps-0 mb-3">
               <label class="form-label">วันเช็คเอ้าต์</label>
-              <input type="date" name="checkout_date" class="form-control shadow-none" min="<?php echo date('Y-m-d') ?>" />
-            </div>
+              <input type="date" name="checkout_date" class="form-control shadow-none" min="<?php echo date('Y-m-d') ?> "value = "<?php echo $_SESSION["checkout"] ?>"/>
           </div>
           <div class="row">
             <div class="col-md-12 ps-0 mb-3">
               <button type="submit" name="search" class="btn btn-primary">บันทึก</button>
             </div>
-
-          </div>
-        </form>
-      </div>
-    </div>
 
 
     <!--ส่วนแสดงห้องพัก และจองห้องพัก-->
@@ -177,70 +134,121 @@ if (isset($_SESSION['GetSearch'])) {
         </thead>
         <tbody>
 
-          <?php
-          while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) :
-          ?>
+                                <?php
 
-            <tr style="height: 100px; width: 200px;">
-              <td style="max-width: 100px;"><img src="<?php echo 'BackEnd/uploads_img/' . $row["rooms_img"]; ?>" alt="รูปภาพของเรา"></td>
-              <td><?php echo $row["rooms_type"]; ?></td>
-              <td><?php echo $row["rooms_size"]; ?></td>
-              <td><?php echo $row["rooms_description"]; ?></td>
-              <td> <?php
-                    if (isset($_SESSION['GetSearch']) && $_SESSION['GetSearch'] === 'getsearch') {
-                      echo $row["available_rooms"];
-                    } else {
-                      echo ' ';
-                    } ?></td>
-              <td>
-                
-                <form class="p-5 card" action="booking.php" method="get">
+                                    include('BackEnd/includes/connect_database.php'); // ดึงไฟล์เชื่อม database เข้ามา
 
-                  <!-- เช็คว่าเป็น hotelowner หรือไม่ ไม่ให้จอง -->
-                  <?php if ((isset($_SESSION['userid'] )) && ($_SESSION["role"] == 'HOTELOWNER')) : ?>
+                                  if(isset($_SESSION['GetSearch']) || ($_SESSION['checkin'] != null && $_SESSION['checkout'] != null)){
+                                    $sql = "SELECT r.room_id, rooms_img, rooms_type, rooms_size, rooms_number - IFNULL(num_booked, 0) AS available_rooms, rooms_description, rooms_price
+                                    FROM hotels h
+                                    JOIN rooms r USING (hotel_id)
+                                    LEFT JOIN (
+                                      SELECT b.room_id, COUNT(bookings_status), SUM(bookings_number)AS num_booked
+                                      FROM hotels h
+                                      JOIN rooms r USING (hotel_id)
+                                      LEFT JOIN bookings b USING (hotel_id, room_id)
+                                      WHERE hotel_id = :hotel_id
+                                      AND bookings_status = 'Confirmed'
+                                      AND (
+                                        (bookings_check_in >= :checkin AND bookings_check_in < :checkout)
+                                        OR (bookings_check_out > :checkin AND bookings_check_out <= :checkout)
+                                        OR (bookings_check_in <= :checkin AND bookings_check_out >= :checkout)
+                                      )
+                                      GROUP BY b.room_id
+                                    ) AS booked_rooms ON r.room_id = booked_rooms.room_id
+                                    WHERE h.hotel_id = :hotel_id";
+                                
+                              
+                                    $stmt = $db->prepare($sql);
+                                    $stmt->bindParam(':hotel_id',  $_SESSION["hotel_id"], PDO::PARAM_INT);
+                                    $stmt->bindParam(':checkin',  $_SESSION["checkin_date"], PDO::PARAM_STR);
+                                    $stmt->bindParam(':checkout', $_SESSION["checkout_date"], PDO::PARAM_STR);
+                                    $stmt->execute();
+                                        //echo 'in';
 
-                    <div class="alert alert-danger" role="alert">
-                      <?php echo $_SESSION['ur_hotel']; ?>
+                                  }else{
+                                    // คำสั่ง SQL สำหรับดึงข้อมูลจากตาราง room
+                                    $sql = "SELECT * FROM hotels 
+                                    JOIN locations l USING (location_id) JOIN rooms r USING (hotel_id) 
+                                    WHERE hotel_id = :hotel_id";
+                                    $stmt = $db->prepare($sql);
+                                    $stmt->bindParam(':hotel_id', $_SESSION["hotel_id"]);
+                                    $stmt->execute();
+                                    //echo 'inelse';
+                                    
+                                   }
+                                    while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) :
+                                ?>
+                                
+                                     <tr style="height: 100px; width: 200px;">
+                                        
+                                            <td style="max-width: 100px;" ><img src="<?php echo 'BackEnd/uploads_img/'.$row["rooms_img"]; ?>" alt="รูปภาพของเรา"></td>
+                                            <td><?php echo $row["rooms_type"]; ?></td>
+                                            <td><?php echo $row["rooms_size"]; ?></td>
+                                            <?php    
+                                                  $select_stmt_romfacility = $db->prepare("SELECT facility_name from rooms r join roomsfacility rf using (room_id) join facilityname 
+                                                  using (facility_id)  WHERE room_id = :room_id");
+                                                  $select_stmt_romfacility->bindParam(':room_id', $row["room_id"]);
+                                                  $select_stmt_romfacility->execute();
+                                      
+                                            ?>
+
+                                            <td><?php echo $row["rooms_description"]. '<br>';?>
+                                            <?php
+                                                  $select_stmt_romfacility = $db->prepare("SELECT facility_name from rooms r join roomsfacility rf using (room_id) join facilityname using (facility_id)  WHERE room_id = :room_id");
+                                                  $select_stmt_romfacility->bindParam(':room_id', $row["room_id"]);
+                                                  $select_stmt_romfacility->execute();
+                                                  while ($row3 = $select_stmt_romfacility->fetch(PDO::FETCH_ASSOC)) :
+                                                  ?>
+                                                      <?php echo $row3["facility_name"]. '<br>' ;  ?>
+                                                  <?php endwhile ?>
+                                            <td> <?php
+                                                      if((isset($_SESSION['GetSearch']) && $_SESSION['GetSearch'] === 'getsearch') || ($_SESSION['checkin'] != null && $_SESSION['checkout'] != null)) {
+                                                        
+                                                        echo $row["available_rooms"];
+                                                      } else {
+                                                        echo 'กรุณาใส่วันที่';
+                                                      }?></td>
+                                            <td>
+                                            <form class="p-5 card" action="booking.php" method="get">
+                                               <!-- เช็คว่าเป็น hotelowner หรือไม่ ไม่ให้จอง -->
+                                         <?php if ((isset($_SESSION['userid'] )) && ($_SESSION["role"] == 'HOTELOWNER')) : ?>
+
+                                            <div class="alert alert-danger" role="alert">
+                                              <?php echo $_SESSION['ur_hotel']; ?>
+                                            </div>
+                                            <?php else : ?>
+                                                <h6 class="mb-2">ราคาหัองพัก/คืน</h6>
+                                                <h2 class="mb-4">฿ <?= number_format($row['rooms_price']) ?></h2>
+                                                <button type="submit2" name="submit2" class="btn btn-primary">จอง</button>
+                                              <?php endif; ?>
+                                           
+                                              <input type="hidden" name= "room_id" value= <?php echo $row["room_id"]?>>
+
+                                              <input type="hidden" name= "hotel_id"value=<?php echo $_SESSION["hotel_id"]?>>
+                                              
+                                              <?php 
+                                                  if(isset($_SESSION["checkin"]) && isset($_SESSION["checkout"]) && isset($_SESSION['GetSearch'])) {
+                                                      echo '<input type="hidden" name="checkout_date" value="' . $_SESSION["checkout"] . '">';
+                                                      echo '<input type="hidden" name="checkin_date" value="' . $_SESSION["checkin"] . '">';
+                                                      echo '<input type="hidden" name="available_rooms" value="' . $row["available_rooms"] . '">';
+                                                  }
+                                                  ?>
+                                            </form>
+                                            </td>
+                                    </tr>
+
+                                <?php endwhile ?>
+
+                            </tbody>
+                        </table>
                     </div>
-
-                  <?php else : ?>
-                    <h6 class="mb-2">ราคาหัองพัก/คืน</h6>
-                    <h2 class="mb-4">฿ <?= number_format($row['rooms_price']) ?></h2>
-                    <button type="submit2" name="submit2" class="btn btn-primary">จอง</button>
-                  <?php endif; ?>
-
-                  <input type="hidden" name="room_id" value=<?php echo $row["room_id"] ?>>
-                  <input type="hidden" name="checkin_date" value=<?php echo $_SESSION["checkin_date"] ?>>
-                  <input type="hidden" name="checkout_date" value=<?php echo $_SESSION["checkout_date"] ?>>
-                  <input type="hidden" name="hotel_id" value=<?php echo $_SESSION["hotel_id"] ?>>
-                  <?php 
-                  if (isset($_SESSION['GetSearch'])) :?>
-                    <input type="hidden" name="available_rooms" value=<?php echo $row["available_rooms"] ?>>
-                  <?php else : ?>
-                    <div class="mt-5 alert alert-danger" role="alert">
-                      <?php echo "กรุณากรอกข้อมูลวันที่เช็คอิน-เช็คเอาท์"; ?>
-                    </div>
-                  <?php endif; ?>
-
-
-                </form>
-              </td>
-            </tr>
-
-          <?php endwhile ?>
-
-        </tbody>
-      </table>
-    </div>
-    </table>
-  </div>
-  <div>
-
-  </div>
-
-
-  <!-- ส่วนรีวิว และแสดงความคิดเห็น -->
-  <div class="wrapper">
+        </table>
+      </div>
+      <div>
+</div>
+   
+<div class="wrapper">
     <div class="review">
       <h3 class="name-re">Review</h3>
     </div>

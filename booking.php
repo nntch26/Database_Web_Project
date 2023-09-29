@@ -10,6 +10,7 @@ if (isset($_GET['submit2']) && isset($_SESSION['userid']) && ($_SESSION["role"] 
 }else{
     header('location: login.php');
 }
+ //echo  'room_id and hotel_id'.$_SESSION["room_id"]. $_SESSION["hotel_id"] . "จำนวนห้องที่เหลือ".$_SESSION["available_rooms"] .$_SESSION["checkin_date"] ;
 
 // แปลงวันที่เช็คอินและเช็คเอาท์เป็น timestamp
 $checkin_timestamp = strtotime($_SESSION["checkin"]);
@@ -74,9 +75,9 @@ $number_of_nights = intval($number_of_nights);
                     <label for="phone"> หมายเลขโทรศัพท์ : </label>
                     <input type="text" id="phone" name="phone" placeholder="โปรดระบุหมายเลขโทรศัพท์" value="<?php echo isset($row["users_phone_number"]) ? $row["users_phone_number"] : ''; ?>" required>
                     <label for="address"> ที่อยู่ : </label>
-                    <input type="text" id="address" name="address" placeholder="โปรดระบุที่อยู่ของคุณ" value="<?php echo isset($row["users_address"]) ? $row["users_address"] : ''; ?>" required>
-                    <label for="address"> จำนวนห้องที่จะเข้าพัก : </label>
-                    <input type="text" id="bookings_number" name="bookings_number" placeholder="เลขจำนวนห้อง" required>
+                    <input type="text" id="address" name="address" value="<?php echo $row["users_address"] ?>" required>
+                    <label for="address"> จำนวนห้องที่จะเข้าพัก : <?php echo '(จำนวนห้องตอนนี้'. $_SESSION["available_rooms"] . ')';?></label>
+                    <input type="text" id="bookings_number" name="bookings_number" required>
                     <input type="hidden" name="price_with_night" value="<?= $price_with_night ?>">
                     <input type="hidden" name="number_of_nights" value="<?= $number_of_nights ?>">
                     <button type="submit" class="btn">Next</button>
@@ -91,10 +92,15 @@ $number_of_nights = intval($number_of_nights);
                     <?php echo $result['hotels_name'] ?>
                 </h4>
                 <div class="row">
-                    <div class="col-50">
-                        <label for="check-in">Check-In</label>
-                        <p><?php echo $_SESSION["checkin"] ?></p>
-                    </div>
+                        <div class="col-50">
+                            <label for="check-in">Check-In   (12:00 - 14:00)</label>
+                            <pre><?php echo $_SESSION["checkin"]?></pre>
+                        </div>
+                        <div class="col-50">
+                            <label for="check-out">Check-Out   (10:00 - 12:00)</label>
+                            <pre><?php echo $_SESSION["checkout"]?></pre>
+                        </div>
+                 
                     <div class="col-50">
                         <label for="check-out">Check-Out</label>
                         <p><?php echo $_SESSION["checkout"] ?></p>
