@@ -15,6 +15,19 @@
   padding: 0;
   box-sizing: border-box;
 }
+.mos {
+  margin-top: 10%;
+}
+
+
+.mos2 {
+  margin-left: 5%;
+  font-size: 2em;
+  text-align: center;
+  color: red;
+  margin-top: 10px;
+  width: 90%;
+}
 
 .section__container {
   max-width: var(--max-width);
@@ -390,7 +403,7 @@ body {
 
 
 .review{
-  margin-top: 25%;
+  margin-top: 50px;
   position: relative;
   margin-bottom: 15px;
 }
@@ -438,7 +451,7 @@ th, td {
 }
 .table{
   margin-left: 5%;
-  margin-top: 38%;
+  margin-top: 50px;
 }
 
 .container{
@@ -475,6 +488,7 @@ th, td {
 
 .ta-desc{
   width: 90%;
+  margin-top: 0;
 }
 
 .mos2{

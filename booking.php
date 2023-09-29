@@ -93,11 +93,11 @@ $number_of_nights = intval($number_of_nights);
                 <div class="row">
                     <div class="col-50">
                         <label for="check-in">Check-In</label>
-                        <pre><?php echo $_SESSION["checkin"] ?></pre>
+                        <p><?php echo $_SESSION["checkin"] ?></p>
                     </div>
                     <div class="col-50">
                         <label for="check-out">Check-Out</label>
-                        <pre><?php echo $_SESSION["checkout"] ?></pre>
+                        <p><?php echo $_SESSION["checkout"] ?></p>
                     </div>
                 </div>
                 <label for="phone">

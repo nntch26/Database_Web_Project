@@ -38,7 +38,7 @@ session_start();
                 <form action="rooms.php" method="get">
                     <div class="form__group ">
                         <div class="input__group" for="location">
-                            <input type="text" placeholder="ชื่อจังหวัด" name="location" />
+                            <input type="text" placeholder="ชื่อจังหวัด" name="location" required>
                             <label>Location</label>
                         </div>
                         <p>Where are you going?</p>
@@ -46,7 +46,7 @@ session_start();
 
                     <div class="form__group">
                         <div class="input__group" for="checkin">
-                            <input type="date" name="checkin" min="<?php echo date('Y-m-d') ?>" />
+                            <input type="date" name="checkin" min="<?php echo date('Y-m-d') ?>" required>
                             <label>Check In</label>
                         </div>
                         <p>Add date</p>
@@ -54,7 +54,7 @@ session_start();
 
                     <div class="form__group">
                         <div class="input__group" for="checkout">
-                            <input type="date" name="checkout" min="<?php echo date('Y-m-d') ?>" />
+                            <input type="date" name="checkout" min="<?php echo date('Y-m-d') ?>" required>
                             <label>Check Out</label>
                         </div>
                         <p>Add date</p>
@@ -69,7 +69,8 @@ session_start();
                     </div>
 
                     <div class="form__group" style="text-align: center;">
-                        <input type="hidden" name="search_name" value="null">
+                        <input type="hidden" name="search_name" value=  >
+
                         <button type="submit" name="submit" class="btn btn-primary shadow-none me-lg-3 me-2">Search</button>
                     </div>
 

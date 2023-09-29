@@ -2,7 +2,6 @@
 body {
   font-family: 'Kanit', sans-serif;
   font-size: 18px;
-  padding: 8px;
   margin-left: 20px;
   margin-right: 20px;
 }
@@ -42,12 +41,13 @@ body {
 
 .container {
   background-color: white;
-  padding: 5px 20px 15px 40px;
+  padding: 5px 40px 15px 40px;
   box-shadow: 5px 5px 30px rgba(0, 0, 0, 0.1);
+
 }
 .card {
     background-color: white;
-    padding: 12px;
+    padding: 25px;
     box-shadow: 5px 5px 30px rgba(0, 0, 0, 0.1);
 }
 .card-title{
@@ -61,19 +61,21 @@ body {
 
 
 .btn {
-  background-color: #04AA6D;
+  align-items: center;
+  background-color: rgb(39, 86, 255);
   color: white;
   padding: 12px;
   margin: 10px 0;
   border: none;
   width: 100%;
-  border-radius: 3px;
+  border-radius: 30px;
   cursor: pointer;
   font-size: 17px;
 }
 
 .btn:hover {
-  background-color: #45a049;
+  background-color:  rgb(31, 72, 219);
+  color: white;
 }
 
 hr {
@@ -88,12 +90,13 @@ span.price {
 
 label {
   font-size: 16px;
+  font-weight: bold;
   margin-bottom: 10px;
   display: block;
   
 }
 
-input[type="text"] {
+input{
   padding: 5px;
   border: 1px solid #ccc;
   border-radius: 5px;
@@ -102,10 +105,20 @@ input[type="text"] {
   height: 4%;
   margin-bottom: 20px;
 }
+p{
+  font-size: 15px;
+}
+.card-text{
+  font-size: 18px;
+}
 
 h4{
   margin: 30px;
 }
+img{
+  border-radius: 10px;
+}
+
 
 /* Responsive layout - when the screen is less than 800px wide, make the two columns stack on top of each other instead of next to each other (also change the direction - make the "cart" column go on top) */
 @media (max-width: 800px) {
