@@ -76,7 +76,7 @@ $number_of_nights = intval($number_of_nights);
                     <input type="text" id="phone" name="phone" placeholder="โปรดระบุหมายเลขโทรศัพท์" value="<?php echo isset($row["users_phone_number"]) ? $row["users_phone_number"] : ''; ?>" required>
                     <label for="address"> ที่อยู่ : </label>
                     <input type="text" id="address" name="address" value="<?php echo $row["users_address"] ?>" required>
-                    <label for="address"> จำนวนห้องที่จะเข้าพัก : <?php echo '(จำนวนห้องตอนนี้' . $_SESSION["available_rooms"] . ')'; ?></label>
+                    <label for="address"> จำนวนห้องที่จะเข้าพัก : <?php echo '(จำนวนห้องตอนนี้ ' . $_SESSION["available_rooms"] . ')'; ?></label>
                     <input type="text" id="bookings_number" name="bookings_number" required>
                     <input type="hidden" name="price_with_night" value="<?= $price_with_night ?>">
                     <input type="hidden" name="number_of_nights" value="<?= $number_of_nights ?>">

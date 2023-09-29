@@ -21,6 +21,7 @@ $select_stmt->bindParam(':bookings_total_price', $_SESSION["total_pay"]);
 $select_stmt->execute();
 
 $result = $select_stmt->fetch(PDO::FETCH_ASSOC);
+$_SESSION["booking_id"] = $result["booking_id"];
 
 //////////////////////////// IMAGE FILES ////////////////////////////
 
