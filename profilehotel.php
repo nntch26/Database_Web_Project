@@ -114,7 +114,7 @@
                 <div class="card mt-5">
                     <div class="card-body-profile" style="line-height: 3;">
                         <h4>แสดงประวัติการชำระของลูกค้า</h4>
-                        <a href="#" class="btn btn-primary shadow-none mb-4 mt-4 me-lg-3 me-2">ดูประวัติชำระเงิน</a>
+                        <a href="inc/historypay.php" class="btn btn-primary shadow-none mb-4 mt-4 me-lg-3 me-2">ดูประวัติชำระเงิน</a>
                     </div>
                 </div>
 

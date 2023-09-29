@@ -56,7 +56,7 @@
                                                              
                                 <td>
 
-                                    <input type="hidden" name="payment_id" value="<?php echo $row["payment_id"]; ?>"> <!-- ส่งค่าไป php แบบซ้อน-->
+                                    <input type="hidden" name="payment_id" value="<?php echo $row["payment_id"]; ?>"> 
                                     <input type="hidden" name="booking_id" value="<?php echo $row["booking_id"]; ?>">
                                    
                                  <!-- อัปเดตข้อมูลแล้ว -->
