@@ -4,8 +4,12 @@ include('includes/connect_database.php');
 $booking_number = $_POST["bookings_number"];
 $price_with_night = intval($_POST["price_with_night"]);
 $bookings_nights = intval($_POST["number_of_nights"]);
+$_SESSION["booking_number"] = $booking_number;
+$_SESSION["price_with_night"] = $price_with_night;
+$_SESSION["bookings_nights"] = $bookings_nights;
 // calculate total price
 $total_pay = ($price_with_night * $booking_number);
+$_SESSION["total_pay"] = $total_pay;
 
 // *-------------------------------------* //
 
@@ -31,9 +35,9 @@ $insert_stmt->bindParam(':hotel_id', $_SESSION["hotel_id"]);
 $insert_stmt->bindParam(':room_id', $_SESSION["room_id"]);
 $insert_stmt->bindParam(':bookings_check_in', $_SESSION["checkin"]);
 $insert_stmt->bindParam(':bookings_check_out', $_SESSION["checkout"]);
-$insert_stmt->bindParam(':bookings_nights', $bookings_nights);
-$insert_stmt->bindParam(':bookings_number', $booking_number);
-$insert_stmt->bindParam(':bookings_total_price', $total_pay);
+$insert_stmt->bindParam(':bookings_nights', $_SESSION["bookings_nights"] );
+$insert_stmt->bindParam(':bookings_number', $_SESSION["booking_number"]);
+$insert_stmt->bindParam(':bookings_total_price', $_SESSION["total_pay"]);
 
 $insert_stmt->execute();
 

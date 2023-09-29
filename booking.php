@@ -7,9 +7,6 @@ if (isset($_GET['submit2']) && isset($_SESSION['userid']) && ($_SESSION["role"] 
     $_SESSION["checkout"] = $_GET["checkout_date"]; // วันที่เช็คเอาท์
     $_SESSION["hotel_id"] = $_GET["hotel_id"];
     $_SESSION["available_rooms"] = $_GET["available_rooms"];
-}else if ($_SESSION["role"] == "HOTELOWNER" && isset($_SESSION['userid'])){
-    $_SESSION['ur_hotel'] = "คุณไม่สามารถจองได้";
-    header('location: book.php');
 }else{
     header('location: login.php');
 }
@@ -48,6 +45,8 @@ $number_of_nights = intval($number_of_nights);
     $select_stmt->bindParam(':user_id', $_SESSION["userid"]);
     $select_stmt->execute();
     $row = $select_stmt->fetch(PDO::FETCH_ASSOC);
+
+    // ************************************************************ //
 
     $select_stmt = $db->prepare("SELECT * FROM hotels
                                     JOIN rooms USING (hotel_id)
@@ -120,11 +119,13 @@ $number_of_nights = intval($number_of_nights);
                     <?php echo 'รายละเอียดห้อง : ' . $result['rooms_description'] ?>
                 </label>
                 <br>
-                <p class="card-text">ราคา 1 ห้องต่อ 1 คืน <span class="price">
+                <p class="card-text">ราคา 1 ห้องต่อ 1 คืน 
+                    <span class="price">
                         <?php echo "฿" .  number_format($result['rooms_price'])  ?>
                     </span></p>
                 <br>
-                <p class="card-text">ระยะเวลาที่พัก <span class="price">
+                <p class="card-text">ระยะเวลาที่พัก 
+                    <span class="price">
                         <?php echo $number_of_nights . " คืน" ?>
                     </span></p>
                 <hr>
