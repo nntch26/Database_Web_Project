@@ -44,6 +44,47 @@ $select_stmt2 = $db->prepare("SELECT facility_name FROM hotels h
 $select_stmt2->bindParam(':hotel_id', $_SESSION["hotel_id"]);
 $select_stmt2->execute();
 
+
+// ส่วนแสดงห้องพัก และจองห้องพัก
+if (isset($_SESSION['GetSearch'])) {
+  $sql = "SELECT r.room_id, rooms_price ,rooms_img, rooms_type, rooms_size, rooms_number - IFNULL(num_booked, 0) AS available_rooms, rooms_description
+          FROM hotels h
+          JOIN rooms r USING (hotel_id)
+          LEFT JOIN (
+            SELECT b.room_id, COUNT(bookings_status), SUM(bookings_number)AS num_booked
+            FROM hotels h
+            JOIN rooms r USING (hotel_id)
+            LEFT JOIN bookings b USING (hotel_id, room_id)
+            WHERE hotel_id = :hotel_id
+            AND bookings_status = 'Confirmed'
+            AND (
+              (bookings_check_in >= :checkin AND bookings_check_in < :checkout)
+              OR (bookings_check_out > :checkin AND bookings_check_out <= :checkout)
+              OR (bookings_check_in <= :checkin AND bookings_check_out >= :checkout)
+            )
+            GROUP BY b.room_id
+          ) AS booked_rooms ON r.room_id = booked_rooms.room_id
+          WHERE h.hotel_id = :hotel_id";
+
+
+  $stmt = $db->prepare($sql);
+  $stmt->bindParam(':hotel_id',  $_SESSION["hotel_id"], PDO::PARAM_INT);
+  $stmt->bindParam(':checkin',  $_SESSION["checkin_date"], PDO::PARAM_STR);
+  $stmt->bindParam(':checkout', $_SESSION["checkout_date"], PDO::PARAM_STR);
+  $stmt->execute();
+
+} else {
+
+  // คำสั่ง SQL สำหรับดึงข้อมูลจากตาราง room
+  $sql = "SELECT * FROM hotels 
+                          JOIN locations l USING (location_id) 
+                          JOIN rooms r USING (hotel_id) 
+                          WHERE hotel_id = :hotel_id";
+  $stmt = $db->prepare($sql);
+  $stmt->bindParam(':hotel_id', $_SESSION["hotel_id"]);
+  $stmt->execute();
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -92,10 +133,8 @@ $select_stmt2->execute();
 
 
 
-
-
     <!---- hotels rooms & roomfaciti ---->
-
+    
     <div class="mos">
       <div class="mos2">
         <form class="p-5 card" action="BackEnd/searchbydate.php" method="get">
@@ -123,7 +162,7 @@ $select_stmt2->execute();
 
     <!--ส่วนแสดงห้องพัก และจองห้องพัก-->
 
-    <div class="ta-desc">
+    <div class="ta-desc" >
 
       <table class="table table-bordered">
         <thead>
@@ -139,47 +178,6 @@ $select_stmt2->execute();
         <tbody>
 
           <?php
-
-
-          if (isset($_SESSION['GetSearch'])) {
-            $sql = "SELECT r.room_id, rooms_price ,rooms_img, rooms_type, rooms_size, rooms_number - IFNULL(num_booked, 0) AS available_rooms, rooms_description
-                    FROM hotels h
-                    JOIN rooms r USING (hotel_id)
-                    LEFT JOIN (
-                      SELECT b.room_id, COUNT(bookings_status), SUM(bookings_number)AS num_booked
-                      FROM hotels h
-                      JOIN rooms r USING (hotel_id)
-                      LEFT JOIN bookings b USING (hotel_id, room_id)
-                      WHERE hotel_id = :hotel_id
-                      AND bookings_status = 'Confirmed'
-                      AND (
-                        (bookings_check_in >= :checkin AND bookings_check_in < :checkout)
-                        OR (bookings_check_out > :checkin AND bookings_check_out <= :checkout)
-                        OR (bookings_check_in <= :checkin AND bookings_check_out >= :checkout)
-                      )
-                      GROUP BY b.room_id
-                    ) AS booked_rooms ON r.room_id = booked_rooms.room_id
-                    WHERE h.hotel_id = :hotel_id";
-
-
-            $stmt = $db->prepare($sql);
-            $stmt->bindParam(':hotel_id',  $_SESSION["hotel_id"], PDO::PARAM_INT);
-            $stmt->bindParam(':checkin',  $_SESSION["checkin_date"], PDO::PARAM_STR);
-            $stmt->bindParam(':checkout', $_SESSION["checkout_date"], PDO::PARAM_STR);
-            $stmt->execute();
-
-          } else {
-
-            // คำสั่ง SQL สำหรับดึงข้อมูลจากตาราง room
-            $sql = "SELECT * FROM hotels 
-                                    JOIN locations l USING (location_id) 
-                                    JOIN rooms r USING (hotel_id) 
-                                    WHERE hotel_id = :hotel_id";
-            $stmt = $db->prepare($sql);
-            $stmt->bindParam(':hotel_id', $_SESSION["hotel_id"]);
-            $stmt->execute();
-          }
-
           while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) :
           ?>
 
