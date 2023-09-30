@@ -95,6 +95,9 @@ if ($_SESSION['search_name'] != null) {
 
 // ดึงคะแนนรีวิว มีจำนวนคน มีจังหวัด
 else if ($_SESSION["location"] != null && $_SESSION["num_guest"] != null && $_SESSION["rating"] > 0) {
+  
+  $searchText = '%' . $_SESSION["location"] . '%';
+
   $select_stmt = $db->prepare("SELECT hotels.*, locations.*, rooms.*, reviews.*
                               FROM hotels
                               JOIN locations USING (location_id)
