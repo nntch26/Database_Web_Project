@@ -144,7 +144,6 @@ if (($_SERVER["REQUEST_METHOD"] == "POST") & ($_SESSION['checkin'] == null | $_S
 
 
     <!---- hotels rooms & roomfaciti ---->
-
     <div class="mos">
       <div class="mos2">
         <form class="p-5 card" action="BackEnd/searchbydate.php" method="get">
