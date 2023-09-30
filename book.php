@@ -184,7 +184,7 @@ if (($_SERVER["REQUEST_METHOD"] == "GET" & !isset($_SESSION['GetSearch'])) & ($_
           <?php while ($row2 = $select_stmt2->fetch(PDO::FETCH_ASSOC)) : ?>
 
             <div class="col-md-3">
-              <div class="card mt-2 mb-5">
+              <div class="card mt-2 mb-3">
                 <div class="card-body" style="line-height: 3;">
                     <h6><?php echo $row2["facility_name"]; ?></h6>
                 </div>
