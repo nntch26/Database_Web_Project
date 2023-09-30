@@ -68,8 +68,13 @@ if (!isset($_SESSION['is_login'])) {
                 <td><?php echo number_format($row["bookings_total_price"]); ?></td>
                 <td><?php echo $row["bookings_status"]; ?></td>
                 <td>
+
+                <?php if($row["bookings_status"] != 'Cancel') : ?>
                   <input type="hidden" name="booking_id" value="<?php echo $row["booking_id"]; ?>">
                   <button type="submit" name="confirm_pay" class="btn btn-primary btn-lg">รายละเอียดการจอง</button>
+                
+                <?php endif; ?>
+
                 </td>
               </form>
             </tr>
