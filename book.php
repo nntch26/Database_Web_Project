@@ -271,7 +271,7 @@ if (($_SERVER["REQUEST_METHOD"] == "GET" & !isset($_SESSION['GetSearch'])) & ($_
                                     JOIN users ON (reviews.user_id = users.user_id) 
                                     WHERE hotel_id = :hotel_id");
 
-      $select_stmt->bindParam(':hotel_id',  $_SESSION["hotel_id"]);
+      $select_stmt->bindParam(':hotel_id', $_SESSION["hotel_id"]);
       $select_stmt->execute();
     
       $row_count = $select_stmt->rowCount();
