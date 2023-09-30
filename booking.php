@@ -7,10 +7,10 @@ if (isset($_GET['submit2']) && isset($_SESSION['userid']) && ($_SESSION["role"] 
     $_SESSION["checkout"] = $_GET["checkout_date"]; // วันที่เช็คเอาท์
     $_SESSION["hotel_id"] = $_GET["hotel_id"];
     $_SESSION["available_rooms"] = $_GET["available_rooms"];
-}else{
+} else {
     header('location: login.php');
 }
- //echo  'room_id and hotel_id'.$_SESSION["room_id"]. $_SESSION["hotel_id"] . "จำนวนห้องที่เหลือ".$_SESSION["available_rooms"] .$_SESSION["checkin_date"] ;
+//echo  'room_id and hotel_id'.$_SESSION["room_id"]. $_SESSION["hotel_id"] . "จำนวนห้องที่เหลือ".$_SESSION["available_rooms"] .$_SESSION["checkin_date"] ;
 
 // แปลงวันที่เช็คอินและเช็คเอาท์เป็น timestamp
 $checkin_timestamp = strtotime($_SESSION["checkin"]);
@@ -76,7 +76,7 @@ $number_of_nights = intval($number_of_nights);
                     <input type="text" id="phone" name="phone" placeholder="โปรดระบุหมายเลขโทรศัพท์" value="<?php echo isset($row["users_phone_number"]) ? $row["users_phone_number"] : ''; ?>" required>
                     <label for="address"> ที่อยู่ : </label>
                     <input type="text" id="address" name="address" value="<?php echo $row["users_address"] ?>" required>
-                    <label for="address"> จำนวนห้องที่จะเข้าพัก : <?php echo '(จำนวนห้องตอนนี้'. $_SESSION["available_rooms"] . ')';?></label>
+                    <label for="address"> จำนวนห้องที่จะเข้าพัก : <?php echo '(จำนวนห้องตอนนี้ ' . $_SESSION["available_rooms"] . ')'; ?></label>
                     <input type="text" id="bookings_number" name="bookings_number" required>
                     <input type="hidden" name="price_with_night" value="<?= $price_with_night ?>">
                     <input type="hidden" name="number_of_nights" value="<?= $number_of_nights ?>">
@@ -120,15 +120,17 @@ $number_of_nights = intval($number_of_nights);
                     <?php echo 'รายละเอียดห้อง : ' . $result['rooms_description'] ?>
                 </label>
                 <br>
-                <p class="card-text">ราคา 1 ห้องต่อ 1 คืน 
+                <p class="card-text">ราคา 1 ห้องต่อ 1 คืน
                     <span class="price">
                         <?php echo "฿" .  number_format($result['rooms_price'])  ?>
-                    </span></p>
+                    </span>
+                </p>
                 <br>
-                <p class="card-text">ระยะเวลาที่พัก 
+                <p class="card-text">ระยะเวลาที่พัก
                     <span class="price">
                         <?php echo $number_of_nights . " คืน" ?>
-                    </span></p>
+                    </span>
+                </p>
                 <hr>
                 <p class="card-text">Total
                     <span class="price">

@@ -1,9 +1,32 @@
 <?php
 session_start();
+include('BackEnd/includes/connect_database.php');
+
+if (!isset($_SESSION['is_login'])) {
+    header('location: login.php');
+} else {
+    // query ข้อมูลของคนที่ login เข้ามา เพื่อแสดงผลใน html
+    $select_stmt3 = $db->prepare("SELECT * FROM users WHERE users_username = :username");
+    $select_stmt3->bindParam(':username', $_SESSION["username"]);
+    $select_stmt3->execute();
+    $row = $select_stmt3->fetch(PDO::FETCH_ASSOC);  // ทำบรรทัดนี้ กรณีที่เราต้องการดึงข้อมูลมาแสดง
+    // query ข้อมูลของคนที่ login เข้ามา 
+
+    $select_stmt = $db->prepare("SELECT * FROM bookings
+                                    JOIN users ON (bookings.user_id = users.user_id)
+                                    JOIN hotels ON (bookings.hotel_id = hotels.hotel_id)
+                                    JOIN rooms ON (bookings.room_id = rooms.room_id)
+                                    WHERE booking_id = :booking_id");
+    $select_stmt->bindParam(':booking_id', $_SESSION["booking_id"]);
+    $select_stmt->execute();
+    $result = $select_stmt->fetch(PDO::FETCH_ASSOC);
+}
+
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,50 +38,46 @@ session_start();
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </head>
+
 <body>
     <div class="wrapper">
         <div class="rapper">
             <div class="card">
-                <img src="https://static.leonardo-hotels.com/image/leonardohotelbucharestcitycenter_room_comfortdouble2_2022_4000x2600_7e18f254bc75491965d36cc312e8111f_1200x780_mobile_3.jpeg" class="card-img-top" width="100" height="250">
+            <img src="<?php echo 'BackEnd/uploads_img/' . $result["rooms_img"]; ?>" class="card-img-top" width="100" height="350" alt="รูปภาพของเรา">
                 <div class="info-name">
-                    <h4 class="card-title">Room Name</h4>
-                    <h6 class="locad">location hotel</h6><br>
+                    <h4 class="card-title"><?php echo $result["rooms_type"] ?></h4>
+                    <h6 class="locad"><?php echo $result["rooms_description"] ?></h6><br>
                 </div>
                 <div class="date">
-                    <label class="card-text">Check-in</label>
-                    <span class="day">day, 00 month 2023</span><br>
-                    <label class="card-text">Check-out</label>
-                    <span class="day">day, 00 month 2023</span><hr>
-                    <label class="type">1 เตียงคิงไซส์</label>
+                    <label class="card-text">จำนวนคนต่อห้อง</label>
+                    <span class="day"><?php echo $result["rooms_size"] ?></span><br>
+                    <label class="card-text">ยอดชำระเงิน</label>
+                    <span class="day"><?php echo "฿ " . $result["bookings_total_price"] ?></span>
                 </div>
             </div>
         </div>
         <div class="desc">
-            <h5 class="txt">ทริปของคุณเริ่มเมื่อ day 00 month 2023</h5>
             <div class="ch-in">
                 <ion-icon name="calendar"></ion-icon>
                 <span class="check-in">Check-in</span>
-                <span class="ch-in-txt">day, 00 month 2023</span><br><br>
+                <span class="ch-in-txt"><?php echo $result["bookings_check_in"] ?></span><br><br>
             </div>
             <div class="ch-out">
                 <ion-icon name="calendar-clear"></ion-icon>
                 <span class="check-in">Check-out</span>
-                <span class="ch-out-txt">day, 00 month 2023</span>
-            </div><hr>
+                <span class="ch-out-txt"><?php echo $result["bookings_check_out"] ?></span>
+            </div>
+            <hr>
             <div class="info-hotel">
                 <div class="info-ho-add">
                     <label class="la-name">ที่อยู่โรงแรม</label>
-                    <span class="info-la1">Sukhumvit 2, 10270 Bangpee, Thailand</span><br><br>
+                    <span class="info-la1"><?php echo $result["hotels_address"] ?></span><br><br>
                 </div>
                 <div class="info-ho-tel">
                     <label class="la-name">เบอร์โทรติดต่อ</label>
-                    <span class="info-la3">+99 123 456 789</span>
-                </div><hr>
-                <div class="foot">
-                    <label class="la-name">ราคารวม</label>
-                    <span class="info-la4">4 ล้าน</span>
-                    <button class="con-color">paid</button>
-                </div><hr>
+                    <span class="info-la3"><?php echo $result["hotels_phone"] ?></span>
+                </div>
+                <hr>
                 <div class="button">
                     <button type="submit" class="btn-cancel">ยกเลิกการจอง</button>
                 </div>
@@ -66,4 +85,5 @@ session_start();
         </div>
     </div>
 </body>
+
 </html>

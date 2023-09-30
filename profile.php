@@ -76,9 +76,12 @@ else{
                     <div class="card-body-profile" style="line-height: 3;">
                         <h4>แก้ไขข้อมูลส่วนตัวของคุณ</h4>
                         <a href="editprofile.php" class="btn btn-primary shadow-none mb-5 mt-4 me-lg-3 me-2">แก้ไขข้อมูล</a>
-
-                        <h4>แสดงประวัติการจองของคุณ</h4>
-                        <a href="#" class="btn btn-primary shadow-none mb-4 mt-4 me-lg-3 me-2">ดูประวัติการจอง</a>
+                        
+                         <!--เช็คว่า เป็นเจ้าของโรงแรมหรือไม่ -->
+                        <?php if ($_SESSION["role"] != 'HOTELOWNER') : ?>
+                            <h4>แสดงประวัติการจองของคุณ</h4>
+                            <a href="inc/historyBook.php" class="btn btn-primary shadow-none mb-4 mt-4 me-lg-3 me-2">ดูประวัติการจอง</a>
+                        <?php endif; ?>
 
                     </div>
                 </div>

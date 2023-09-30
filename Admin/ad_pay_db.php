@@ -11,23 +11,19 @@ if (isset($_POST['ad_submitpay'])) {
     // เปลี่ยนสถานะของ payment
     $sql = "UPDATE payments SET payments_status = 'Paid' WHERE payment_id = :payment_id";
 
-    $stmt = $db->prepare($sql2);
+    $stmt = $db->prepare($sql);
     $stmt->bindParam(':payment_id', $payment_id);
     $stmt->execute();
 
 
      // เปลี่ยนสถานะของ booking
-     $sql2 = "UPDATE bookings SET bookings_status = 'Confirm' WHERE booking_id = :booking_id";
+     $sql2 = "UPDATE bookings SET bookings_status = 'Confirmed' WHERE booking_id = :booking_id";
 
      $stmt2 = $db->prepare($sql2);
      $stmt2->bindParam(':booking_id', $booking_id);
      $stmt2->execute();
 
-
-
-     
-
-
+     $_SESSION['is_pay'] = true;
 
 
     header('location: admin.php?page=payment');
@@ -46,26 +42,22 @@ if (isset($_POST['ad_submitpay'])) {
     $booking_id = $_POST["booking_id"];
 
 
+      // เปลี่ยนสถานะของ payment
+      $sql = "UPDATE payments SET payments_status = 'Declined' WHERE payment_id = :payment_id";
 
-    $sql4 = "DELETE FROM requests WHERE request_id = :request_id";
+      $stmt = $db->prepare($sql);
+      $stmt->bindParam(':payment_id', $payment_id);
+      $stmt->execute();
+  
+  
+       // เปลี่ยนสถานะของ booking
+       $sql2 = "UPDATE bookings SET bookings_status = 'Cancel' WHERE booking_id = :booking_id";
+  
+       $stmt2 = $db->prepare($sql2);
+       $stmt2->bindParam(':booking_id', $booking_id);
+       $stmt2->execute();
 
-    $sql5 = "DELETE FROM hotels WHERE request_id = :request_id";
-
-   
-    $stmt4 = $db->prepare($sql4);
-    $stmt4->bindParam(':request_id', $request_id);
-
-    $stmt5 = $db->prepare($sql5);
-    $stmt5->bindParam(':request_id', $request_id);
-
-    
-    $stmt4->execute();
-    $stmt5->execute();
-
-
-
-
-    $_SESSION['is_register'] = false;
+    $_SESSION['is_pay'] = false;
     header('location: admin.php?page=payment');
 
 
