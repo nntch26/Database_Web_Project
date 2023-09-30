@@ -70,6 +70,7 @@ session_start();
 
                     <div class="form__group" style="text-align: center;">
                         <input type="hidden" name="search_name" value=  >
+                        <input type="hidden" name="rating" value= 0 >
 
                         <button type="submit" name="submit" class="btn btn-primary shadow-none me-lg-3 me-2">Search</button>
                     </div>
