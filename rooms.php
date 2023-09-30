@@ -10,7 +10,9 @@ $_SESSION["num_guest"] = $_GET['num_guest'];
 
 
 //ดึง Hotel ล่ะ JOIN กับตัว locations กับ rooms เพื่อดึงตัวโรงแรมที่ตรงตามเงื่อนไขที่ Tourist ค้นหา
-
+if (isset($_SESSION['GetSearch'])){
+  unset($_SESSION['GetSearch']);
+}
 
 
 // ค้นหาจาก ชื่อโรงแรม
