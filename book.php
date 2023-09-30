@@ -56,7 +56,7 @@ if (($_SERVER["REQUEST_METHOD"] == "GET" & !isset($_SESSION['GetSearch'])) & ($_
   $stmt->bindParam(':hotel_id',  $_SESSION["hotel_id"], PDO::PARAM_INT);
   $stmt->bindParam(':checkin',  $_SESSION["checkin"], PDO::PARAM_STR);
   $stmt->bindParam(':checkout', $_SESSION["checkout"], PDO::PARAM_STR);
-  
+
   $stmt->execute();
 
 
@@ -133,39 +133,71 @@ if (($_SERVER["REQUEST_METHOD"] == "GET" & !isset($_SESSION['GetSearch'])) & ($_
   <!---- hotel img des  ---->
   <div class="wrapper">
     <div class="info">
+
+      <!-- รูปภาพโรงแรม -->
       <div class="img">
         <img src="<?php echo 'BackEnd/uploads_img/' . $row["hotels_img"]; ?>" alt="รูปภาพของเรา">
       </div>
-      <div class="info-txt">
-        <h2 class="name-info"><?php echo $row["hotels_name"] ?></h2>
-        <p class="txt-info">
-          <?php echo $row["hotels_description"] ?>
-        </p>
-        <h2 class="name-info">ที่อยู่ของโรงแรม</h2>
-        <p class="txt-info">
-          <?php echo $row["hotels_address"] . " " . $row["location_name"] . " " . $row["hotels_postcode"]?>
-        </p> 
-      </div>
-    </div>
 
-    <!---- hotel facility ---->
-    <?php
-    $select_stmt2 = $db->prepare("SELECT facility_name from hotels h join hotelsfacility h2 using (hotel_id) join facilityname 
-           using (facility_id)  WHERE hotel_id = :hotel_id");
-    $select_stmt2->bindParam(':hotel_id', $_SESSION["hotel_id"]);
-    $select_stmt2->execute();
-    ?>
-    <!---- css มีปัญหา ---->
 
-    <div class="desc">
-      <div class="desc-over">
-        <h3 class="desc-txt">Property Overview</h3>
-        <div class="propertyover"> <!---- css มีปัญหา ตรงนี้เลยลบ tag class --->
-          <p class="desc-info1"><?php while ($row2 = $select_stmt2->fetch(PDO::FETCH_ASSOC)) : ?><?php echo $row2["facility_name"]; ?></p>
-        <?php endwhile ?>
+      <!-- เนื้อหาโรงแรม -->
+
+      <div class="container">
+        <div class="row">
+
+          <div class="col-md-12">
+            <div class="card mt-5">
+              <div class="card-body-profile" style="line-height: 3;">
+                  <h1 class="mt-2 name-info" style="font-weight: 700;"><?php echo $row["hotels_name"] ?></h1>
+                  <p class="txt-info"><?php echo $row["hotels_description"] ?></p>
+              </div>
+            </div>
+          </div>
+
+          
+          <div class="col-md-12">
+            <div class="card mt-5">
+              <div class="card-body-profile" style="line-height: 3;">
+                  <h2 class="name-info" style="font-weight: 500;">ที่อยู่ของโรงแรม</h2>
+                  <p class="txt-info">
+                    <?php echo $row["hotels_address"] . " " . $row["location_name"] . " " . $row["hotels_postcode"]?>
+                  </p>
+
+                  <h3 class="name-info" style="font-weight: 300;">ติดต่อได้ที่</้>
+                  <h5 class="txt-info"> เบอร์ติดต่อ : <?php echo $row["hotels_phone"]?></้>
+
+              </div>
+            </div>
+          </div>
+
+
+          <!---- hotel facility ---->
+          <?php
+          $select_stmt2 = $db->prepare("SELECT facility_name from hotels h join hotelsfacility h2 using (hotel_id) join facilityname 
+                using (facility_id)  WHERE hotel_id = :hotel_id");
+          $select_stmt2->bindParam(':hotel_id', $_SESSION["hotel_id"]);
+          $select_stmt2->execute();
+          ?>
+
+          <h2 class="name-info mt-5" style="font-weight: 700;">สิ่งอำนวยความสะดวก</h2>
+
+          <?php while ($row2 = $select_stmt2->fetch(PDO::FETCH_ASSOC)) : ?>
+
+            <div class="col-md-3">
+              <div class="card mt-2 mb-5">
+                <div class="card-body" style="line-height: 3;">
+                    <h6><?php echo $row2["facility_name"]; ?></h6>
+                </div>
+              </div>
+            </div>
+          
+            <?php endwhile ?>
+
         </div>
       </div>
-    </div>
+
+     
+
 
 
 
@@ -282,6 +314,11 @@ if (($_SERVER["REQUEST_METHOD"] == "GET" & !isset($_SESSION['GetSearch'])) & ($_
   <div>
   </div>
 
+
+
+  <!--- ส่วนแสดงคะแนนรีวิว และแสดงความคิดเห็น ---->
+
+
   <?php
   $review_stmt = $db->prepare("SELECT COALESCE(AVG(COALESCE(reviews_rating, 0)), 0) AS average_rating
                               FROM reviews 
@@ -295,8 +332,8 @@ if (($_SERVER["REQUEST_METHOD"] == "GET" & !isset($_SESSION['GetSearch'])) & ($_
 
   <div class="wrapper">
     <div class="review">
-      <h3 class="name-re">รีวิวจากผู้เข้าพัก</h3> <br>
-      <h4 class="name-re">คะแนนรีวิว : <?php echo $result["average_rating"] . " / 5"?></h4>
+      <h1 class="name-re" style="font-weight: 700;">รีวิวจากผู้เข้าพัก</h1> <br>
+      <h4 class="name-re" style="font-weight: 500;">คะแนนรีวิว : <?php echo $result["average_rating"] . " / 5"?></h4>
     </div>
 
     <div class="box">
