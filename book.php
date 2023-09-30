@@ -134,7 +134,7 @@ if (($_SERVER["REQUEST_METHOD"] == "GET" & !isset($_SESSION['GetSearch'])) & ($_
     <div class="desc">
       <div class="desc-over">
         <h3 class="desc-txt">Property Overview</h3>
-        <div> <!---- css มีปัญหา ตรงนี้เลยลบ tag class --->
+        <div class="propertyover"> <!---- css มีปัญหา ตรงนี้เลยลบ tag class --->
           <p class="desc-info1"><?php while ($row2 = $select_stmt2->fetch(PDO::FETCH_ASSOC)) : ?><?php echo $row2["facility_name"]; ?></p>
         <?php endwhile ?>
         </div>
@@ -172,14 +172,14 @@ if (($_SERVER["REQUEST_METHOD"] == "GET" & !isset($_SESSION['GetSearch'])) & ($_
 
     <div class="ta-desc">
 
-      <table class="table table-bordered">
+      <table class="table">
         <thead>
           <tr>
             <th>รูปภาพ</th>
-            <th>ประเถทห้อง</th>
+            <th>ประเภทห้อง</th>
             <th>คน</th>
             <th>Description</th>
-            <th>จำนวนห้องตอนนี้</th>
+            <th>จำนวนห้อง</th>
             <th></th>
           </tr>
         </thead>
@@ -193,7 +193,7 @@ if (($_SERVER["REQUEST_METHOD"] == "GET" & !isset($_SESSION['GetSearch'])) & ($_
 
             <tr style="height: 100px; width: 200px;">
 
-              <td style="max-width: 100px;"><img src="<?php echo 'BackEnd/uploads_img/' . $row["rooms_img"]; ?>" alt="รูปภาพของเรา"></td>
+              <td style="max-width: 200px;"><img src="<?php echo 'BackEnd/uploads_img/' . $row["rooms_img"]; ?>" alt="รูปภาพของเรา"></td>
               <td><?php echo $row["rooms_type"]; ?></td>
               <td><?php echo $row["rooms_size"]; ?></td>
               <?php
