@@ -75,7 +75,7 @@ if ($_SESSION['search_name'] != null) {
 
 
 
-  // ดึงคะแนนรีวิว
+  // ดึงคะแนนรีวิว มีจำนวนคน ไม่มีจังหวัด
 }else if ($_SESSION["location"] == null && $_SESSION["num_guest"] != null && $_SESSION["rating"] > 0) {
   $select_stmt = $db->prepare("SELECT hotels.*, locations.*, rooms.*, reviews.*
                               FROM hotels
@@ -85,12 +85,29 @@ if ($_SESSION['search_name'] != null) {
                               WHERE rooms.rooms_size >= :num_guest AND reviews.reviews_rating >= :rating1 AND reviews.reviews_rating < :rating2
                               GROUP BY hotels.hotel_id");
   
-  // กำหนดค่าพารามิเตอร์
   $select_stmt->bindValue(":num_guest", $_SESSION["num_guest"], PDO::PARAM_INT);
   $select_stmt->bindValue(":rating1", $_SESSION["rating"], PDO::PARAM_INT);
   $select_stmt->bindValue(":rating2", $_SESSION["rating"]+1, PDO::PARAM_INT);
   
-  // ดำเนินการค้นหา
+  $select_stmt->execute();
+
+}
+
+// ดึงคะแนนรีวิว มีจำนวนคน มีจังหวัด
+else if ($_SESSION["location"] != null && $_SESSION["num_guest"] != null && $_SESSION["rating"] > 0) {
+  $select_stmt = $db->prepare("SELECT hotels.*, locations.*, rooms.*, reviews.*
+                              FROM hotels
+                              JOIN locations USING (location_id)
+                              JOIN rooms USING (hotel_id)
+                              JOIN reviews USING (hotel_id)
+                              WHERE location_name LIKE :get_location AND rooms.rooms_size >= :num_guest AND reviews.reviews_rating >= :rating1 AND reviews.reviews_rating < :rating2
+                              GROUP BY hotels.hotel_id");
+  
+  $select_stmt->bindParam(':get_location', $searchText);
+  $select_stmt->bindValue(":num_guest", $_SESSION["num_guest"], PDO::PARAM_INT);
+  $select_stmt->bindValue(":rating1", $_SESSION["rating"], PDO::PARAM_INT);
+  $select_stmt->bindValue(":rating2", $_SESSION["rating"]+1, PDO::PARAM_INT);
+  
   $select_stmt->execute();
 
 }
