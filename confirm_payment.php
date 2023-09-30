@@ -43,7 +43,7 @@ if (!isset($_SESSION['is_login'])) {
     <div class="wrapper">
         <div class="rapper">
             <div class="card">
-            <img src="<?php echo 'BackEnd/uploads_img/' . $row["rooms_img"]; ?>" alt="รูปภาพของเรา">
+            <img src="<?php echo 'BackEnd/uploads_img/' . $result["rooms_img"]; ?>" class="card-img-top" width="100" height="350" alt="รูปภาพของเรา">
                 <div class="info-name">
                     <h4 class="card-title"><?php echo $result["rooms_type"] ?></h4>
                     <h6 class="locad"><?php echo $result["rooms_description"] ?></h6><br>
