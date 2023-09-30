@@ -10,7 +10,7 @@ $_SESSION["num_guest"] = $_GET['num_guest'];
 
 
 //ดึง Hotel ล่ะ JOIN กับตัว locations กับ rooms เพื่อดึงตัวโรงแรมที่ตรงตามเงื่อนไขที่ Tourist ค้นหา
-if (isset($_SESSION['GetSearch'])){
+if (isset($_SESSION['GetSearch'])) {
   unset($_SESSION['GetSearch']);
 }
 
@@ -67,6 +67,8 @@ if ($_SESSION['search_name'] != null) {
 
 //นับจำนวนข้อมูลที่มี
 $row_count = $select_stmt->rowCount();
+
+
 
 ?>
 
@@ -127,9 +129,17 @@ $row_count = $select_stmt->rowCount();
 
                   <!-- ชื่อโรงแรม -->
                   <div class="col-md-5 px-lg-3 px-md-3 px-0">
+                    <?php
+                    $review_stmt = $db->prepare("SELECT COALESCE(AVG(COALESCE(reviews_rating, 0)), 0) AS average_rating, COUNT(reviews_comment) AS count_reviews 
+                                                FROM reviews 
+                                                WHERE hotel_id = :hotel_id");
+                    $review_stmt->bindParam(':hotel_id', $row["hotel_id"]);
+                    $review_stmt->execute();
+                    $result = $review_stmt->fetch(PDO::FETCH_ASSOC);
+                    ?>
                     <h5 class="mb-3"><?= $row['hotels_name'] ?></h5>
-                    <span class="badge rounded-pill bg-light text-dark text-wrap">คะแนนรีวิว : </span>
-                    <span class="badge rounded-pill bg-light text-dark text-wrap">รีวิว : </span>
+                    <span class="badge rounded-pill bg-light text-dark text-wrap">คะแนนรีวิว : <?php echo $result["average_rating"] ?></span>
+                    <span class="badge rounded-pill bg-light text-dark text-wrap">รีวิว : <?php echo $result["count_reviews"] ?> </span>
 
                     <!-- ที่อยู่ -->
                     <p class="mb-1 mt-2"><?= $row['hotels_address'] ?></p>

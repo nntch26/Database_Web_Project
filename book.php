@@ -271,7 +271,7 @@ if (($_SERVER["REQUEST_METHOD"] == "POST") & ($_SESSION['checkin'] == null | $_S
                                     JOIN users ON (reviews.user_id = users.user_id) 
                                     WHERE hotel_id = :hotel_id");
 
-      $select_stmt->bindParam(':hotel_id', $_GET["hotel_id"]);
+      $select_stmt->bindParam(':hotel_id', $_SESSION["hotel_id"]);
       $select_stmt->execute();
 
       $row_count = $select_stmt->rowCount();
@@ -280,6 +280,7 @@ if (($_SERVER["REQUEST_METHOD"] == "POST") & ($_SESSION['checkin'] == null | $_S
       ?>
           <div class="scroll-box">
             <h5 class="pro-re"> <?php echo $row["users_username"] ?> </h5>
+            <h6 class="pro-re"> <?php echo "คะแนนรีวิว : " . $row["reviews_rating"] . " / 5" ?> </h6><hr>
             <h6 class="txt-re"> <?php echo $row["reviews_comment"] ?> </h6>
           </div>
 
