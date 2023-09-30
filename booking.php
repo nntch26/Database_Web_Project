@@ -92,14 +92,19 @@ $number_of_nights = intval($number_of_nights);
                     <?php echo $result['hotels_name'] ?>
                 </h4>
                 <div class="row">
-                        <div class="col-50">
-                            <label for="check-in">Check-In   (12:00 - 14:00)</label>
-                            <pre><?php echo $_SESSION["checkin"]?></pre>
-                        </div>
-                        <div class="col-50">
-                            <label for="check-out">Check-Out   (10:00 - 12:00)</label>
-                            <pre><?php echo $_SESSION["checkout"]?></pre>
-                        </div>
+                    <div class="col-50">
+                        <label for="check-in">Check-In (12:00 - 14:00)</label>
+                        <pre><?php echo $_SESSION["checkin"] ?></pre>
+                    </div>
+                    <div class="col-50">
+                        <label for="check-out">Check-Out (10:00 - 12:00)</label>
+                        <pre><?php echo $_SESSION["checkout"] ?></pre>
+                    </div>
+
+                    <div class="col-50">
+                        <label for="check-out">Check-Out</label>
+                        <p><?php echo $_SESSION["checkout"] ?></p>
+                    </div>
                 </div>
                 <label for="phone">
                     <?php echo 'เบอร์ติดต่อ : ' . $result['hotels_phone'] ?>
