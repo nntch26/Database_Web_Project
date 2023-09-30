@@ -40,23 +40,9 @@ if (!isset($_SESSION['is_login'])) {
 </head>
 
 <body>
-    <div class="wrapper">
-        <div class="rapper">
-            <div class="card">
-            <img src="<?php echo 'BackEnd/uploads_img/' . $row["rooms_img"]; ?>" alt="รูปภาพของเรา">
-                <div class="info-name">
-                    <h4 class="card-title"><?php echo $result["rooms_type"] ?></h4>
-                    <h6 class="locad"><?php echo $result["rooms_description"] ?></h6><br>
-                </div>
-                <div class="date">
-                    <label class="card-text">จำนวนคนต่อห้อง</label>
-                    <span class="day"><?php echo $result["rooms_size"] ?></span><br>
-                    <label class="card-text">ยอดชำระเงิน</label>
-                    <span class="day"><?php echo "฿ " . $result["bookings_total_price"] ?></span>
-                </div>
-            </div>
-        </div>
-        <div class="desc">
+    <h1>Confirm Payments</h1>
+    <div class="row">
+    <div class="col align-self-center">
             <div class="ch-in">
                 <ion-icon name="calendar"></ion-icon>
                 <span class="check-in">Check-in</span>
@@ -78,8 +64,58 @@ if (!isset($_SESSION['is_login'])) {
                     <span class="info-la3"><?php echo $result["hotels_phone"] ?></span>
                 </div>
                 <hr>
+                <div class="box">
+                    <div class="rating">
+                        <h3 class="txtcomm">Rating</h3>
+                        <div class="mb-2">
+                            <input type="radio" id="f1" class="form-check-input shadow-none me-1">
+                            <label class="form-check-label" value="1" for="f1" name="rating">1 ★</label>
+                        </div>
+                        <div class="mb-2">
+                            <input type="radio" id="f1" class="form-check-input shadow-none me-1">
+                            <label class="form-check-label" value="2" for="f2" name="rating">2 ★★</label>
+                        </div>
+                        <div class="mb-2">
+                            <input type="radio" id="f1" class="form-check-input shadow-none me-1">
+                            <label class="form-check-label" value="3" for="f3" name="rating">3 ★★★</label>
+                        </div>
+                        <div class="mb-2">
+                            <input type="radio" id="f1" class="form-check-input shadow-none me-1">
+                            <label class="form-check-label" value="4 " for="f3" name="rating">4 ★★★★</label>
+                        </div>
+                        <div class="mb-2">
+                            <input type="radio" id="f1" class="form-check-input shadow-none me-1">
+                            <label class="form-check-label" value="5" for="f3" name="rating">5 ★★★★★</label>
+                        </div>
+                    </div>
+                    <div class="comment">
+                        <h3 class="txtcomm">Comment</h3>
+                        <div class="commentbox">
+                            <textarea class="inputcomment" type="text"></textarea>
+                        </div>
+                        <div class="btnbox">
+                            <button class="btn" type="summit"> โพสต์</button>
+                        </div>
+
+                    </div>
+                </div>
                 <div class="button">
                     <button type="submit" class="btn-cancel">ยกเลิกการจอง</button>
+                </div>
+            </div>
+        </div>
+        <div class="col">
+            <div class="card">
+            <img src="<?php echo 'BackEnd/uploads_img/' . $result["rooms_img"]; ?>" class="card-img-top" width="100" height="350" alt="รูปภาพของเรา">
+                <div class="info-name">
+                    <h4 class="card-title"><?php echo $result["rooms_type"] ?></h4>
+                    <h6 class="locad"><?php echo $result["rooms_description"] ?></h6><br>
+                </div>
+                <div class="date">
+                    <label class="card-text">จำนวนคนต่อห้อง</label>
+                    <span class="day"><?php echo $result["rooms_size"] ?></span><br>
+                    <label class="card-text">ยอดชำระเงิน</label>
+                    <span class="day"><?php echo "฿ " . $result["bookings_total_price"] ?></span>
                 </div>
             </div>
         </div>

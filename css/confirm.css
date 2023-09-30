@@ -1,6 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@400;700&display=swap');
 body{
     font-family: 'Kanit', sans-serif;
+    margin: 50px;
 }
 
 *{
@@ -8,10 +9,65 @@ body{
     padding: 0;
     box-sizing: border-box;
 }
+.box{
+    display: flex;
+}
+.rating{
+    margin-right: 10px;
+    padding: 10px;
+    display: flex;
+    flex: 30%;
+    flex-direction: column;
+    border-radius: 20px;
+    box-shadow: 5px 5px 30px rgba(0, 0, 0, 0.1);
+}
+.comment{
+    display: flex;
+    flex: 70%;
+    flex-direction: column;
+    padding: 10px;
+    border-radius: 20px;
+    box-shadow: 5px 5px 30px rgba(0, 0, 0, 0.1);
+}
+.commentbox{
+    display: flex;
+    flex: 90%;
+}
+.inputcomment{
+    margin-top: 5px;
+    border: none;
+    width: 100%;
+}
+.txtcomm{
+    margin: 10px 0px 10px 30px;
+}
+
+.btnbox{
+    margin-left: 90%;
+    margin-top: 10px;
+}
+.mb-2{
+    margin-left: 10px;
+}
+.btn{
+    font-size: 15px;
+    display: flex;
+    flex: 10%;
+    right: 10px;
+    border: none;
+    background-color: rgb(74, 112, 249);
+    color: white;
+    font-weight: bold;
+    border-radius: 25px;
+}
+.btn:hover{
+    background-color: rgb(39, 86, 255);
+    color: white; 
+}
 
 /*หน้าใหญ่*/
 .wrapper{
-    width: 100%;
+    width: 50%;
     margin-bottom: 5%;
 }
 
@@ -142,13 +198,17 @@ hr{
 
 /* ปุ่มล่าง */
 .btn-cancel{
-    margin-top: 1%;
+    margin-top: 40px;
     right: 5%;
     border: none;
     padding: 10px 20px;
-    background-color: rgb(39, 86, 255);
+    background-color: rgb(74, 112, 249);
     color: white;
     font-weight: bold;
     border-radius: 25px;
     align-items: stretch;
+}
+.btn-cancel:hover{
+    background-color: rgb(39, 86, 255);
+    color: white;
 }
