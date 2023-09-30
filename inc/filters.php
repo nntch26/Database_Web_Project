@@ -57,7 +57,6 @@
                         <input type="radio" id="f5" class="form-check-input shadow-none me-1" value="5" name="rating">
                         <label class="form-check-label" for="f5">5 ★★★★★</label>
                     </div>
-
                 </div>
                 
                 <div class="border bg-light p-3 rounded mb-3">
@@ -65,11 +64,11 @@
                     <div class="d-flex">
                         <div class="me-2">
                             <label class="form-label">Min</label>
-                            <input type="text" class="form-control shadow-none" name="min">
+                            <input type="text" class="form-control shadow-none" name="min" value="<?php echo $_SESSION["min"] ?>">
                         </div>
                         <div>
                             <label class="form-label">Max</label>
-                            <input type="text" class="form-control shadow-none" name="max">
+                            <input type="text" class="form-control shadow-none" name="max" value="<?php echo $_SESSION["max"] ?>">
                         </div>
                     </div>
                 </div>

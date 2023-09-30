@@ -8,12 +8,18 @@ $_SESSION["checkout"] = $_GET['checkout'];
 $_SESSION["search_name"] = $_GET['search_name'];
 $_SESSION["num_guest"] = $_GET['num_guest'];
 
-if (isset($_GET['rating'])){
+if (isset($_GET['rating'])) {
   $_SESSION["rating"] = $_GET['rating'];
-
-}else{
+} else {
   $_SESSION["rating"] = 0;
+}
 
+if (isset($_GET['min']) && isset($_GET['max'])) {
+  $_SESSION["min"] = $_GET['min'];
+  $_SESSION["max"] = $_GET['max'];
+} else {
+  $_SESSION["min"] = 0;
+  $_SESSION["max"] = 0;
 }
 
 
@@ -21,7 +27,8 @@ if (isset($_GET['rating'])){
 if (isset($_SESSION['GetSearch'])) {
   unset($_SESSION['GetSearch']);
 }
-
+//เผื่อ debug
+// echo "before min : " . $_SESSION["min"] . " before max : " . $_SESSION["max"] . " before rating : " . $_SESSION["rating"] . " before location : " . $_SESSION["location"] . " before num_guest : " . $_SESSION["num_guest"];
 
 // ค้นหาจาก ชื่อโรงแรม
 if ($_SESSION['search_name'] != null) {
@@ -42,7 +49,7 @@ if ($_SESSION['search_name'] != null) {
 
 
   // ค้นหาจาก จำนวนคน
-} else if ($_SESSION["location"] == null && $_SESSION["num_guest"] != null && $_SESSION["rating"] == 0) {
+} else if ($_SESSION["location"] == null && $_SESSION["num_guest"] != null && $_SESSION["rating"] == 0 && ($_SESSION["min"] == 0 && $_SESSION["max"] == 0)) {
   $select_stmt = $db->prepare("SELECT hotels.*, locations.*, rooms.*
                               FROM hotels
                               JOIN locations USING (location_id)
@@ -58,7 +65,7 @@ if ($_SESSION['search_name'] != null) {
 
 
   // ค้นหาจาก จังหวัด จำนวนคน
-} else if ($_SESSION["location"] != null && $_SESSION["num_guest"] != null && $_SESSION["rating"] == 0) {
+} else if ($_SESSION["location"] != null && $_SESSION["num_guest"] != null && $_SESSION["rating"] == 0 && ($_SESSION["min"] == 0 && $_SESSION["max"] == 0)) {
 
   $searchText = '%' . $_SESSION["location"] . '%';
 
@@ -76,7 +83,7 @@ if ($_SESSION['search_name'] != null) {
 
 
   // ดึงคะแนนรีวิว มีจำนวนคน ไม่มีจังหวัด
-}else if ($_SESSION["location"] == null && $_SESSION["num_guest"] != null && $_SESSION["rating"] > 0) {
+} else if ($_SESSION["location"] == null && $_SESSION["num_guest"] != null && $_SESSION["rating"] > 0 && ($_SESSION["min"] == 0 && $_SESSION["max"] == 0)) {
   $select_stmt = $db->prepare("SELECT hotels.*, locations.*, rooms.*, reviews.*
                               FROM hotels
                               JOIN locations USING (location_id)
@@ -84,18 +91,17 @@ if ($_SESSION['search_name'] != null) {
                               JOIN reviews USING (hotel_id)
                               WHERE rooms.rooms_size >= :num_guest AND reviews.reviews_rating >= :rating1 AND reviews.reviews_rating < :rating2
                               GROUP BY hotels.hotel_id");
-  
+
   $select_stmt->bindValue(":num_guest", $_SESSION["num_guest"], PDO::PARAM_INT);
   $select_stmt->bindValue(":rating1", $_SESSION["rating"], PDO::PARAM_INT);
-  $select_stmt->bindValue(":rating2", $_SESSION["rating"]+1, PDO::PARAM_INT);
-  
-  $select_stmt->execute();
+  $select_stmt->bindValue(":rating2", $_SESSION["rating"] + 1, PDO::PARAM_INT);
 
+  $select_stmt->execute();
 }
 
 // ดึงคะแนนรีวิว มีจำนวนคน มีจังหวัด
-else if ($_SESSION["location"] != null && $_SESSION["num_guest"] != null && $_SESSION["rating"] > 0) {
-  
+else if ($_SESSION["location"] != null && $_SESSION["num_guest"] != null && $_SESSION["rating"] > 0 && ($_SESSION["min"] == 0 && $_SESSION["max"] == 0)) {
+
   $searchText = '%' . $_SESSION["location"] . '%';
 
   $select_stmt = $db->prepare("SELECT hotels.*, locations.*, rooms.*, reviews.*
@@ -105,14 +111,97 @@ else if ($_SESSION["location"] != null && $_SESSION["num_guest"] != null && $_SE
                               JOIN reviews USING (hotel_id)
                               WHERE location_name LIKE :get_location AND rooms.rooms_size >= :num_guest AND reviews.reviews_rating >= :rating1 AND reviews.reviews_rating < :rating2
                               GROUP BY hotels.hotel_id");
-  
+
   $select_stmt->bindParam(':get_location', $searchText);
   $select_stmt->bindValue(":num_guest", $_SESSION["num_guest"], PDO::PARAM_INT);
   $select_stmt->bindValue(":rating1", $_SESSION["rating"], PDO::PARAM_INT);
-  $select_stmt->bindValue(":rating2", $_SESSION["rating"]+1, PDO::PARAM_INT);
-  
-  $select_stmt->execute();
+  $select_stmt->bindValue(":rating2", $_SESSION["rating"] + 1, PDO::PARAM_INT);
 
+  $select_stmt->execute();
+}
+
+#กรณีมีแค่คน MIN MAX
+else if ($_SESSION["location"] == null && $_SESSION["num_guest"] != null && $_SESSION["rating"] == 0 
+        && ($_SESSION["min"] >= 0 && $_SESSION["max"] > 0)) {
+
+  $select_stmt = $db->prepare("SELECT hotels.*, locations.*, rooms.*
+                              FROM hotels
+                              JOIN locations USING (location_id)
+                              JOIN rooms USING (hotel_id)
+                              WHERE rooms.rooms_size >= :num_guest AND rooms.rooms_price >= :min AND rooms.rooms_price < :max
+                              GROUP BY hotels.hotel_id");
+
+  $select_stmt->bindValue(":num_guest", $_SESSION["num_guest"], PDO::PARAM_INT);
+  $select_stmt->bindValue(":min", $_SESSION["min"], PDO::PARAM_INT);
+  $select_stmt->bindValue(":max", $_SESSION["max"], PDO::PARAM_INT);
+
+  $select_stmt->execute();
+}
+
+#กรณีมีคน มีจังหวัด MIN MAX
+else if ($_SESSION["location"] != null && $_SESSION["num_guest"] != null && $_SESSION["rating"] == 0 
+        && ($_SESSION["min"] >= 0 && $_SESSION["max"] > 0)) {
+
+  $searchText = '%' . $_SESSION["location"] . '%';
+
+  $select_stmt = $db->prepare("SELECT hotels.*, locations.*, rooms.*
+                              FROM hotels
+                              JOIN locations USING (location_id)
+                              JOIN rooms USING (hotel_id)
+                              WHERE location_name LIKE :get_location AND rooms.rooms_size >= :num_guest AND rooms.rooms_price >= :min AND rooms.rooms_price < :max
+                              GROUP BY hotels.hotel_id");
+
+  $select_stmt->bindParam(':get_location', $searchText);
+  $select_stmt->bindValue(":num_guest", $_SESSION["num_guest"], PDO::PARAM_INT);
+  $select_stmt->bindValue(":min", $_SESSION["min"], PDO::PARAM_INT);
+  $select_stmt->bindValue(":max", $_SESSION["max"], PDO::PARAM_INT);
+
+  $select_stmt->execute();
+}
+#กรณีมีแค่คน MIN MAX RATING
+else if ($_SESSION["location"] == null && $_SESSION["num_guest"] != null && $_SESSION["rating"] > 0 
+      && ($_SESSION["min"] >= 0 && $_SESSION["max"] > 0)) {
+
+  $select_stmt = $db->prepare("SELECT hotels.*, locations.*, rooms.*, reviews.*
+                              FROM hotels
+                              JOIN locations USING (location_id)
+                              JOIN rooms USING (hotel_id)
+                              LEFT JOIN reviews USING (hotel_id)
+                              WHERE rooms.rooms_size >= :num_guest AND rooms.rooms_price >= :min AND rooms.rooms_price < :max AND reviews.reviews_rating >= :rating1 AND reviews.reviews_rating < :rating2
+                              GROUP BY hotels.hotel_id");
+
+  $select_stmt->bindValue(":num_guest", $_SESSION["num_guest"], PDO::PARAM_INT);
+  $select_stmt->bindValue(":min", $_SESSION["min"], PDO::PARAM_INT);
+  $select_stmt->bindValue(":max", $_SESSION["max"], PDO::PARAM_INT);
+  $select_stmt->bindValue(":rating1", $_SESSION["rating"], PDO::PARAM_INT);
+  $select_stmt->bindValue(":rating2", $_SESSION["rating"] + 1, PDO::PARAM_INT);
+
+  $select_stmt->execute();
+}
+
+#มีคน มีจังหวัด MIN MAX RATING
+else if ($_SESSION["location"] != null && $_SESSION["num_guest"] != null && $_SESSION["rating"] > 0 
+        && ($_SESSION["min"] >= 0 && $_SESSION["max"] > 0)) {
+
+  $searchText = '%' . $_SESSION["location"] . '%';
+
+  $select_stmt = $db->prepare("SELECT hotels.*, locations.*, rooms.*, reviews.*
+                              FROM hotels
+                              JOIN locations USING (location_id)
+                              JOIN rooms USING (hotel_id)
+                              LEFT JOIN reviews USING (hotel_id)
+                              WHERE location_name LIKE :get_location AND rooms.rooms_size >= :num_guest AND rooms.rooms_price >= :min 
+                              AND rooms.rooms_price < :max AND reviews.reviews_rating >= :rating1 AND reviews.reviews_rating < :rating2
+                              GROUP BY hotels.hotel_id");
+
+  $select_stmt->bindParam(':get_location', $searchText);
+  $select_stmt->bindValue(":num_guest", $_SESSION["num_guest"], PDO::PARAM_INT);
+  $select_stmt->bindValue(":min", $_SESSION["min"], PDO::PARAM_INT);
+  $select_stmt->bindValue(":max", $_SESSION["max"], PDO::PARAM_INT);
+  $select_stmt->bindValue(":rating1", $_SESSION["rating"], PDO::PARAM_INT);
+  $select_stmt->bindValue(":rating2", $_SESSION["rating"] + 1, PDO::PARAM_INT);
+
+  $select_stmt->execute();
 }
 
 
@@ -285,7 +374,6 @@ $row_count = $select_stmt->rowCount();
 
 <?php
 if (isset($_SESSION["rating"])) {
-    unset($_SESSION["rating"]);
-    
+  unset($_SESSION["rating"]);
 }
 ?>

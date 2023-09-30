@@ -11,7 +11,7 @@ if (($_SERVER["REQUEST_METHOD"] == "GET" & !isset($_SESSION['GetSearch'])) & ($_
   $select_stmt->bindParam(':hotel_id', $_SESSION["hotel_id"]);
   $select_stmt->execute();
   $row = $select_stmt->fetch(PDO::FETCH_ASSOC);
-} else if (isset($_SESSION['checkin']) && isset($_SESSION['checkout']) && $_SERVER["REQUEST_METHOD"] == "GET" && !isset($_SESSION['GetSearch'])){
+} else if (isset($_SESSION['checkin']) && isset($_SESSION['checkout']) && $_SERVER["REQUEST_METHOD"] == "GET" && !isset($_SESSION['GetSearch'])) {
   $_SESSION["hotel_id"] = $_GET["hotel_id"];
   $select_stmt = $db->prepare("SELECT * FROM hotels 
   JOIN locations l USING (location_id) JOIN rooms r USING (hotel_id)  
@@ -119,6 +119,10 @@ if (($_SERVER["REQUEST_METHOD"] == "GET" & !isset($_SESSION['GetSearch'])) & ($_
         <p class="txt-info">
           <?php echo $row["hotels_description"] ?>
         </p>
+        <h2 class="name-info">ที่อยู่ของโรงแรม</h2>
+        <p class="txt-info">
+          <?php echo $row["hotels_address"] . " " . $row["location_name"] . " " . $row["hotels_postcode"]?>
+        </p> 
       </div>
     </div>
 
@@ -258,9 +262,19 @@ if (($_SERVER["REQUEST_METHOD"] == "GET" & !isset($_SESSION['GetSearch'])) & ($_
   <div>
   </div>
 
+  <?php
+  $review_stmt = $db->prepare("SELECT COALESCE(AVG(COALESCE(reviews_rating, 0)), 0) AS average_rating
+                              FROM reviews 
+                              WHERE hotel_id = :hotel_id");
+  $review_stmt->bindParam(':hotel_id', $_SESSION["hotel_id"]);
+  $review_stmt->execute();
+  $result = $review_stmt->fetch(PDO::FETCH_ASSOC);
+  ?>
+
   <div class="wrapper">
     <div class="review">
-      <h3 class="name-re">Review</h3>
+      <h3 class="name-re">รีวิวจากผู้เข้าพัก</h3> <br>
+      <h4 class="name-re">คะแนนรีวิว : <?php echo $result["average_rating"] . " / 5"?></h4>
     </div>
 
     <div class="box">
@@ -273,14 +287,15 @@ if (($_SERVER["REQUEST_METHOD"] == "GET" & !isset($_SESSION['GetSearch'])) & ($_
 
       $select_stmt->bindParam(':hotel_id', $_SESSION["hotel_id"]);
       $select_stmt->execute();
-    
+
       $row_count = $select_stmt->rowCount();
       if ($row_count > 0) {
         while ($row = $select_stmt->fetch(PDO::FETCH_ASSOC)) {
       ?>
           <div class="scroll-box">
             <h5 class="pro-re"> <?php echo $row["users_username"] ?> </h5>
-            <h6 class="pro-re"> <?php echo "คะแนนรีวิว : " . $row["reviews_rating"] . " / 5" ?> </h6><hr>
+            <h6 class="pro-re"> <?php echo "คะแนนรีวิว : " . $row["reviews_rating"] . " / 5" ?> </h6>
+            <hr>
             <h6 class="txt-re"> <?php echo $row["reviews_comment"] ?> </h6>
           </div>
 
