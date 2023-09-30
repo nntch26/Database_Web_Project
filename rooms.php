@@ -116,7 +116,7 @@ $row_count = $select_stmt->rowCount();
         if ($row_count > 0) {
           while ($row = $select_stmt->fetch(PDO::FETCH_ASSOC)) {
         ?>
-            <form action="book.php" method="post">
+            <form action="book.php" method="get">
               <div class="card mb-4 border-0 shadow">
                 <div class="row g-0 p-3 align-items-center">
 

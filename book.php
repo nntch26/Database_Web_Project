@@ -2,8 +2,8 @@
 session_start();
 include('BackEnd/includes/connect_database.php'); // ดึงไฟล์เชื่อม database เข้ามาecho $_SESSION['checkout'] . '1111';
 
-if (($_SERVER["REQUEST_METHOD"] == "POST") & ($_SESSION['checkin'] == null | $_SESSION['checkout'] == null)) {
-  $_SESSION["hotel_id"] = $_POST["hotel_id"];
+if (($_SERVER["REQUEST_METHOD"] == "GET" & !isset($_SESSION['GetSearch'])) & ($_SESSION['checkin'] == null | $_SESSION['checkout'] == null)) {
+  $_SESSION["hotel_id"] = $_GET["hotel_id"];
   $select_stmt = $db->prepare("SELECT * FROM hotels 
                               JOIN locations l USING (location_id) JOIN rooms r USING (hotel_id)  
                               WHERE hotel_id = :hotel_id");
@@ -11,8 +11,8 @@ if (($_SERVER["REQUEST_METHOD"] == "POST") & ($_SESSION['checkin'] == null | $_S
   $select_stmt->bindParam(':hotel_id', $_SESSION["hotel_id"]);
   $select_stmt->execute();
   $row = $select_stmt->fetch(PDO::FETCH_ASSOC);
-} else if (($_SESSION['checkin'] != null && $_SESSION['checkout'] != null) & $_SERVER["REQUEST_METHOD"] == "POST"){
-  $_SESSION["hotel_id"] = $_POST["hotel_id"];
+} else if (isset($_SESSION['checkin']) && isset($_SESSION['checkout']) && $_SERVER["REQUEST_METHOD"] == "GET" && !isset($_SESSION['GetSearch'])){
+  $_SESSION["hotel_id"] = $_GET["hotel_id"];
   $select_stmt = $db->prepare("SELECT * FROM hotels 
   JOIN locations l USING (location_id) JOIN rooms r USING (hotel_id)  
   WHERE hotel_id = :hotel_id");
@@ -271,9 +271,9 @@ if (($_SERVER["REQUEST_METHOD"] == "POST") & ($_SESSION['checkin'] == null | $_S
                                     JOIN users ON (reviews.user_id = users.user_id) 
                                     WHERE hotel_id = :hotel_id");
 
-      $select_stmt->bindParam(':hotel_id', $_GET["hotel_id"]);
+      $select_stmt->bindParam(':hotel_id',  $_SESSION["hotel_id"]);
       $select_stmt->execute();
-
+    
       $row_count = $select_stmt->rowCount();
       if ($row_count > 0) {
         while ($row = $select_stmt->fetch(PDO::FETCH_ASSOC)) {
