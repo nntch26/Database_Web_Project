@@ -15,17 +15,20 @@
   padding: 0;
   box-sizing: border-box;
 }
-.mos {
-  margin-top: 10%;
+.propertyover{
+  box-shadow: 5px 5px 30px rgba(0, 0, 0, 0.1);
+  padding: 20px;
 }
 
 
+
 .mos2 {
+  box-shadow: 5px 5px 30px rgba(0, 0, 0, 0.1);
   margin-left: 5%;
   font-size: 2em;
   text-align: center;
   color: red;
-  margin-top: 10px;
+  margin-top: 30px;
   width: 90%;
 }
 
@@ -49,6 +52,7 @@ a {
 img {
   width: 100%;
   display: flex;
+  border-radius: 30px;
 }
 
 body {
@@ -271,41 +275,32 @@ body {
 .wrapper {
   display: flex;
   flex-direction: column;
-  min-height: 100vh;
 }
 
 .name-info{
   color: rgb(39, 86, 255);
-}
-.txt-info{
-  margin-bottom: 5%;
 }
 .desc-txt{
   display: flex;
   justify-content: flex-start;
   padding-right: calc(var(--bs-gutter-x) * .5);
   padding-left: calc(var(--bs-gutter-x) * .5);
-  margin-top: 100px;
+  margin-top: auto;
   margin-right: auto;
   margin-left: auto;
   margin-bottom: 2%;
   color: rgb(39, 86, 255);
 }
+.desc-over{
+  margin-top: 100px;
+}
 
 .desc{
-  margin-top: 10%;
+  margin-top: 5%;
+  margin-left: 100px;
   display: grid;
   grid-template-columns: auto auto;
   justify-content: flex-start;
-  margin-bottom: 10%;
-}
-
-
-
-.desc-over{
-  position: absolute;
-  left: 5%;
-  margin-bottom: 5%;
 }
 
 
@@ -363,8 +358,7 @@ body {
 
 .info-txt{
   position: absolute;
-  left: 5%;
-  margin-bottom: 5%;
+  margin-left: 90px;
 }
 
 
@@ -482,21 +476,9 @@ th, td {
 }
 
 
-.mos{
-  margin-top: 10%;
-}
-
 .ta-desc{
   width: 90%;
   margin-top: 0;
 }
 
-.mos2{
-  margin-left: 5%;
-  font-size: 2em;
-  text-align: center;
-  color: red;
-  margin-top: 5%;
-  width: 90%;
-}
 
