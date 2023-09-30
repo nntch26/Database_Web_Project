@@ -35,47 +35,46 @@
     </div>
 
 
+    <form action="rooms.php" method="post">
+        <div class="border bg-light p-3 rounded mb-3">
+            <h5 class="mb-3" style="font-size: 18px;">Property Class</h5>
+            <div class="mb-2">
+                <input type="radio" id="f1" class="form-check-input shadow-none me-1" value="1" name="rating">
+                <label class="form-check-label" for="f1">1 ★</label>
+            </div>
+            <div class="mb-2">
+                <input type="radio" id="f2" class="form-check-input shadow-none me-1" value="2" name="rating">
+                <label class="form-check-label" for="f2">2 ★★</label>
+            </div>
+            <div class="mb-2">
+                <input type="radio" id="f3" class="form-check-input shadow-none me-1" value="3" name="rating">
+                <label class="form-check-label" for="f3">3 ★★★</label>
+            </div>
+            <div class="mb-2">
+                <input type="radio" id="f4" class="form-check-input shadow-none me-1" value="4" name="rating">
+                <label class="form-check-label" for="f4">4 ★★★★</label>
+            </div>
+            <div class="mb-2">
+                <input type="radio" id="f5" class="form-check-input shadow-none me-1" value="5" name="rating">
+                <label class="form-check-label" for="f5">5 ★★★★★</label>
+            </div>
 
+        </div>
+        
         <div class="border bg-light p-3 rounded mb-3">
-        <h5 class="mb-3" style="font-size: 18px;">Property Class</h5>
-        <div class="mb-2">
-            <input type="radio" id="f1" class="form-check-input shadow-none me-1">
-            <label class="form-check-label" value="1" for="f1" name="rating">1 ★</label>
-        </div>
-        <div class="mb-2">
-            <input type="radio" id="f1" class="form-check-input shadow-none me-1">
-            <label class="form-check-label" value="2" for="f2" name="rating">2 ★★</label>
-        </div>
-        <div class="mb-2">
-            <input type="radio" id="f1" class="form-check-input shadow-none me-1">
-            <label class="form-check-label" value="3" for="f3" name="rating">3 ★★★</label>
-        </div>
-        <div class="mb-2">
-            <input type="radio" id="f1" class="form-check-input shadow-none me-1">
-            <label class="form-check-label" value="4 " for="f3" name="rating">4 ★★★★</label>
-        </div>
-        <div class="mb-2">
-            <input type="radio" id="f1" class="form-check-input shadow-none me-1">
-            <label class="form-check-label" value="5" for="f3" name="rating">5 ★★★★★</label>
-        </div>
-        <div class="mb-2">
-            <input type="radio" id="f1" class="form-check-input shadow-none me-1">
-            <label class="form-check-label" value="6" for="f3" name="rating">ALL ★ - ★★★★★</label>
-        </div>
-        </div>
-        <div class="border bg-light p-3 rounded mb-3">
-        <h5 class="mb-3" style="font-size: 18px;">Price</h5>
-        <div class="d-flex">
-            <div class="me-2">
-            <label class="form-label">Min</label>
-            <input type="text" class="form-control shadow-none">
-            </div>
-            <div>
-            <label class="form-label">Max</label>
-            <input type="text" class="form-control shadow-none">
+            <h5 class="mb-3" style="font-size: 18px;">Price</h5>
+            <div class="d-flex">
+                <div class="me-2">
+                <label class="form-label">Min</label>
+                <input type="text" class="form-control shadow-none">
+                </div>
+                <div>
+                <label class="form-label">Max</label>
+                <input type="text" class="form-control shadow-none">
+                </div>
             </div>
         </div>
-        </div>
+    </form>
     </div>
     </div>
 </nav>
