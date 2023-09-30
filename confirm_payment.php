@@ -56,6 +56,10 @@ if (!isset($_SESSION['is_login'])) {
             <hr>
             <div class="info-hotel">
                 <div class="info-ho-add">
+                    <label class="la-name">ชื่อโรงแรม</label>
+                    <span class="info-la1"><?php echo $result["hotels_name"] ?></span><br><br>
+                </div>
+                <div class="info-ho-add">
                     <label class="la-name">ที่อยู่โรงแรม</label>
                     <span class="info-la1"><?php echo $result["hotels_address"] ?></span><br><br>
                 </div>
