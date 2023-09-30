@@ -20,6 +20,17 @@ if (!isset($_SESSION['is_login'])) {
     $select_stmt->bindParam(':booking_id', $_SESSION["booking_id"]);
     $select_stmt->execute();
     $result = $select_stmt->fetch(PDO::FETCH_ASSOC);
+
+
+    // ตรวจสอบว่า user เคยมีรีวิว โรงแรมนี้ หรือไม่
+    $select_stmt4 = $db->prepare("SELECT * FROM reviews WHERE user_id = :user_id AND hotel_id = :hotel_id");
+    $select_stmt4->bindParam(':user_id', $_SESSION["userid"]);
+    $select_stmt4->bindParam(':hotel_id', $result["hotel_id"]);
+    $select_stmt4->execute();
+    $rowre = $select_stmt4->fetch(PDO::FETCH_ASSOC);
+
+
+
 }
 
 ?>
@@ -43,6 +54,9 @@ if (!isset($_SESSION['is_login'])) {
     <h1>Confirm Payments</h1>
     <div class="row">
     <div class="col align-self-center">
+
+            <!-- รายละเอียดการจอง ฝั่งซ้าย--->
+
             <div class="ch-in">
                 <ion-icon name="calendar"></ion-icon>
                 <span class="check-in">Check-in</span>
@@ -56,6 +70,10 @@ if (!isset($_SESSION['is_login'])) {
             <hr>
             <div class="info-hotel">
                 <div class="info-ho-add">
+                    <label class="la-name">ชื่อโรงแรม</label>
+                    <span class="info-la1"><?php echo $result["hotels_name"] ?></span><br><br>
+                </div>
+                <div class="info-ho-add">
                     <label class="la-name">ที่อยู่โรงแรม</label>
                     <span class="info-la1"><?php echo $result["hotels_address"] ?></span><br><br>
                 </div>
@@ -64,46 +82,68 @@ if (!isset($_SESSION['is_login'])) {
                     <span class="info-la3"><?php echo $result["hotels_phone"] ?></span>
                 </div>
                 <hr>
-                <div class="box">
-                    <div class="rating">
-                        <h3 class="txtcomm">Rating</h3>
-                        <div class="mb-2">
-                            <input type="radio" id="f1" class="form-check-input shadow-none me-1">
-                            <label class="form-check-label" value="1" for="f1" name="rating">1 ★</label>
-                        </div>
-                        <div class="mb-2">
-                            <input type="radio" id="f1" class="form-check-input shadow-none me-1">
-                            <label class="form-check-label" value="2" for="f2" name="rating">2 ★★</label>
-                        </div>
-                        <div class="mb-2">
-                            <input type="radio" id="f1" class="form-check-input shadow-none me-1">
-                            <label class="form-check-label" value="3" for="f3" name="rating">3 ★★★</label>
-                        </div>
-                        <div class="mb-2">
-                            <input type="radio" id="f1" class="form-check-input shadow-none me-1">
-                            <label class="form-check-label" value="4 " for="f3" name="rating">4 ★★★★</label>
-                        </div>
-                        <div class="mb-2">
-                            <input type="radio" id="f1" class="form-check-input shadow-none me-1">
-                            <label class="form-check-label" value="5" for="f3" name="rating">5 ★★★★★</label>
-                        </div>
-                    </div>
-                    <div class="comment">
-                        <h3 class="txtcomm">Comment</h3>
-                        <div class="commentbox">
-                            <textarea class="inputcomment" type="text"></textarea>
-                        </div>
-                        <div class="btnbox">
-                            <button class="btn" type="summit"> โพสต์</button>
-                        </div>
 
+
+                <!-- ส่วนให้คะแนน และแสดงความคิดเห็น ฝั่งซ้าย--->
+
+                <!--ตรวจสอบว่ามีรีวิวหรือไม่-->
+                <?php if((!$rowre) && ($result["bookings_status"] != 'WAITING')) : ?>
+                <form action="BackEnd/rating_db.php" method="post">
+                    <div class="box">
+                        <div class="rating">
+                            <h3 class="txtcomm">Rating</h3>
+
+                            <div class="mb-2">
+                                <input type="radio" id="f1" class="form-check-input shadow-none me-1" value="1" name="rating">
+                                <label class="form-check-label" for="f1">1 ★</label>
+                            </div>
+                            <div class="mb-2">
+                                <input type="radio" id="f2" class="form-check-input shadow-none me-1" value="2" name="rating">
+                                <label class="form-check-label" for="f2">2 ★★</label>
+                            </div>
+                            <div class="mb-2">
+                                <input type="radio" id="f3" class="form-check-input shadow-none me-1" value="3" name="rating">
+                                <label class="form-check-label" for="f3">3 ★★★</label>
+                            </div>
+                            <div class="mb-2">
+                                <input type="radio" id="f4" class="form-check-input shadow-none me-1" value="4" name="rating">
+                                <label class="form-check-label" for="f4">4 ★★★★</label>
+                            </div>
+                            <div class="mb-2">
+                                <input type="radio" id="f5" class="form-check-input shadow-none me-1" value="5" name="rating">
+                                <label class="form-check-label" for="f5">5 ★★★★★</label>
+                            </div>
+                        </div>
+                        <div class="comment">
+                            <h3 class="txtcomm">Comment</h3>
+                            <div class="commentbox">
+                                <textarea class="inputcomment" name="comment" id="comment" type="text"></textarea>
+                            </div>
+
+                            <div class="btnbox">
+                                <input type="hidden" name="hotel_id" value="<?php echo $result["hotel_id"]; ?>">
+                                <button class="btn" type="submit" name="post_com"> โพสต์</button>
+                            </div>
+                            
+                        </div>
                     </div>
-                </div>
-                <div class="button">
-                    <button type="submit" class="btn-cancel">ยกเลิกการจอง</button>
-                </div>
+                    
+                     <!-- ปุ่มยกเลิกการจอง -->
+                     <div class="button">
+                        <button type="submit" name="cancle_pay" class="btn-cancel">ยกเลิกการจอง</button>
+                    </div>
+
+                    <?php endif; ?>
+
+                </form>
+
+
+
             </div>
         </div>
+
+
+        <!-- รายละเอียดห้องพัก ฝั่งขวา--->
         <div class="col">
             <div class="card">
             <img src="<?php echo 'BackEnd/uploads_img/' . $result["rooms_img"]; ?>" class="card-img-top" width="100" height="350" alt="รูปภาพของเรา">
