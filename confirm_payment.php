@@ -51,6 +51,8 @@ if (!isset($_SESSION['is_login'])) {
 </head>
 
 <body>
+
+
     <h1>Confirm Payments</h1>
     <div class="row">
     <div class="col align-self-center">
@@ -135,6 +137,10 @@ if (!isset($_SESSION['is_login'])) {
 
                     <?php endif; ?>
 
+                </form>
+
+                <form action="BackEnd/rating_db.php" method="post">
+                    <button type="submit" name="back" class="btn btn-danger shadow-none mb-4 mt-4 me-lg-3 me-2">Go Back</button>
                 </form>
 
 

@@ -50,6 +50,10 @@ if (isset($_POST['post_com'])) {
     $upstmt2->execute();
 
 
+}elseif (isset($_POST['back'])){
+    header('location: ../index.php');
+
+
 }
 
 
