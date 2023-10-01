@@ -59,9 +59,15 @@ if (!isset($_SESSION['is_login'])) {
                                     <?php echo "<pre>" . $_SESSION["checkout"] . "</pre>" ?>
                                 </div>
                             </div>
+                            
                             <hr>
-                            <label class="form-label">อัปโหลดรูปภาพสลิปหลักฐานการโอนเงินของคุณ</label>
-                            <input type="file" name="bill_img" class="form-control shadow-none">
+
+                            <div class="row">
+                                <label class="form-label">อัปโหลดรูปภาพสลิปหลักฐานการโอนเงินของคุณ</label>
+                                <input type="file" name="bill_img" class="form-control shadow-none">    
+                            </div>
+
+                           
                         </div>
 
                         <div class="col-50">
