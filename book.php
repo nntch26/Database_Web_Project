@@ -278,16 +278,19 @@ if (($_SERVER["REQUEST_METHOD"] == "GET" & !isset($_SESSION['GetSearch'])) & ($_
                     } ?></td>
               <td>
                 <form class="p-5 card" action="booking.php" method="get">
+                  
                   <!-- เช็คว่าเป็น hotelowner หรือไม่ ไม่ให้จอง -->
                   <?php if ((isset($_SESSION['userid'])) && ($_SESSION["role"] == 'HOTELOWNER')) : ?>
 
                     <div class="alert alert-danger" role="alert">
-                      <?php echo $_SESSION['ur_hotel']; ?>
+                      <?php echo "ไม่สามารถจองห้องพักได้"; ?>
                     </div>
                   <?php else : ?>
+
                     <h6 class="mb-2">ราคาหัองพัก/คืน</h6>
                     <h2 class="mb-4">฿ <?= number_format($row['rooms_price']) ?></h2>
                     <button type="submit2" name="submit2" class="btn btn-primary">จอง</button>
+
                   <?php endif; ?>
 
                   <input type="hidden" name="room_id" value=<?php echo $row["room_id"] ?>>
