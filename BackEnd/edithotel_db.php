@@ -8,7 +8,7 @@ include('includes/connect_database.php'); // ดึงไฟล์เชื่�
 // เช็คว่า กดปุ่ม update
 if (isset($_POST['edithotel_update'])) {
 
-    $hotelname = $_POST['hotel_name'];
+    $hotelname = $_POST['hotelname'];
     $hotelphone = $_POST['hotel_phone'];
     $hoteldes = $_POST['hotels_description'];
 
