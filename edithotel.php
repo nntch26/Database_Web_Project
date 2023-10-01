@@ -91,7 +91,7 @@ if (!isset($_SESSION['is_login'])) {
 
                         <div class="col-md-6 ps-0 mb-3">
                             <label class="form-label">ชื่อโรงแรม</label>
-                            <input type="text" name="hotelname" value="<?php echo isset($_SESSION["hotelname"]); ?>" class="form-control shadow-none">
+                            <input type="text" name="hotelname" value="<?php echo $_SESSION["hotelname"]; ?>" class="form-control shadow-none">
                         </div>
 
                         <div class="col-md-6 ps-0 mb-3">
