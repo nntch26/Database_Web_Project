@@ -139,10 +139,10 @@ session_start();
                 <div class="card">
                     <img src="https://cf.bstatic.com/xdata/images/hotel/max1024x768/184305239.jpg?k=2d22fe63ae1f8960e057238c98fb436f7bd9f65854e3a5e918607c5cfa1d0a52&o=&hp=1" class="card-img-top" alt="รูปโรงแรม">
                     <div class="card-body">
-                        <h5 class="card-title">โรงแรมชื่อ: โรงแรมที่หนึ่ง</h5>
-                        <p class="card-text">จังหวัด: BKK</p>
+                        <h5 class="card-title">Gfeel Hostel</h5>
+                        <p class="card-text">จังหวัด: กรุงเทพมหานคร</p>
                         <p class="card-text">คะแนนรีวิว: 4.5/5</p>
-                        <p class="card-text">ราคาเริ่มต้น/คืน: 2,500 บาท</p>
+                        <p class="card-text">ราคาเริ่มต้น/คืน: 1,200 บาท</p>
                         <a href="#" class="btn btn-primary">จองห้อง</a>
                     </div>
                 </div>
@@ -152,10 +152,10 @@ session_start();
                 <div class="card">
                     <img src="https://static.leonardo-hotels.com/image/leonardohotelbucharestcitycenter_room_comfortdouble2_2022_4000x2600_7e18f254bc75491965d36cc312e8111f_1200x780_mobile_3.jpeg" class="card-img-top" alt="รูปโรงแรม">
                     <div class="card-body">
-                        <h5 class="card-title">โรงแรมชื่อ: โรงแรมที่สอง</h5>
-                        <p class="card-text">จังหวัด: CNX</p>
+                        <h5 class="card-title">Grand Business Inn</h5>
+                        <p class="card-text">จังหวัด: กรุงเทพมหานคร</p>
                         <p class="card-text">คะแนนรีวิว: 4.2/5</p>
-                        <p class="card-text">ราคาเริ่มต้น/คืน: 2,000 บาท</p>
+                        <p class="card-text">ราคาเริ่มต้น/คืน: 1,500 บาท</p>
                         <a href="#" class="btn btn-primary">จองห้อง</a>
                     </div>
                 </div>
@@ -165,8 +165,8 @@ session_start();
                 <div class="card">
                     <img src="https://www.kayak.co.th/rimg/himg/47/ec/7e/ice-115522-63352612_3XL-307131.jpg?width=1366&height=768&crop=true" class="card-img-top" alt="รูปโรงแรม">
                     <div class="card-body">
-                        <h5 class="card-title">โรงแรมชื่อ: โรงแรมที่สอง</h5>
-                        <p class="card-text">จังหวัด: CNX</p>
+                        <h5 class="card-title">ASAI Bangkok Sathorn</h5>
+                        <p class="card-text">จังหวัด: กรุงเทพมหานคร</p>
                         <p class="card-text">คะแนนรีวิว: 4.2/5</p>
                         <p class="card-text">ราคาเริ่มต้น/คืน: 2,000 บาท</p>
                         <a href="#" class="btn btn-primary">จองห้อง</a>
@@ -178,8 +178,8 @@ session_start();
                 <div class="card">
                     <img src="https://image-tc.galaxy.tf/wijpeg-68348kpk1umj01sjidmalztjd/jprerovsky-hotel-clement-807-16a2955.jpg" class="card-img-top" alt="รูปโรงแรม">
                     <div class="card-body">
-                        <h5 class="card-title">โรงแรมชื่อ: โรงแรมที่สอง</h5>
-                        <p class="card-text">จังหวัด: CNX</p>
+                        <h5 class="card-title">ASAI Bangkok Sathorn</h5>
+                        <p class="card-text">จังหวัด: กรุงเทพมหานคร</p>
                         <p class="card-text">คะแนนรีวิว: 4.2/5</p>
                         <p class="card-text">ราคาเริ่มต้น/คืน: 2,000 บาท</p>
                         <a href="#" class="btn btn-primary">จองห้อง</a>
