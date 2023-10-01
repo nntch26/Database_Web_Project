@@ -19,18 +19,10 @@ if (isset($_POST['edithotel_update'])) {
 
 
 
-    // เช็คว่า เป็นข้อมูลที่รับมาเป็นค่าว่าง หรือไม่
-    if (empty($hotelname) || empty($hotelphone) || empty($hoteldes)
-        || empty($hoteladd) || empty($hotelcity) || empty($hotelcode)) {
-        $_SESSION['err_edithotel'] = "โปรดระบุข้อมูลของคุณให้ครบถ้วน";
-        header('location: ../edithotel.php'); // กลับไปหน้า edit
-        exit; // จบการทำงาน
-    }
+  
 
 
-
-    // กรอกข้อมูลครบ 
-    else {
+   
 
         //เช็คว่าข้อมูลที่กรอกเข้ามาซ้ำ ใน database หรือไม่
         $select_stmt = $db->prepare("SELECT COUNT(hotels_name) AS count_name 
@@ -243,7 +235,7 @@ if (isset($_POST['edithotel_update'])) {
                 exit;
             }
         }
-    }
+    
 } elseif (isset($_POST['edithotel_back'])) {
     header('location: ../profilehotel.php');
     exit;

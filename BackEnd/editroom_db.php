@@ -25,19 +25,9 @@ if (isset($_POST['editroom_update'])) {
     $_SESSION["hotel_id"] = $row['hotel_id']; // เอาไปใช้ต่อ
 
 
-    // เช็คว่า เป็นข้อมูลที่รับมาเป็นค่าว่าง หรือไม่
-    if ((empty($roomtype) || empty($roomdes) || empty($roomprice) 
-    || empty($roomsize) || empty($room_facility) || empty($room_num))) {
+   
 
-        $_SESSION['err_editroom'] = "โปรดระบุข้อมูลของคุณให้ครบถ้วน";
-        header('location: ../insertroom.php'); // กลับไปหน้า edit
-        exit; // จบการทำงาน
-    }
-
-
-
-    // กรอกข้อมูลครบ 
-    else {
+ 
 
         //////////////////////////// IMAGE FILES ////////////////////////////
 
@@ -189,7 +179,7 @@ if (isset($_POST['editroom_update'])) {
             header('location: ../editroom.php');
             exit;
         }
-    }
+    
 } elseif (isset($_POST['editroom_back'])) {
 
     header('location: ../profilehotel.php');

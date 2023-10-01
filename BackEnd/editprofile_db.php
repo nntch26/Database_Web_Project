@@ -13,15 +13,7 @@ if (isset($_POST['update'])) {
     $phone = $_POST['phone'];
     
 
-    // เช็คว่า เป็นข้อมูลที่รับมาเป็นค่าว่าง หรือไม่
-    if (empty($firstname) || empty($lastname) || empty($address) || empty($phone)) {
-        $_SESSION['err_edit'] = "โปรดระบุข้อมูลของคุณให้ครบถ้วน";
-        header('location: ../editprofile.php'); // กลับไปหน้า editprofile 
-        exit; // จบการทำงาน
-    }
-
-    // กรอกข้อมูลครบ 
-    else {
+   
 
         $update_stmt = $db->prepare("UPDATE users SET users_first_name = :firstname, 
         users_last_name = :lastname , users_phone_number = :phone, 
@@ -50,7 +42,7 @@ if (isset($_POST['update'])) {
             exit;
         }
 
-    }
+    
 
 } elseif (isset($_POST['back'])){
     header('location: ../profile.php');
