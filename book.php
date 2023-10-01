@@ -278,7 +278,7 @@ if (($_SERVER["REQUEST_METHOD"] == "GET" & !isset($_SESSION['GetSearch'])) & ($_
                     } ?></td>
               <td>
                 <form class="p-5 card" action="booking.php" method="get">
-                  
+
                   <!-- เช็คว่าเป็น hotelowner หรือไม่ ไม่ให้จอง -->
                   <?php if ((isset($_SESSION['userid'])) && ($_SESSION["role"] == 'HOTELOWNER')) : ?>
 
@@ -363,9 +363,11 @@ if (($_SERVER["REQUEST_METHOD"] == "GET" & !isset($_SESSION['GetSearch'])) & ($_
 
       <?php
         }
-      } else {
-        echo "ไม่พบข้อมูลที่ตรงกับคำค้นหา";
-      } ?>
+      } else { ?>
+      <div class="scroll-box">
+        <h6 class="txt-re"> <?php echo "ตอนนี้ยังไม่มีการให้คะแนรีวิว" ?> </h6>
+      </div>
+      <?php } ?> 
     </div>
   </div>
   </div>
