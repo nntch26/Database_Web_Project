@@ -1,6 +1,6 @@
 <?php
 session_start();
-          include('../BackEnd/includes/connect_database.php'); // ดึงไฟล์เชื่อม database เข้ามา
+include('../BackEnd/includes/connect_database.php'); // ดึงไฟล์เชื่อม database เข้ามา
 
 
 // เช็คว่า login หรือยัง ถ้ายัง ให้กลับไปยังหน้า login.php เพื่อทำการ login ก่อน
@@ -70,7 +70,7 @@ if (!isset($_SESSION['is_login'])) {
                 <td><?php echo $row["bookings_status"]; ?></td>
                 <td>
 
-                <?php if($row["bookings_status"] != 'Cancel') : ?>
+                <?php if($row["bookings_status"] != "Cancle" && $row["bookings_status"] != "Cancle Booking" ) : ?>
                   <input type="hidden" name="booking_id" value="<?php echo $row["booking_id"]; ?>">
                   <button type="submit" name="confirm_pay" class="btn btn-primary btn-lg">รายละเอียดการจอง</button>
                 

@@ -44,7 +44,7 @@ if (isset($_POST['post_com'])) {
 // ยกเลิกการจอง
 }elseif (isset($_POST['cancle_pay'])) {
 
-    header('location: ../booking_cancel.php');
+    header('location: ../booking_cancle.php');
 
 
 

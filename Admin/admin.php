@@ -17,7 +17,9 @@
                 <a href="admin.php?page=user" class="btn mb-3" >User</a><br>
                 <a href="admin.php?page=hotel" class="btn mb-3" >Hotel</a><br>
                 <a href="admin.php?page=payment" class="btn mb-3" >Payments</a><br>
+                <a href="admin.php?page=booking" class="btn mb-3" >Cancle Booking</a><br>
                 <a href="admin.php?page=requirement" class="btn mb-5" >Requirement</a><br>
+
                 <hr>
                 <a href="../BackEnd/logout_db.php" class="btn" >Logout</a><br>
 
@@ -48,9 +50,14 @@
 
                             break;
                         case 'requirement':
-                            // แสดงหน้า Requirement
+                           // แสดงหน้า Requirement
                             include('reqhotel.php'); 
-                            break;
+                            break; 
+                        
+                        case 'booking':
+                            // แสดงหน้า Requirement
+                                include('ad_booking_cancle.php'); 
+                                break;
                         default:
                             // หากหน้าไม่ถูกต้อง
                             echo "Invalid Page";

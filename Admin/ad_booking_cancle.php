@@ -1,6 +1,8 @@
+
+
 <div class="container">
     <div class="card-body-profile">
-        <h2>Confirm Payments</h2>
+        <h2>Cancle Booking</h2>
         <hr>
         <div style="height: 100%; overflow: auto;">
             <table class="table table-bordered">
@@ -18,68 +20,58 @@
                 <tbody>
 
                     <?php
+                        session_start();
 
                         include('../BackEnd/includes/connect_database.php'); // ดึงไฟล์เชื่อม database เข้ามา
 
                         // คำสั่ง SQL สำหรับดึงข้อมูลจากตาราง payment
-                        $sql = "SELECT * FROM payments 
-                                JOIN bookings USING (booking_id)
-                                WHERE bookings_status != 'Cancle Booking'
-
-                                ORDER BY payment_date DESC
-                                ";
+                        $sql = " SELECT * FROM payments 
+                        JOIN bookings USING (booking_id)
+                        JOIN users ON (users.user_id = bookings.user_id)
+                        WHERE bookings_status = 'Cancle Booking'
+                        ORDER BY payment_date DESC
+                        ";
 
                         $stmt = $db->prepare($sql);
                         $stmt->execute();
 
+                        
                         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) :
                     ?>
                         <tr>
-                            <form method="POST" action="ad_pay_db.php">
+                            <form method="POST" action="ad_cancle_db.php">
                                 <td><?php echo $row["payment_id"]; ?></td>
                                 <td><?php echo $row["booking_id"]; ?></td>
                                 <td><?php echo $row["user_id"]; ?></td>
                                 <td><?php echo $row["payments_amount"]; ?></td>
                                 <td><?php echo $row["payment_date"]; ?></td>
                                 <td>
-                                    <?php if ($row["payments_status"] != 'Cancel Booking'): ?>
+                                    <?php if ($row["bookings_status"] != 'Cancle Booking'): ?>
                                     <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#myModal<?php echo $row["payment_id"]; ?>">View Details</a>
                                     
-                                    <?php elseif ($row["payments_status"] == 'Cancel Booking'): ?>
+                                    <?php elseif ($row["bookings_status"] == 'Cancle Booking'): ?>
                                     <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#myModal<?php echo $row["payment_id"]; ?>">View Details</a>
                                     <?php endif; ?>
                                 
                                 </td>
                                 
                                 <td>
-                                    <?php if ($row["payments_status"] == 'Paid'): ?>
-                                        <!-- ถ้าเป็น Paid ให้แสดงสถานะ -->
-                                        <span style="color: green;"><b><?php echo $row["payments_status"]; ?></b></span>
-                                    
-                                    <?php elseif ($row["payments_status"] == 'Declined'): ?>
-
-                                        <span style="color: red;"><b><?php echo $row["payments_status"]; ?></b></span>
-
-                                    <?php elseif ($row["payments_status"] == 'Cancel Booking'): ?>
-                                        <span style="color: red;"><b><?php echo $row["payments_status"]; ?></b></span>
-
-                                    <?php endif; ?>
+                                    <span style="color: red;"><b><?php echo $row["bookings_status"]; ?></b></span>
                                 </td>
 
-
-                                                             
+                                                            
                                 <td>
 
                                     <input type="hidden" name="payment_id" value="<?php echo $row["payment_id"]; ?>"> 
                                     <input type="hidden" name="booking_id" value="<?php echo $row["booking_id"]; ?>">
+                                    <input type="hidden" name="payment_id" value="<?php echo $row["user_id"]; ?>"> 
+
                                    
-                                 <!-- อัปเดตข้อมูลแล้ว -->
-                                 <?php if ($row["payments_status"] == 'Paid' || $row["payments_status"] == 'Declined') : ?>
+                                <?php if (isset($_SESSION['is_cancle'])): ?>
 
                                 <?php else : ?>
-                                    <!-- ถ้าไม่ใช่ APPROVE ให้แสดงปุ่ม Confirm และ Cancel -->
                                     <button type="submit" name="ad_submitpay" class="btn btn-success">Confirm</button>
-                                    <button type="submit" name="ad_cancelpay" class="btn btn-danger">Cancel</button>
+                                    <button type="submit" name="ad_cancelpay" class="btn btn-danger">Cancle</button>
                                 
                                 <?php endif; ?>
                                 </td>
@@ -89,13 +81,14 @@
                         </tr>
 
 
-                        <!-- รูปการชำระเงิน -->
+                        
+                        <!-- ยกเลิกการจอง -->
                         <div class="modal fade" id="myModal<?php echo $row["payment_id"]; ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
                             <div class="modal-dialog" role="document">
                                 <div class="modal-content">
 
                                     <div class="modal-header">
-                                        <h4 class="modal-title" id="myModalLabel">รายละเอียดการชำระเงิน</h4>
+                                        <h4 class="modal-title" id="myModalLabel">รายละเอียดการขอคืนเงิน</h4>
                                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                             <span aria-hidden="true">&times;</span>
                                         </button>
@@ -105,7 +98,16 @@
                                         <!-- ส่วนนี้จะแสดงข้อมูลรายละเอียดใน Modal -->
                                         <div class="card">
                                             <div class="card-body">
-                                                <img src="../BackEnd/bill_img/<?= $row['payments_img'] ?>" class="img-fluid rounded">
+                                                <h5 class="card-title"><b>หมายเลขการจอง :</b> <?php echo $row["booking_id"]; ?></h5>
+                                                <p class="card-text"><b>ชื่อ-นามสุกล : </b> <?php echo $row["users_first_name"]. " ". $row["users_last_name"] ; ?></p>
+                                                <p class="card-text"> <b>เบอร์ติดต่อ :</b> <?php echo $row["users_phone_number"]; ?></p>
+                                                <p class="card-text"> <b>Email :</b> <?php echo  $row["users_email"]; ?></p>
+                                                <hr>
+                                                <p class="card-text">  <b>หมายเลขบัญชีธนาคาร :</b> <?php echo isset($_SESSION["banknum"]) ? $_SESSION["banknum"] : ''; ?></p>
+                                                <p class="card-text">  <b>ธนาคาร :</b> <?php echo isset($_SESSION["bank"]) ? $_SESSION["bank"] : ''; ?></p>
+                                                <p class="card-text">  <b>วันเวลาส่งคำขอคืนเงิน :</b> <?php echo isset($_SESSION["booking_cancle_date"]) ? $_SESSION["booking_cancle_date"] : ''; ?></p>
+                                                <p class="card-text">  <b>เหตุผลที่ยกเลิก :</b> <?php echo isset($_SESSION["reason"]) ? $_SESSION["reason"] : ''; ?></p>
+
                                             </div>
                                         </div>
                                     </div>
@@ -117,6 +119,9 @@
                                 </div>
                             </div>
                         </div>
+
+
+
 
                     <?php endwhile ?>
 
