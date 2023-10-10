@@ -13,7 +13,7 @@ session_start();
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css" integrity="sha512-YWzhKL2whUzgiheMoBFwW8CKV4qpHQAEuvilg9FAn5VJUDwKZZxkJNuGM4XkWuk94WCrrwslk8yWNGmY1EduTA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="css/styles.css">
 
-    <title>AURATEL Hotel</title>
+    <title>หาแรมนอน</title>
 
 </head>
 
@@ -204,13 +204,13 @@ session_start();
                     <h4>ติดต่อเรา</h4>
                     <address>
                         <p>1/1 ถนนสุขุมวิท, กรุงเทพฯ, ประเทศไทย</p>
-                        <p>อีเมล: auratel@gmail.com</p>
+                        <p>อีเมล: Haramnon@gmail.com</p>
                         <p>โทรศัพท์: +66 893456789</p>
                     </address>
                 </div>
                 <div class="mt-5 mb-5 text-center">
                     <small class="text-center">
-                        Copyright © 2023 auratel.com. All Rights Reserved.
+                        Copyright © 2023 Haramnon.com. All Rights Reserved.
                     </small>
 
                 </div>

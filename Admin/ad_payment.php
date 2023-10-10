@@ -39,16 +39,28 @@
                                 <td><?php echo $row["user_id"]; ?></td>
                                 <td><?php echo $row["payments_amount"]; ?></td>
                                 <td><?php echo $row["payment_date"]; ?></td>
-                                <td><a href="#" class="btn btn-primary" data-toggle="modal" data-target="#myModal<?php echo $row["payment_id"]; ?>">View Details</a></td>
+                                <td>
+                                    <?php if ($row["payments_status"] != 'Cancel Booking'): ?>
+                                    <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#myModal<?php echo $row["payment_id"]; ?>">View Details</a>
+                                    
+                                    <?php elseif ($row["payments_status"] == 'Cancel Booking'): ?>
+                                    <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#myModal<?php echo $row["payment_id"]; ?>">View Details</a>
+                                    <?php endif; ?>
+                                
+                                </td>
                                 
                                 <td>
                                     <?php if ($row["payments_status"] == 'Paid'): ?>
                                         <!-- ถ้าเป็น Paid ให้แสดงสถานะ -->
                                         <span style="color: green;"><b><?php echo $row["payments_status"]; ?></b></span>
+                                    
                                     <?php elseif ($row["payments_status"] == 'Declined'): ?>
+
                                         <span style="color: red;"><b><?php echo $row["payments_status"]; ?></b></span>
-                                    <?php else: ?>
-                                        <?php echo $row["payments_status"]; ?>
+
+                                    <?php elseif ($row["payments_status"] == 'Cancel Booking'): ?>
+                                        <span style="color: red;"><b><?php echo $row["payments_status"]; ?></b></span>
+
                                     <?php endif; ?>
                                 </td>
 
