@@ -115,7 +115,7 @@ if (!isset($_SESSION['is_login'])) {
           </tbody>
         </table>
         <br>
-        <a href="../profilehotel.php" class="btn btn-primary btn-lg" type="submit">ย้อนกลับ</a>
+        <a href="../profilehotel.php" class="btn btn-danger btn-lg" type="submit">ย้อนกลับ</a>
     </div>
  </div>
 </body>

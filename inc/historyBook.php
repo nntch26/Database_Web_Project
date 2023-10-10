@@ -1,5 +1,7 @@
 <?php
 session_start();
+          include('../BackEnd/includes/connect_database.php'); // ดึงไฟล์เชื่อม database เข้ามา
+
 
 // เช็คว่า login หรือยัง ถ้ายัง ให้กลับไปยังหน้า login.php เพื่อทำการ login ก่อน
 if (!isset($_SESSION['is_login'])) {
@@ -29,6 +31,21 @@ if (!isset($_SESSION['is_login'])) {
       <table class="table table-bordered">
         <h1>History Booking</h1>
         <h2>ประวัติการจอง</h2>
+
+        <!-- search --->
+        <div class="input-group mt-5 mb-5" >
+          <div class="input-group-prepend">
+            <button class="btn btn-primary btn-lg mr-2" type="button">All</button>
+
+          </div>
+            <input type="search" class="form-control rounded ml-5" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
+            <button type="button" class="btn btn-outline-primary btn-lg">search</button>
+          </div>
+        </div>
+
+
+
+
         <thead class="table-primary">
           <tr>
             <th scope="col">ชื่อโรงแรม</th>
@@ -43,8 +60,6 @@ if (!isset($_SESSION['is_login'])) {
 
         <tbody>
           <?php
-
-          include('../BackEnd/includes/connect_database.php'); // ดึงไฟล์เชื่อม database เข้ามา
 
           // คำสั่ง SQL สำหรับดึงข้อมูลจากตาราง booking
           $sql = "SELECT * FROM bookings
@@ -83,7 +98,7 @@ if (!isset($_SESSION['is_login'])) {
         </tbody>
       </table>
       <br>
-      <a href="../profile.php" class="btn btn-primary btn-lg" type="submit">ย้อนกลับ</a>
+      <a href="../profile.php" class="btn btn-danger btn-lg" type="submit">ย้อนกลับ</a>
     </div>
   </div>
 </body>
