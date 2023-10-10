@@ -133,6 +133,10 @@ if (!isset($_SESSION['is_login'])) {
                      <!-- ปุ่มยกเลิกการจอง -->
                      <div class="button">
                         <button type="submit" name="cancle_pay" class="btn-cancel">ยกเลิกการจอง</button>
+                        <p style="color:red;"> * คุณสามารถยกเลิกการจองได้ภายใน 5 วัน หลังจากทำการชำระเงิน ระบบจะคืนเงินให้คุณ <br>
+                        ( หากทำการรีวิวไปแล้ว จะไม่สามารถยกเลิกการจองได้ )
+                        </p>
+
                     </div>
 
                     <?php endif; ?>
