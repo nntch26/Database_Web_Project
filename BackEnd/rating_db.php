@@ -21,14 +21,10 @@ if (isset($_POST['post_com'])) {
     $insert_stmt->execute();
     $row = $insert_stmt->fetch(PDO::FETCH_ASSOC); // ดึงข้อมูลออกมา
 
-
     // เช็คว่า ถ้าเพิ่มข้อมูลผ่านแล้ว 
     if ($insert_stmt) {
-
         $_SESSION["is_reviews"] = $hotelid;
         header('location: ../confirm_payment.php');
-
-      
     }
 
     // สมัครไม่สำเร็จ
@@ -67,15 +63,3 @@ if (isset($_POST['post_com'])) {
 
 
 }
-
-
-
-
-
-
-
-
-
-
-
-?>
