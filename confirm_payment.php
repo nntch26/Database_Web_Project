@@ -68,7 +68,6 @@ if (!isset($_SESSION['is_login'])) {
 
 <body>
 
-
     <h1>Confirm Payments</h1>
     <div class="row">
         <div class="col align-self-center">
@@ -138,14 +137,12 @@ if (!isset($_SESSION['is_login'])) {
                                     <textarea class="inputcomment" name="comment" id="comment" type="text"></textarea>
                                 </div>
 
-                            <div class="btnbox">
-                                <input type="hidden" name="hotel_id" value="<?php echo $result["hotel_id"]; ?>">
-                                <button class="btn" type="submit" name="post_com"> โพสต์</button>
+                                <div class="btnbox">
+                                    <input type="hidden" name="hotel_id" value="<?php echo $result["hotel_id"]; ?>">
+                                    <button class="btn" type="submit" name="post_com"> โพสต์</button>
+                                </div>
                             </div>
-                            
                         </div>
-                    </div>
-                    
                     <?php endif; ?>
                     </form>
 
@@ -165,12 +162,8 @@ if (!isset($_SESSION['is_login'])) {
                     <form action="BackEnd/rating_db.php" method="post">
                         <button type="submit" name="back" class="btn btn-danger shadow-none mb-4 mt-4 me-lg-3 me-2">Go Back</button>
                     </form>
-
-
-
             </div>
         </div>
-
 
         <!-- รายละเอียดห้องพัก ฝั่งขวา--->
         <div class="col">
