@@ -8,7 +8,7 @@
             <table class="table table-bordered">
                 <thead>
                     <tr>
-                        <th>Payment Id</th>
+                        <th>Id</th>
                         <th>Booking Id</th>
                         <th>User Id</th>
                         <th>Amount</th>
@@ -28,6 +28,7 @@
                         $sql = " SELECT * FROM payments 
                         JOIN bookings USING (booking_id)
                         JOIN users ON (users.user_id = bookings.user_id)
+                        JOIN canclebooking ON (canclebooking.booking_id = bookings.booking_id)
                         WHERE bookings_status = 'Cancle Booking'
                         ORDER BY payment_date DESC
                         ";
@@ -40,23 +41,26 @@
                     ?>
                         <tr>
                             <form method="POST" action="ad_cancle_db.php">
-                                <td><?php echo $row["payment_id"]; ?></td>
+                                <td><?php echo $row["cancle_id"]; ?></td>
                                 <td><?php echo $row["booking_id"]; ?></td>
                                 <td><?php echo $row["user_id"]; ?></td>
                                 <td><?php echo $row["payments_amount"]; ?></td>
                                 <td><?php echo $row["payment_date"]; ?></td>
                                 <td>
-                                    <?php if ($row["bookings_status"] != 'Cancle Booking'): ?>
-                                    <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#myModal<?php echo $row["payment_id"]; ?>">View Details</a>
-                                    
-                                    <?php elseif ($row["bookings_status"] == 'Cancle Booking'): ?>
+                                    <?php if ($row["bookings_status"] == 'Cancle Booking'): ?>
                                     <a href="#" class="btn btn-primary" data-toggle="modal" data-target="#myModal<?php echo $row["payment_id"]; ?>">View Details</a>
                                     <?php endif; ?>
                                 
                                 </td>
                                 
                                 <td>
-                                    <span style="color: red;"><b><?php echo $row["bookings_status"]; ?></b></span>
+                                <?php if ($row["cancle_status"] == 'Confirmed'): ?>
+                                    <span style="color: green;"><b><?php echo $row["cancle_status"]; ?></b></span>
+
+                                <?php else: ?>
+                                        <span style="color: red;"><b><?php echo $row["cancle_status"]; ?></b></span>
+                                <?php endif; ?>
+
                                 </td>
 
                                                             
@@ -67,7 +71,7 @@
                                     <input type="hidden" name="payment_id" value="<?php echo $row["user_id"]; ?>"> 
 
                                    
-                                <?php if (isset($_SESSION['is_cancle'])): ?>
+                                <?php if ($row['cancle_status'] != 'WAITING'): ?>
 
                                 <?php else : ?>
                                     <button type="submit" name="ad_submitpay" class="btn btn-success">Confirm</button>
@@ -103,10 +107,10 @@
                                                 <p class="card-text"> <b>เบอร์ติดต่อ :</b> <?php echo $row["users_phone_number"]; ?></p>
                                                 <p class="card-text"> <b>Email :</b> <?php echo  $row["users_email"]; ?></p>
                                                 <hr>
-                                                <p class="card-text">  <b>หมายเลขบัญชีธนาคาร :</b> <?php echo isset($_SESSION["banknum"]) ? $_SESSION["banknum"] : ''; ?></p>
-                                                <p class="card-text">  <b>ธนาคาร :</b> <?php echo isset($_SESSION["bank"]) ? $_SESSION["bank"] : ''; ?></p>
-                                                <p class="card-text">  <b>วันเวลาส่งคำขอคืนเงิน :</b> <?php echo isset($_SESSION["booking_cancle_date"]) ? $_SESSION["booking_cancle_date"] : ''; ?></p>
-                                                <p class="card-text">  <b>เหตุผลที่ยกเลิก :</b> <?php echo isset($_SESSION["reason"]) ? $_SESSION["reason"] : ''; ?></p>
+                                                <p class="card-text">  <b>หมายเลขบัญชีธนาคาร :</b> <?php echo $row['cancle_banknum'] ?></p>
+                                                <p class="card-text">  <b>ธนาคาร :</b> <?php echo $row['cancle_bankname'] ?></p>
+                                                <p class="card-text">  <b>วันเวลาส่งคำขอคืนเงิน :</b> <?php echo $row['cancle_date'] ?></p>
+                                                <p class="card-text">  <b>เหตุผลที่ยกเลิก :</b> <?php echo $row['cancle_reason'] ?></p>
 
                                             </div>
                                         </div>

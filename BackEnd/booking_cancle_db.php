@@ -6,10 +6,10 @@ include('includes/connect_database.php'); // ดึงไฟล์เชื่�
 
 // เช็คว่า กดปุ่ม
 if (isset($_POST['submit'])) {
-    $_SESSION["banknum"]= $_POST['banknum'];
-    $_SESSION["bank"]= $_POST['bank'];
-    $_SESSION["booking_cancle_date"] = date('Y-m-d');
-    $_SESSION["reason"] = $_POST['reason'];
+    $banknum = $_POST['banknum'];
+    $bank= $_POST['bank'];
+    $booking_cancle_date= date('Y-m-d');
+    $reason = $_POST['reason'];
 
 
 
@@ -31,6 +31,20 @@ if (isset($_POST['submit'])) {
     $upstmt3->bindParam(':booking_id', $_SESSION["booking_id"]);
     $upstmt3->execute();
 
+
+
+    $sql4 = "INSERT INTO canclebooking (booking_id, user_id, cancle_banknum, cancle_bankname, cancle_date, cancle_reason, cancle_status)
+    VALUES (:booking_id, :user_id, :banknum, :bank, :cancledate, :reason, 'WAITING')";
+
+    $upstmt4 = $db->prepare($sql4);
+    $upstmt4->bindParam(':booking_id', $_SESSION["booking_id"]);
+    $upstmt4->bindParam(':user_id', $_SESSION["userid"]);
+    $upstmt4->bindParam(':banknum', $banknum);
+    $upstmt4->bindParam(':bank', $bank);
+    $upstmt4->bindParam(':cancledate', $booking_cancle_date);
+    $upstmt4->bindParam(':reason', $reason);
+
+    $upstmt4->execute();
 
     $_SESSION['cancle'] = "โปรดรอเจ้าหน้าที่ตรวจสอบ เมื่อเสร็จสิ้นแล้วระบบจะคืนเงินให้ภายใน 24 ชม.";
     header('location: ../booking_cancle.php');

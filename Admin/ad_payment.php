@@ -59,10 +59,6 @@
                                     <?php elseif ($row["payments_status"] == 'Declined'): ?>
 
                                         <span style="color: red;"><b><?php echo $row["payments_status"]; ?></b></span>
-
-                                    <?php elseif ($row["payments_status"] == 'Cancel Booking'): ?>
-                                        <span style="color: red;"><b><?php echo $row["payments_status"]; ?></b></span>
-
                                     <?php endif; ?>
                                 </td>
 

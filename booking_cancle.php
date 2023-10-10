@@ -63,18 +63,18 @@ if (!isset($_SESSION['is_login'])) {
 
                 <div class="col-md-6 ps-0 mb-3">
                     <label class="form-label">หมายเลขบัญชีธนาคาร</label>
-                    <input type="text" name="banknum" class="form-control shadow-none">
+                    <input type="text" name="banknum" class="form-control shadow-none"required>
                 </div>
 
                 <div class="col-md-6 ps-0 mb-3">
                     <label class="form-label">ธนาคาร</label>
-                    <input type="text" name="bank" class="form-control shadow-none">
+                    <input type="text" name="bank" class="form-control shadow-none" required>
                 </div>
             </div>
 
             <div class="form-group">
                 <label for="reason">เหตุผลที่ยกเลิก:</label>
-                <textarea class="form-control" id="reason" name="reason" rows="4" placeholder="กรอกเหตุผลที่ยกเลิก"></textarea>
+                <textarea class="form-control" id="reason" name="reason" rows="4" placeholder="กรอกเหตุผลที่ยกเลิก" required></textarea> 
             </div>
             <button type="submit" class="btn btn-primary" name="submit">ยกเลิกคำขอ</button>
         </form>

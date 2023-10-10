@@ -8,8 +8,14 @@ if (isset($_POST['ad_submitpay'])) {
     $booking_id = $_POST["booking_id"];
     $user_id = $_POST["user_id"];
 
+   $sql = "UPDATE canclebooking SET cancle_status = 'Confirmed' WHERE booking_id = :booking_id";
+ 
+    $stmt = $db->prepare($sql);
+    $stmt->bindParam(':booking_id', $booking_id);
+    $stmt->execute();
+
     
-     $_SESSION['is_cancle'] = true;
+    $_SESSION['is_cancle'] = true;
 
 
     header('location: admin.php?page=booking');
@@ -29,23 +35,14 @@ if (isset($_POST['ad_submitpay'])) {
     $user_id = $_POST["user_id"];
 
 
-
-      // เปลี่ยนสถานะของ payment
-      $sql = "UPDATE payments SET payments_status = 'Declined' WHERE payment_id = :payment_id";
-
-      $stmt = $db->prepare($sql);
-      $stmt->bindParam(':payment_id', $payment_id);
-      $stmt->execute();
-  
-  
-       // เปลี่ยนสถานะของ booking
-       $sql2 = "UPDATE bookings SET bookings_status = 'Cancle' WHERE booking_id = :booking_id";
-  
-       $stmt2 = $db->prepare($sql2);
-       $stmt2->bindParam(':booking_id', $booking_id);
-       $stmt2->execute();
+    $sql = "UPDATE canclebooking SET cancle_status = 'Declined' WHERE booking_id = :booking_id";
+ 
+    $stmt = $db->prepare($sql);
+    $stmt->bindParam(':booking_id', $booking_id);
+    $stmt->execute();
 
     $_SESSION['is_pay'] = false;
+
     header('location: admin.php?page=booking');
 
 
