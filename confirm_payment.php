@@ -148,7 +148,7 @@ if (!isset($_SESSION['is_login'])) {
 
                     <form action="BackEnd/rating_db.php" method="post">
                         <!-- ปุ่มยกเลิกการจอง -->
-                        <?php if ($day_difference <= 5) {
+                        <?php if (($day_difference <= 5) && (!$rowre) && ($result["bookings_status"] != 'WAITING')) {
                             echo '<div class="button">';
                             echo '<button type="submit" name="cancle_pay" class="btn-cancel">ยกเลิกการจอง</button>';
                             echo '</div>';
