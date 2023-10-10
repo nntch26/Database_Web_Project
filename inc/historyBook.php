@@ -32,20 +32,6 @@ if (!isset($_SESSION['is_login'])) {
         <h1>History Booking</h1>
         <h2>ประวัติการจอง</h2>
 
-        <!-- search --->
-        <div class="input-group mt-5 mb-5" >
-          <div class="input-group-prepend">
-            <button class="btn btn-primary btn-lg mr-2" type="button">All</button>
-
-          </div>
-            <input type="search" class="form-control rounded ml-5" placeholder="Search" aria-label="Search" aria-describedby="search-addon" />
-            <button type="button" class="btn btn-outline-primary btn-lg">search</button>
-          </div>
-        </div>
-
-
-
-
         <thead class="table-primary">
           <tr>
             <th scope="col">ชื่อโรงแรม</th>
