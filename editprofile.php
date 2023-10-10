@@ -81,7 +81,7 @@ if (!isset($_SESSION['is_login'])) {
                             <input type="text" name="lastname" value="<?php echo isset($_SESSION["lastname"]) ? $_SESSION["lastname"] : ''; ?>" class="form-control shadow-none">
                         </div>
 
-                        <div class="col-md-12 p-0 mb-3">
+                        <div class="col-md-12 ps-0 mb-3">
                             <label class="form-label">ที่อยู่</label>
                             <input type="text" name="address" value="<?php echo isset($_SESSION["address"]) ? $_SESSION["address"] : ''; ?>" class="form-control shadow-none">
                         </div>
