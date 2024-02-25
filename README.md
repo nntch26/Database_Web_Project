@@ -28,6 +28,9 @@
 <br>
 - ผู้ดูแลระบบ
 
+# PROJECT DEMO VIDEO
+https://youtu.be/q7KSkcyxZ4k
+
 # Home page
 ![image](https://github.com/nntch26/Database_Web_Project/assets/117381190/b5449060-bca7-4789-a501-2240d1313585)
 
